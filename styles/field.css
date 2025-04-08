@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+body{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#container {
+    margin-top: 10vh;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+   flex-direction: column;
+}
+
+#battleField{
+    display: flex;
+    flex-direction:row ;
+    flex-wrap: wrap;
+}
+
+.brick{
+    border: black solid 1px
+}
+
