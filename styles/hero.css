@@ -1,8 +1,5 @@
 #hero {
     background-color: rgb(255, 0, 0);
     border: black solid 1px;
-   width: 100px;
-   height: 100px;
     position: absolute;
-    z-index: 1;
 }
