@@ -7,14 +7,21 @@ class Field {
     constructor(width, height) {
         this.width = width
         this.height = height
+        this.container = null
         this.stage = 1
     }
     // Create the battlefield:
     Create() {
-        let container = document.createElement("div")
-        container.setAttribute("id", "container")
-        let fragment = document.createDocumentFragment()
+        this.container = document.createElement("div")
+        this.container.setAttribute("id", "container")
 
+        document.body.appendChild(this.container)
+    }
+
+    // Create the battle field:
+    CreateBattleField() {
+        this.Create()
+        let fragment = document.createDocumentFragment()
         let board = document.createElement("div")
         board.setAttribute("id", "bord")
         board.style.width = `${this.width}vw`
@@ -29,7 +36,7 @@ class Field {
         attempts.setAttribute("id", "attempts")
         fragment.append(time, score, attempts)
         board.appendChild(fragment)
-        container.appendChild(board)
+        this.container.appendChild(board)
 
         let battleField = document.createElement("div")
         battleField.setAttribute("id", "battleField")
@@ -61,8 +68,7 @@ class Field {
             }
             battleField.appendChild(wall)
         }
-        container.appendChild(battleField)
-        document.body.appendChild(container)
+        this.container.appendChild(battleField)
         this.createGates()
     }
 
