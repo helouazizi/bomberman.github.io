@@ -14,7 +14,6 @@ class Field {
     Create() {
         this.container = document.createElement("div")
         this.container.setAttribute("id", "container")
-
         document.body.appendChild(this.container)
     }
 
@@ -42,6 +41,7 @@ class Field {
         battleField.setAttribute("id", "battleField")
         battleField.style.width = `${this.width}vw`
         battleField.style.height = `${this.height}vh`
+
         for (let y = 1; y <= 13; y++) {
             let wall = document.createElement("div")
             wall.setAttribute("class", "wall")

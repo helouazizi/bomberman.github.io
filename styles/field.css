@@ -16,6 +16,10 @@ body{
     display: flex;
    flex-direction: column;
 }
+#battleField{
+    position: relative;
+    overflow: hidden;
+}
 
 .wall{
    display: flex;
@@ -26,4 +30,8 @@ body{
 }
 .gate{
     background-color: green;
+}
+
+.hero {
+    
 }
