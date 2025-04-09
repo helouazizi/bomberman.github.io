@@ -11,26 +11,16 @@ body{
 }
 
 #container {
-    margin-top: 10vh;
     width: fit-content;
     height: fit-content;
     display: flex;
    flex-direction: column;
 }
 
-
-
 .wall{
    display: flex;
    flex-direction: row;
-  
-
 }
 .solid{
     border: black solid 1px;
-
-   
 }
-/* .path{
-    border: black solid 1px
-} */

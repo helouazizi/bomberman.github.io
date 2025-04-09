@@ -8,8 +8,7 @@ class Field {
         this.width = width
         this.height = height
     }
-
-
+    // Create the battlefield:
     Create() {
         let container = document.createElement("div")
         container.setAttribute("id", "container")
@@ -53,20 +52,25 @@ class Field {
                     brick.classList.add("solid")
 
                 } else {
-                    if(y %2!==0&& x%2!==0 ){
+                    if (y % 2 !== 0 && x % 2 !== 0) {
                         brick.classList.add("solid")
                     }
                     brick.classList.add("gate")
                 }
-
-
             }
             battleField.appendChild(wall)
-
         }
         container.appendChild(battleField)
         document.body.appendChild(container)
+    }
 
-
+    // Genrate the breakable walls randomly:
+    GenerateGates(count) {
+        let random = new Set()
+        do {
+            let num = Math.round(Math.random() * 114) + 1
+            random.add(num)
+        } while (random.size < count)
+        return Array.from(random)
     }
 }
