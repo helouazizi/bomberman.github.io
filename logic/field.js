@@ -96,7 +96,7 @@ class Field {
         }
         let random = new Set()
         do {
-            let num = Math.round(Math.random() * 113) + 1
+            let num = Math.floor(Math.random() * 112) + 2
             random.add(num)
         } while (random.size < count)
         return Array.from(random)
