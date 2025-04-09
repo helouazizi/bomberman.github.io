@@ -24,3 +24,6 @@ body{
 .solid{
     border: black solid 1px;
 }
+.gate{
+    background-color: green;
+}

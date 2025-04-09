@@ -7,6 +7,7 @@ class Field {
     constructor(width, height) {
         this.width = width
         this.height = height
+        this.stage = 1
     }
     // Create the battlefield:
     Create() {
@@ -43,33 +44,71 @@ class Field {
             for (let x = 1; x <= 15; x++) {
                 let brick = document.createElement("div")
                 brick.setAttribute("class", "brick")
-                brick.setAttribute("id", `${this.#count}`)
+               
                 brick.style.width = `${this.width / 15}vw`
                 brick.style.height = `100%`
                 wall.appendChild(brick)
-                this.#count++
-                if (y === 1 || y === 13 || x == 1 || x == 15) {
+                
+                if (y === 1 || y === 13 || x == 1 || x == 15|| (y % 2 !== 0 && x % 2 !== 0)) {
                     brick.classList.add("solid")
                 } else {
-                    if (y % 2 !== 0 && x % 2 !== 0) {
-                        brick.classList.add("solid")
-                    }
-                    brick.classList.add("gate")
+                  
+                    brick.classList.add("path")
+                    brick.setAttribute("id", `${this.#count}`)
+                    this.#count++
+
                 }
             }
             battleField.appendChild(wall)
         }
         container.appendChild(battleField)
         document.body.appendChild(container)
+        this.createGates()
     }
 
     // Genrate the breakable walls randomly:
-    GenerateGates(count) {
+    generateRandomIds() {
+        let count = 0
+        switch (this.stage) {
+
+            case 2:
+                count = 20
+                break
+
+            case 3:
+                count = 22
+                break
+            case 4:
+                count = 25
+                break
+            case 5:
+                count = 30
+                break
+            default:
+                count = 16
+        }
         let random = new Set()
         do {
-            let num = Math.round(Math.random() * 114) + 1
+            let num = Math.round(Math.random() * 113) + 1
             random.add(num)
         } while (random.size < count)
         return Array.from(random)
     }
+
+    // create the breakable walls
+    createGates() {
+        let Ids = this.generateRandomIds()
+        document.getElementById(`${Ids[Ids.length / 2]}`).classList.add('door')
+     
+        
+        Ids.forEach(id=>{
+            console.log(id);
+        
+            let brick = document.getElementById(`${id}`)
+            brick.classList.add('gate')
+        })
+
+
+    }
+
 }
