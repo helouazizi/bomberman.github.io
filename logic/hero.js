@@ -7,5 +7,6 @@ class Hero extends Feild {
         this.y=0
     }
     
+    
 
 }
