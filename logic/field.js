@@ -8,6 +8,7 @@ class Field {
         this.width = width
         this.height = height
         this.container = null
+        this.battleField= null
         this.stage = 1
     }
     // Create the battlefield:
@@ -37,10 +38,10 @@ class Field {
         board.appendChild(fragment)
         this.container.appendChild(board)
 
-        let battleField = document.createElement("div")
-        battleField.setAttribute("id", "battleField")
-        battleField.style.width = `${this.width}vw`
-        battleField.style.height = `${this.height}vh`
+        this.battleField = document.createElement("div")
+        this.battleField.setAttribute("id", "battleField")
+        this.battleField.style.width = `${this.width}vw`
+        this.battleField.style.height = `${this.height}vh`
 
         for (let y = 1; y <= 13; y++) {
             let wall = document.createElement("div")
@@ -66,9 +67,9 @@ class Field {
 
                 }
             }
-            battleField.appendChild(wall)
+            this.battleField.appendChild(wall)
         }
-        this.container.appendChild(battleField)
+        this.container.appendChild(this.battleField)
         this.createGates()
     }
 

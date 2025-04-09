@@ -3,4 +3,4 @@ import { Hero } from './hero.js'
 let feild = new Field(50, 60)
 feild.CreateBattleField()
 let hero = new Hero()
-hero.Create()
+hero.createHero()
