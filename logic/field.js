@@ -50,7 +50,6 @@ class Field {
                 this.#count++
                 if (y === 1 || y === 13 || x == 1 || x == 15) {
                     brick.classList.add("solid")
-
                 } else {
                     if (y % 2 !== 0 && x % 2 !== 0) {
                         brick.classList.add("solid")
