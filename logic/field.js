@@ -3,10 +3,12 @@ export { Field }
 // Create a field to set the battle field of 
 // our game and the track the progress of the game:
 class Field {
+    #count = 1
     constructor(width, height) {
         this.width = width
         this.height = height
     }
+
 
     Create() {
         let container = document.createElement("div")
@@ -33,29 +35,38 @@ class Field {
         battleField.setAttribute("id", "battleField")
         battleField.style.width = `${this.width}vw`
         battleField.style.height = `${this.height}vh`
-
-        let bricksFragments = document.createDocumentFragment()
-        let count = 1
-        for (let x = 1; x <= 16; x++) {
-            for (let y = 1; y <= 13; y++) {
+        for (let y = 1; y <= 13; y++) {
+            let wall = document.createElement("div")
+            wall.setAttribute("class", "wall")
+            wall.setAttribute("id", `wall-${y}`)
+            wall.style.width = `100%`
+            wall.style.height = `${this.height / 13}vh`
+            for (let x = 1; x <= 15; x++) {
                 let brick = document.createElement("div")
-                brick.setAttribute("id", count)
-                brick.style.width = `${this.width / 16}vw`
-                brick.style.height = `${this.height / 13}vh`
+                brick.setAttribute("class", "brick")
+                brick.setAttribute("id", `${this.#count}`)
+                brick.style.width = `${this.width / 15}vw`
+                brick.style.height = `100%`
+                wall.appendChild(brick)
+                this.#count++
+                if (y === 1 || y === 13 || x == 1 || x == 15) {
+                    brick.classList.add("solid")
 
-                if (count <= 16 || count > 192 || count % 16 == 0 || count % 16 == 1) {
-                    brick.setAttribute("class", "brick")
-                } else if ( y %2 === 0 && count % 2 !== 0) {
-                    brick.setAttribute("class", "brick")
                 } else {
-                    brick.setAttribute("class", "path")
+                    if(y %2!==0&& x%2!==0 ){
+                        brick.classList.add("solid")
+                    }
+                    brick.classList.add("gate")
                 }
-                count++
-                bricksFragments.appendChild(brick)
+
+
             }
+            battleField.appendChild(wall)
+
         }
-        battleField.appendChild(bricksFragments)
         container.appendChild(battleField)
         document.body.appendChild(container)
+
+
     }
 }

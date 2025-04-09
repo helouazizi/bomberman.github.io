@@ -18,13 +18,19 @@ body{
    flex-direction: column;
 }
 
-#battleField{
-    display: flex;
-    flex-direction:row ;
-    flex-wrap: wrap;
-}
 
-.brick{
+
+.wall{
+   display: flex;
+   flex-direction: row;
+  
+
+}
+.solid{
+    border: black solid 1px;
+
+   
+}
+/* .path{
     border: black solid 1px
-}
-
+} */
