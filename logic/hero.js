@@ -15,5 +15,5 @@ class Hero {
     }
 
     // Get the position of each element within
-    getPosition = (element) => element.getBoundingClientRect()
+  
 }
