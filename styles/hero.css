@@ -3,4 +3,5 @@
     height: 100%;
     background-color: rgb(255, 0, 0);
     border: black solid 1px;
+    position: absolute;
 }

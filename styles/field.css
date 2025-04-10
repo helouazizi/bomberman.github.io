@@ -17,10 +17,6 @@ body{
    flex-direction: column;
 }
 
-#battleField{
-    position: relative;
-}
-
 .wall{
    display: flex;
    flex-direction: row;
