@@ -35,11 +35,39 @@ class Hero {
                 case "ArrowLeft":
                     this.x--
             }
-          
-            console.log(this.x);
-            console.log(this.y);
+            console.log(this.getWallId() ,"wallid");
+            
             this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`
         })
+    }
+    // get the wall id:
+    getWallId(){
+        let walls=document.querySelectorAll(".wall")
+        let heroPosition = this.getPosition(this.hero)
+        let id = 0
+        walls.forEach(wall => {
+            let wallPosition = this.getPosition(wall)
+          
+        
+            
+            if (wallPosition.top <= heroPosition.top && wallPosition.bottom >= heroPosition.bottom){
+                id = wall.getAttribute("id")
+            }
+
+            
+            
+        });
+        return id
+
+    }
+    // create a checker  function to move the hero in left and right derictions:
+    canMoveRight(id="wall-3"){
+        let wall = document.getElementById(id)
+        let bricks=wall.getElementsByClassName("solid")
+        console.log(bricks);
+        
+
+        
     }
     getPosition = (element) => element.getBoundingClientRect()
 }

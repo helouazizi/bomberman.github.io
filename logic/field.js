@@ -111,7 +111,7 @@ class Field {
         Ids.forEach(id => {
             let brick = document.getElementById(`${id}`)
     
-            brick.classList.add('gate')
+            brick.classList.add("solid",'gate')
         })
 
 
