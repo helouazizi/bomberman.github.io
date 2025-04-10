@@ -8,7 +8,7 @@ class Field {
         this.width = width
         this.height = height
         this.container = null
-        this.battleField= null
+        this.battleField = null
         this.stage = 1
     }
     // Create the battlefield:
@@ -52,15 +52,15 @@ class Field {
             for (let x = 1; x <= 15; x++) {
                 let brick = document.createElement("div")
                 brick.setAttribute("class", "brick")
-               
+
                 brick.style.width = `${this.width / 15}vw`
                 brick.style.height = `100%`
                 wall.appendChild(brick)
-                
-                if (y === 1 || y === 13 || x == 1 || x == 15|| (y % 2 !== 0 && x % 2 !== 0)) {
+
+                if (y === 1 || y === 13 || x == 1 || x == 15 || (y % 2 !== 0 && x % 2 !== 0)) {
                     brick.classList.add("solid")
                 } else {
-                  
+
                     brick.classList.add("path")
                     brick.setAttribute("id", `${this.#count}`)
                     this.#count++
@@ -106,16 +106,17 @@ class Field {
     createGates() {
         let Ids = this.generateRandomIds()
         document.getElementById(`${Ids[Ids.length / 2]}`).classList.add('door')
-     
-        
-        Ids.forEach(id=>{
-            console.log(id);
-        
+
+
+        Ids.forEach(id => {
             let brick = document.getElementById(`${id}`)
+    
             brick.classList.add('gate')
         })
 
 
     }
 
+    // Get the position of each element within
+    getPosition = (element) => element.getBoundingClientRect()
 }

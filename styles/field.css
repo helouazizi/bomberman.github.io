@@ -16,18 +16,20 @@ body{
     display: flex;
    flex-direction: column;
 }
+
 #battleField{
     position: relative;
-
 }
 
 .wall{
    display: flex;
    flex-direction: row;
 }
+
 .solid{
     border: black solid 1px;
 }
+
 .gate{
     background-color: green;
 }

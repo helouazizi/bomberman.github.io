@@ -1,18 +1,25 @@
 import { Field } from './field.js'
 export { Hero }
-class Hero extends Field {
-    constructor() {
-        super(battleField)
-        this.x = 0
-        this.y = 0
-        this.battleField = battleField
-    }
+class Hero {
+
     createHero() {
+        let battleField = document.getElementById("")
         let hero = document.createElement("div")
         hero.setAttribute("id", "hero")
-        hero.style.width = `${parseInt(this.battleField.style.width) / 15}vw`
-        hero.style.height = `${parseInt(this.battleField.style.height) / 13}vh`
-        this.battleField.appendChild(hero)
+        
+        let first = document.getElementById("1")
+        console.log(first);
+
+        let position = this.getPosition(first)
+        console.log(position);
+        console.log(hero.getBoundingClientRect());
+
+
+        hero.style.left = position.left + "px";
+        hero.style.top = position.top + "px";
+        hero.style.width = position.width + "px";
+        hero.style.height = position.height + "px";
+        document.body.appendChild(hero)
     }
 
     // Get the position of each element within
