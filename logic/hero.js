@@ -18,24 +18,38 @@ class Hero {
     }
     // create a function  to handle the movement of the hero:
     moveHero() {
+    
+        let Positions = this.Positions()
+     
+        
         document.addEventListener("keydown", (e) => {
             console.log(e.key);
         
 
             switch (e.key) {
                 case "ArrowDown":
-                    this.y++
+                    if(this.moverChecker(Positions,2)){
+                        this.y++
+                    }
+         
                     break
                 case "ArrowUp":
-                    this.y--
+                    if(this.moverChecker(Positions,1)){
+                        this.y--
+
+                    }
+                    
+             
+                       
+                
                     break
+
                 case "ArrowRight":
                     this.x++
                     break
                 case "ArrowLeft":
                     this.x--
             }
-            console.log(this.getWallId() ,"wallid");
             
             this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`
         })
@@ -69,5 +83,66 @@ class Hero {
 
         
     }
+    // another aproch
+    Positions(){
+        let battleField = document.getElementById("battleField")
+        let walls = battleField.querySelectorAll(".solid")
+   
+        let Positions =[]
+         walls.forEach((wall)=>{
+            let position = this.getPosition(wall)
+            Positions.push(position)
+          
+        })
+        return Positions
+        
+        
+        
+        
+    }
+    moverChecker(Positions=[],deriction=0){
+        let heroPosition= this.getPosition(this.hero)
+        console.log(heroPosition);
+        let bool = true
+        
+        Positions.forEach(pos=>{
+           
+            if (deriction ===1 &&( pos.left<= heroPosition.left && pos.right>= heroPosition.right)&& heroPosition.top <= pos.bottom&& heroPosition.bottom >= pos.top){
+                bool = false
+            } else if(deriction == 2 && (pos.left<= heroPosition.left && pos.right>= heroPosition.right)&& heroPosition.bottom >= pos.top&& heroPosition.top <= pos.bottom){
+                bool = false
+            }
+
+        })
+        return bool
+        
+        
+
+
+    }
     getPosition = (element) => element.getBoundingClientRect()
 }
+//bottom
+// : 
+// 230.015625
+// height
+// : 
+// 41.625
+// left
+// : 
+// 257.5
+// right
+// : 
+// 291.828125
+// top
+// : 
+// 188.390625
+// width
+// : 
+// 34.328125
+// x
+// : 
+// 257.5
+// y
+// : 
+// 188.39062

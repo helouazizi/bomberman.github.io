@@ -5,6 +5,6 @@ feild.CreateBattleField()
 let hero = new Hero()
 hero.createHero()
 hero.moveHero()
-hero.canMoveRight()
+
 
  
