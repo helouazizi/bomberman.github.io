@@ -81,14 +81,14 @@ class Hero {
 
         Positions.forEach(pos => {
 
-            if (deriction === 1 && (pos.left <= heroPosition.left && pos.right >= heroPosition.right) && heroPosition.top <= pos.bottom && heroPosition.bottom >= pos.top) {
+            if (deriction === 1 && (pos.left <= heroPosition.left && pos.right >= heroPosition.right) && heroPosition.top -1<= pos.bottom && heroPosition.bottom >= pos.top) {
                 bool = false
-            } else if (deriction == 2 && (pos.left <= heroPosition.left && pos.right >= heroPosition.right) && heroPosition.bottom >= pos.top && heroPosition.top <= pos.bottom) {
+            } else if (deriction == 2 && (pos.left <= heroPosition.left && pos.right >= heroPosition.right) && heroPosition.bottom+1 >= pos.top && heroPosition.top <= pos.bottom) {
                 bool = false
-            } else if (deriction == 3 && (pos.top <= heroPosition.top && pos.bottom >= heroPosition.bottom) && heroPosition.left <= pos.right && heroPosition.right >= pos.left) {
+            } else if (deriction == 3 && (pos.top <= heroPosition.top && pos.bottom >= heroPosition.bottom) && heroPosition.left +1<= pos.right && heroPosition.right >= pos.left) {
                 bool = false
 
-            } else if (deriction == 4 && (pos.top <= heroPosition.top && pos.bottom >= heroPosition.bottom) && heroPosition.right >= pos.left && heroPosition.left <= pos.right) {
+            } else if (deriction == 4 && (pos.top <= heroPosition.top && pos.bottom >= heroPosition.bottom) && heroPosition.right -1>= pos.left && heroPosition.left <= pos.right) {
                 bool = false
                 console.log(2);
                 
