@@ -103,27 +103,3 @@ class Hero {
     }
     getPosition = (element) => element.getBoundingClientRect()
 }
-//bottom
-// : 
-// 230.015625
-// height
-// : 
-// 41.625
-// left
-// : 
-// 257.5
-// right
-// : 
-// 291.828125
-// top
-// : 
-// 188.390625
-// width
-// : 
-// 34.328125
-// x
-// : 
-// 257.5
-// y
-// : 
-// 188.39062
