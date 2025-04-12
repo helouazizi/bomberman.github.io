@@ -23,11 +23,14 @@ class Hero {
             console.log(e.key);
             switch (e.key) {
                 case "ArrowDown":
-                    if (this.canMoveVertically()) {
+                    console.log(this.getPosition(this.hero), "hero!");
+                
+                    if (this.canMoveVertically("down")) {
                         this.y++
                     }
                     break
                 case "ArrowUp":
+                console.log(this.getPosition(this.hero), "hero!");
                 
                     if (this.canMoveVertically("up")) {
                         this.y--
@@ -93,11 +96,11 @@ class Hero {
         let position = this.getPosition(this.hero)
         elements.forEach(element => {
             if (direction === "up") {
-                if (!(position.top < element.bottom)) {
+                if (!(position.top > element.bottom)) {
                     can = false
                 }
             } else {
-                if (!(position.bottom > element.top) ) {
+                if (!(position.bottom < element.top) ) {
                     can = false
                 }
             }
