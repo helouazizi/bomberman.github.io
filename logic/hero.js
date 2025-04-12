@@ -22,7 +22,7 @@ class Hero {
             console.log(e.key);
             switch (e.key) {
                 case "ArrowDown":
-                    if(this.canMoveHorizontally()) {
+                    if(this.canMoveVertically()) {
                         this.y++
                     }
                     
@@ -30,7 +30,7 @@ class Hero {
 
                     break
                 case "ArrowUp":
-                    if(this.canMoveHorizontally("up")) {
+                    if(this.canMoveVertically("up")) {
                         this.y--
                     }
                     
