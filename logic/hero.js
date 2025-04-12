@@ -28,6 +28,7 @@ class Hero {
                     }
                     break
                 case "ArrowUp":
+                
                     if (this.canMoveVertically("up")) {
                         this.y--
                     }
@@ -92,50 +93,31 @@ class Hero {
         let position = this.getPosition(this.hero)
         elements.forEach(element => {
             if (direction === "up") {
-                if (!(position.top +2 < element.bottom) ) {
+                if (!(position.top > element.bottom) ) {
                     can = false
                 }
             } else {
-                if (!(position.bottom -2  > element.top) ) {
+                if (!(position.bottom   < element.top) ) {
                     can = false
                 }
             }
         })
         return can
-        // let can = true
-        // let elements = this.getHorizontalBricks(direction)
-        // let position = this.getPosition(this.hero)
-        // elements.forEach(element => {
-        //     if (direction === "right") {
-        //         if (!(position.right + 2 < element.left)) {
-        //             can = false
-        //         }
-        //     } else {
-        //         if( !(position.left - 2 > element.right)) {
-        //             can = false
-        //         }
-        //     }
-        // })
-        // return can
-
     }
 
     // Get all the bricks in the vertical range:
-    getVerticalBricks() {
+    getVerticalBricks(direction = "down") {
         let bricks = document.querySelectorAll(".solid")
         let position = this.getPosition(this.hero)
         let elements = []
         bricks.forEach(brick => {
             let hinder = this.getPosition(brick)
-            if (position.left > hinder.left - position.width && position.right < hinder.right + position.width) {
-                if (direction === "up" && position.bottom  > hinder.top) {
-                    elements.push(hinder)
-                } else if (direction === "down" && position.top < hinder.buttom) {
-                    elements.push(hinder)
-                }
+            if (position.right < hinder.right + position.width && position.left > hinder.left - position.width) {
+                elements.push(hinder)
             }
         })
-        
+        console.log(elements);
+     
 
         return elements
     }
