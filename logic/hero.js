@@ -93,11 +93,11 @@ class Hero {
         let position = this.getPosition(this.hero)
         elements.forEach(element => {
             if (direction === "up") {
-                if (!(position.top > element.bottom) ) {
+                if (!(position.top < element.bottom)) {
                     can = false
                 }
             } else {
-                if (!(position.bottom   < element.top) ) {
+                if (!(position.bottom > element.top) ) {
                     can = false
                 }
             }
@@ -113,10 +113,17 @@ class Hero {
         bricks.forEach(brick => {
             let hinder = this.getPosition(brick)
             if (position.right < hinder.right + position.width && position.left > hinder.left - position.width) {
-                elements.push(hinder)
+                if (direction=== "down" && position.bottom < hinder.top){
+                    elements.push(hinder)
+                }else if (direction === "up" && position.top > hinder.bottom ) {
+                    elements.push(hinder)
+
+                }
             }
+
         })
-        console.log(elements);
+     console.log(elements);
+     
      
 
         return elements
