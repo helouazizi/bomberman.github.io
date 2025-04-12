@@ -22,13 +22,20 @@ class Hero {
             console.log(e.key);
             switch (e.key) {
                 case "ArrowDown":
-                    this.y++
+                    if(this.canMoveHorizontally()) {
+                        this.y++
+                    }
+                    
                     
 
                     break
                 case "ArrowUp":
+                    if(this.canMoveHorizontally("up")) {
+                        this.y--
+                    }
+                    
 
-                    this.y--
+                    
 
                     break
                 case "ArrowRight":
@@ -82,17 +89,39 @@ class Hero {
         return elements
     }
     // check the vertical movement:
-    canMoveVertically() {
+    canMoveVertically(direction = "down") {
+        let can = true
+        let elements = this.getHorizontalBricks()
+        let position = this.getPosition(this.hero)
+        elements.forEach(element =>{
+            if (direction === "up") {
+                if(!(position.top <=  element.bottom ) && !(position.bottom+2>= element.top )) {
+                    can = false 
+                }
+            } else {
+                if(!(position.botto>= element.top) && !(position.top-2 <= element.bottom) ) {
+                    can = false
+                }  
+            }
+        })
+        return can
 
     }
 
     // Get all the bricks in the vertical range:
     getVerticalBricks() {
         let bricks = document.querySelectorAll(".solid")
+        let position = this.getPosition(this.hero)
+        let elements = []
         bricks.forEach(brick => {
-            console.log(this.getPosition(brick));
-            console.log(this.getPosition(this.hero));
+            let hinder = this.getPosition(brick)
+            if (position.left > hinder.left - position.width && position.right < hinder.right + position.width) {
+                elements.push(hinder)
+            }
         })
+        
+
+        return elements
     }
 
 
