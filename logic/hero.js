@@ -96,7 +96,7 @@ class Hero {
         let position = this.getPosition(this.hero)
         elements.forEach(element => {
             if (direction === "up") {
-                if (!(position.top > element.bottom)) {
+                if () {
                     can = false
                 }
             } else {
