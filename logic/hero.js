@@ -3,8 +3,9 @@ class Hero {
 
     constructor() {
         this.hero = null
-        this.x = 0
-        this.y = 0
+        this.x = 2
+        this.y = 2
+    
     }
 
     createHero() {
@@ -73,34 +74,49 @@ class Hero {
         bricks.forEach(brick => {
             let hinder = this.getPosition(brick)
             if (position.top > hinder.top - position.height && position.bottom < hinder.bottom + position.height) {
-                if (direction === "left" && position.left >= hinder.right) {
+                if (direction === "left" && position.left > hinder.right) {
                     elements.push(hinder)
-                } else if (direction === "right" && position.right < hinder.right) {
+                } else if (direction === "right" && position.right < hinder.left) {
                     elements.push(hinder)
                 }
             }
         })
-        console.log(elements, "elements");
+        
 
         return elements
     }
     // check the vertical movement:
     canMoveVertically(direction = "down") {
         let can = true
-        let elements = this.getHorizontalBricks()
+        let elements = this.getVerticalBricks(direction)
         let position = this.getPosition(this.hero)
         elements.forEach(element => {
             if (direction === "up") {
-                if (!(position.top <= element.bottom) && !(position.bottom + 2 >= element.top)) {
+                if (!(position.top +2 < element.bottom) ) {
                     can = false
                 }
             } else {
-                if (!(position.botto >= element.top) && !(position.top - 2 <= element.bottom)) {
+                if (!(position.bottom -2  > element.top) ) {
                     can = false
                 }
             }
         })
         return can
+        // let can = true
+        // let elements = this.getHorizontalBricks(direction)
+        // let position = this.getPosition(this.hero)
+        // elements.forEach(element => {
+        //     if (direction === "right") {
+        //         if (!(position.right + 2 < element.left)) {
+        //             can = false
+        //         }
+        //     } else {
+        //         if( !(position.left - 2 > element.right)) {
+        //             can = false
+        //         }
+        //     }
+        // })
+        // return can
 
     }
 
@@ -112,10 +128,14 @@ class Hero {
         bricks.forEach(brick => {
             let hinder = this.getPosition(brick)
             if (position.left > hinder.left - position.width && position.right < hinder.right + position.width) {
-                elements.push(hinder)
+                if (direction === "up" && position.bottom  > hinder.top) {
+                    elements.push(hinder)
+                } else if (direction === "down" && position.top < hinder.buttom) {
+                    elements.push(hinder)
+                }
             }
         })
-
+        
 
         return elements
     }
