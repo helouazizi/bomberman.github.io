@@ -29,12 +29,6 @@ class Hero {
 
 
             switch (e.key) {
-                case "ArrowDown":
-                    if (this.moverChecker(Positions, 2)) {
-                        this.y++
-                    }
-
-                    break
                 case "ArrowUp":
                     if (this.moverChecker(Positions, 1)) {
                         this.y--
@@ -42,6 +36,13 @@ class Hero {
                     }
                     break
 
+                case "ArrowDown":
+                    if (this.moverChecker(Positions, 2)) {
+                        this.y++
+                    }
+
+                    break
+              
                 case "ArrowRight":
                     if (this.moverChecker(Positions, 3)) {
                         this.x++
