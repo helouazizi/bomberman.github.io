@@ -84,14 +84,14 @@ class Hero {
 
         Positions.forEach(pos => {
 
-            if (deriction === 1 && (pos.left -this.hero.offsetWidth <= heroPosition.left && pos.right +this.hero.offsetWidth >= heroPosition.right) && heroPosition.top <= pos.bottom && heroPosition.bottom >= pos.top) {
+            if (deriction === 1 && (pos.left -this.hero.offsetWidth <= heroPosition.left && pos.right +this.hero.offsetWidth >= heroPosition.right) && heroPosition.top -2<= pos.bottom && heroPosition.bottom >= pos.top) {
                 bool = false
-            } else if (deriction == 2 && (pos.left -this.hero.offsetWidth <= heroPosition.left && pos.right +this.hero.offsetWidth >= heroPosition.right) && heroPosition.bottom >= pos.top && heroPosition.top <= pos.bottom) {
+            } else if (deriction == 2 && (pos.left -this.hero.offsetWidth <= heroPosition.left && pos.right +this.hero.offsetWidth >= heroPosition.right) && heroPosition.bottom +2>= pos.top && heroPosition.top <= pos.bottom) {
                 bool = false
-            } else if (deriction == 3 && (pos.top- this.hero.offsetHeight<= heroPosition.top && pos.bottom+ this.hero.offsetHeight >= heroPosition.bottom) && heroPosition.left +1<= pos.right && heroPosition.right >= pos.left) {
+            } else if (deriction == 3 && (pos.top- this.hero.offsetHeight<= heroPosition.top && pos.bottom+ this.hero.offsetHeight >= heroPosition.bottom) && heroPosition.left+2 <= pos.right && heroPosition.right >= pos.left) {
                 bool = false
 
-            } else if (deriction == 4 && (pos.top- this.hero.offsetHeight<= heroPosition.top && pos.bottom+ this.hero.offsetHeight >= heroPosition.bottom)&& heroPosition.right -1>= pos.left && heroPosition.left <= pos.right) {
+            } else if (deriction == 4 && (pos.top- this.hero.offsetHeight<= heroPosition.top && pos.bottom+ this.hero.offsetHeight >= heroPosition.bottom)&& heroPosition.right  -2 >= pos.left && heroPosition.left <= pos.right) {
                 bool = false
                 console.log(2);
                 
