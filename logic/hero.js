@@ -5,8 +5,6 @@ class Hero {
         this.hero = null
         this.x = 0
         this.y = 0
-        this.heroHeight = null
-        this.heroWidth = null
     }
 
     createHero() {
@@ -20,90 +18,84 @@ class Hero {
     }
     // create a function  to handle the movement of the hero:
     moveHero() {
-
-        let Positions = this.Positions()
-
-
         document.addEventListener("keydown", (e) => {
             console.log(e.key);
-
-
             switch (e.key) {
-                case "ArrowUp":
-                    if (this.moverChecker(Positions, 1)) {
-                        this.y--
-
-                    }
-                    break
-
                 case "ArrowDown":
-                    if (this.moverChecker(Positions, 2)) {
-                        this.y++
-                    }
+                    this.y++
+                    
 
                     break
-              
+                case "ArrowUp":
+
+                    this.y--
+
+                    break
                 case "ArrowRight":
-                    if (this.moverChecker(Positions, 3)) {
+                    if(this.canMoveHorizontally("right")) {
                         this.x++
-                        
                     }
                     break
                 case "ArrowLeft":
-                    if (this.moverChecker(Positions, 4)) {
+                    if(this.canMoveHorizontally()) {
                         this.x--
                     }
-                    break
             }
 
             this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`
         })
-    }
-
-    // another aproch
-    Positions() {
-        let battleField = document.getElementById("battleField")
-        let walls = battleField.querySelectorAll(".solid")
-
-        let Positions = []
-        walls.forEach((wall) => {
-            let position = this.getPosition(wall)
-            Positions.push(position)
-
-        })
-        return Positions
-
-
-
 
     }
-    moverChecker(Positions = [], deriction = 0) {
-        
-        let heroPosition = this.getPosition(this.hero)
-        console.log(heroPosition);
-        let bool = true
 
-        Positions.forEach(pos => {
-
-            if (deriction === 1 && (pos.left -this.hero.offsetWidth <= heroPosition.left && pos.right +this.hero.offsetWidth >= heroPosition.right) && heroPosition.top -2<= pos.bottom && heroPosition.bottom >= pos.top) {
-                bool = false
-            } else if (deriction == 2 && (pos.left -this.hero.offsetWidth <= heroPosition.left && pos.right +this.hero.offsetWidth >= heroPosition.right) && heroPosition.bottom +2>= pos.top && heroPosition.top <= pos.bottom) {
-                bool = false
-            } else if (deriction == 3 && (pos.top- this.hero.offsetHeight<= heroPosition.top && pos.bottom+ this.hero.offsetHeight >= heroPosition.bottom) && heroPosition.left+2 <= pos.right && heroPosition.right >= pos.left) {
-                bool = false
-
-            } else if (deriction == 4 && (pos.top- this.hero.offsetHeight<= heroPosition.top && pos.bottom+ this.hero.offsetHeight >= heroPosition.bottom)&& heroPosition.right  -2 >= pos.left && heroPosition.left <= pos.right) {
-                bool = false
-                console.log(2);
-                
+    // check the horizontal movement:
+    canMoveHorizontally(direction = "left") {
+        let can = true
+        let elements = this.getHorizontalBricks()
+        let position = this.getPosition(this.hero)
+        elements.forEach(element =>{
+            if (direction === "right") {
+                if(!(position.right + 2 <=  element.left ) && !(position.left-2 >= element.right )) {
+                    can = false 
+                }
+            } else {
+                if(!(position.left -2 >= element.right) && !(position.right+2 <= element.left) ) {
+                    can = false
+                }  
             }
-
         })
-        return bool
+        return can
+    }
 
+    // Get all the bricks in the horizontal range:
+    getHorizontalBricks() {
+        let bricks = document.querySelectorAll(".solid")
+        let position = this.getPosition(this.hero)
+        let elements = []
+        bricks.forEach(brick => {
+            let hinder = this.getPosition(brick)
+            if (position.top > hinder.top - position.height && position.bottom < hinder.bottom + position.height) {
+                elements.push(hinder)
+            }
+        })
+        console.log(elements, "elements");
 
-
+        return elements
+    }
+    // check the vertical movement:
+    canMoveVertically() {
 
     }
+
+    // Get all the bricks in the vertical range:
+    getVerticalBricks() {
+        let bricks = document.querySelectorAll(".solid")
+        bricks.forEach(brick => {
+            console.log(this.getPosition(brick));
+            console.log(this.getPosition(this.hero));
+        })
+    }
+
+
+
     getPosition = (element) => element.getBoundingClientRect()
 }

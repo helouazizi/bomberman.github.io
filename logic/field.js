@@ -81,7 +81,6 @@ class Field {
             case 2:
                 count = 20
                 break
-
             case 3:
                 count = 22
                 break
@@ -109,8 +108,7 @@ class Field {
 
 
         Ids.forEach(id => {
-            let brick = document.getElementById(`${id}`)
-    
+            let brick = document.getElementById(`${id}`) 
             brick.classList.add("solid",'gate')
         })
 
