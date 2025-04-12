@@ -8,9 +8,10 @@ class Bomb extends Hero {
 
     // Function to create a bomb (Throw it and run):
     create() {
-        this.container = document.createElement("div")
-        this.container.setAttribute("id", "bomb")
+        let container = document.createElement("div")
+        container.setAttribute("id", "bomb")
         this.hero.appendChild(this.container)
+
     }
 
     // Create an explosion:
