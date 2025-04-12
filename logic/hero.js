@@ -5,7 +5,6 @@ class Hero {
         this.hero = null
         this.x = 2
         this.y = 2
-    
     }
 
     createHero() {
@@ -15,6 +14,7 @@ class Hero {
         first.style.position = "relative"
         first.style.overflow = "visible";
         first.appendChild(this.hero)
+        this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`
 
     }
     // create a function  to handle the movement of the hero:
@@ -23,15 +23,12 @@ class Hero {
             console.log(e.key);
             switch (e.key) {
                 case "ArrowDown":
-                    console.log(this.getPosition(this.hero), "hero!");
-                
                     if (this.canMoveVertically("down")) {
                         this.y++
                     }
                     break
                 case "ArrowUp":
-                console.log(this.getPosition(this.hero), "hero!");
-                
+                     (this.getPosition(this.hero), "hero!");
                     if (this.canMoveVertically("up")) {
                         this.y--
                     }
@@ -62,7 +59,7 @@ class Hero {
                     can = false
                 }
             } else {
-                if( !(position.left - 2 > element.right)) {
+                if (!(position.left - 2 > element.right)) {
                     can = false
                 }
             }
@@ -85,8 +82,6 @@ class Hero {
                 }
             }
         })
-        
-
         return elements
     }
     // check the vertical movement:
@@ -96,11 +91,11 @@ class Hero {
         let position = this.getPosition(this.hero)
         elements.forEach(element => {
             if (direction === "up") {
-                if (position.top -2 <  element.bottom) {
+                if (position.top - 2 < element.bottom) {
                     can = false
                 }
             } else {
-                if (position.bottom + 2 >  element.top) {
+                if (position.bottom + 2 > element.top) {
                     can = false
                 }
             }
@@ -116,23 +111,15 @@ class Hero {
         bricks.forEach(brick => {
             let hinder = this.getPosition(brick)
             if (position.right < hinder.right + position.width && position.left > hinder.left - position.width) {
-                if (direction=== "down" && position.bottom < hinder.top){
+                if (direction === "down" && position.bottom < hinder.top) {
                     elements.push(hinder)
-                }else if (direction === "up" && position.top > hinder.bottom ) {
+                } else if (direction === "up" && position.top > hinder.bottom) {
                     elements.push(hinder)
-
                 }
             }
 
         })
-     console.log(elements);
-     
-     
-
         return elements
     }
-
-
-
     getPosition = (element) => element.getBoundingClientRect()
 }
