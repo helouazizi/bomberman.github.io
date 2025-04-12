@@ -22,33 +22,25 @@ class Hero {
             console.log(e.key);
             switch (e.key) {
                 case "ArrowDown":
-                    if(this.canMoveVertically()) {
+                    if (this.canMoveVertically()) {
                         this.y++
                     }
-                    
-                    
-
                     break
                 case "ArrowUp":
-                    if(this.canMoveVertically("up")) {
+                    if (this.canMoveVertically("up")) {
                         this.y--
                     }
-                    
-
-                    
-
                     break
                 case "ArrowRight":
-                    if(this.canMoveHorizontally("right")) {
+                    if (this.canMoveHorizontally("right")) {
                         this.x++
                     }
                     break
                 case "ArrowLeft":
-                    if(this.canMoveHorizontally()) {
+                    if (this.canMoveHorizontally()) {
                         this.x--
                     }
             }
-
             this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`
         })
 
@@ -57,31 +49,35 @@ class Hero {
     // check the horizontal movement:
     canMoveHorizontally(direction = "left") {
         let can = true
-        let elements = this.getHorizontalBricks()
+        let elements = this.getHorizontalBricks(direction)
         let position = this.getPosition(this.hero)
-        elements.forEach(element =>{
+        elements.forEach(element => {
             if (direction === "right") {
-                if(!(position.right + 2 <=  element.left ) && !(position.left-2 >= element.right )) {
-                    can = false 
+                if (!(position.right + 2 < element.left)) {
+                    can = false
                 }
             } else {
-                if(!(position.left -2 >= element.right) && !(position.right+2 <= element.left) ) {
+                if( !(position.left - 2 > element.right)) {
                     can = false
-                }  
+                }
             }
         })
         return can
     }
 
     // Get all the bricks in the horizontal range:
-    getHorizontalBricks() {
+    getHorizontalBricks(direction = "left") {
         let bricks = document.querySelectorAll(".solid")
         let position = this.getPosition(this.hero)
         let elements = []
         bricks.forEach(brick => {
             let hinder = this.getPosition(brick)
             if (position.top > hinder.top - position.height && position.bottom < hinder.bottom + position.height) {
-                elements.push(hinder)
+                if (direction === "left" && position.left >= hinder.right) {
+                    elements.push(hinder)
+                } else if (direction === "right" && position.right < hinder.right) {
+                    elements.push(hinder)
+                }
             }
         })
         console.log(elements, "elements");
@@ -93,15 +89,15 @@ class Hero {
         let can = true
         let elements = this.getHorizontalBricks()
         let position = this.getPosition(this.hero)
-        elements.forEach(element =>{
+        elements.forEach(element => {
             if (direction === "up") {
-                if(!(position.top <=  element.bottom ) && !(position.bottom+2>= element.top )) {
-                    can = false 
+                if (!(position.top <= element.bottom) && !(position.bottom + 2 >= element.top)) {
+                    can = false
                 }
             } else {
-                if(!(position.botto>= element.top) && !(position.top-2 <= element.bottom) ) {
+                if (!(position.botto >= element.top) && !(position.top - 2 <= element.bottom)) {
                     can = false
-                }  
+                }
             }
         })
         return can
@@ -119,7 +115,7 @@ class Hero {
                 elements.push(hinder)
             }
         })
-        
+
 
         return elements
     }
