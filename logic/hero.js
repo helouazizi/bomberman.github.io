@@ -1,4 +1,5 @@
 export { Hero }
+import { Bomb } from "./bomb.js";
 class Hero {
 
     constructor() {
@@ -22,6 +23,10 @@ class Hero {
         document.addEventListener("keydown", (e) => {
             console.log(e.key);
             switch (e.key) {
+                case " ":
+                    let axis = this.bringHeroAxis()
+                    let bomb = new Bomb(this.hero, axis.x, axis.y)
+                    bomb.create()
                 case "ArrowDown":
                     if (this.canMoveVertically("down")) {
                         this.y++
@@ -42,6 +47,8 @@ class Hero {
                     if (this.canMoveHorizontally()) {
                         this.x--
                     }
+                 
+             
             }
             this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`
         })
@@ -120,6 +127,15 @@ class Hero {
 
         })
         return elements
+    }
+
+    // gring the center of the hero 
+    bringHeroAxis(){
+        let obj = {}
+        let position = this.getPosition(this.hero)
+        obj.x = position.x+ position.width/2
+        obj.y = position.y + position.height/2
+        return obj
     }
     getPosition = (element) => element.getBoundingClientRect()
 }

@@ -4,9 +4,9 @@ export { Field }
 // our game and the track the progress of the game:
 class Field {
     #count = 1
-    constructor(width, height) {
-        this.width = width
+    constructor(height) {
         this.height = height
+        this.width = (height*15)/13
         this.container = null
         this.battleField = null
         this.stage = 1
@@ -40,7 +40,7 @@ class Field {
 
         this.battleField = document.createElement("div")
         this.battleField.setAttribute("id", "battleField")
-        this.battleField.style.width = `${this.width}vw`
+        this.battleField.style.width = `${this.width}vh`
         this.battleField.style.height = `${this.height}vh`
 
         for (let y = 1; y <= 13; y++) {

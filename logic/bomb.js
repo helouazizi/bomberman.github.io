@@ -1,25 +1,43 @@
 export { Bomb };
-
-class Bomb extends Hero {
-  constructor(hero) {
+class Bomb {
+  constructor(hero, x, y) {
     this.hero = hero;
+    this.x = x;
+    this.y = y;
   }
 
   // Function to create a bomb (Throw it and run):
   create() {
-    let container = document.createElement("div");
-    container.setAttribute("id", "bomb");
-    this.hero.appendChild(this.container);
+    let bomb = document.createElement("div");
+    bomb.setAttribute("id", "bomb");
+    bomb.style.backgroundColor = "blue";
+    bomb.style.width = `100%`;
+    bomb.style.height = `100%`;
+    let location = this.bringbombcontainer();
+    
+    let element = document.getElementById(location)
+    element.append(bomb);
   }
+
   // lets get the boomb locations
-  bringbomblocation() {
-    let heropostions = this.getPosition(this.hero);
+  bringbombcontainer() {
     let elements = document.querySelectorAll(".path");
-    let location 
+    var location;
     elements.forEach((elment) => {
-        let elmentPositions = this.getPosition(elment)
-        if (elmentPositions.bottom >= heropostions.bottom && elmentPositions.right >= heropostions.right &&  )
+      let elmentPositions = this.getPosition(elment);
+      console.log(elment);
+      console.log(elmentPositions);
+      if (
+        this.x > elmentPositions.left &&
+        this.x < elmentPositions.right &&
+        this.y > elmentPositions.top &&
+        this.y < elmentPositions.bottom
+      ) {
+        location = elment.getAttribute("id");
+  
+      }
     });
+    return location;
   }
 
   // Create an explosion:
