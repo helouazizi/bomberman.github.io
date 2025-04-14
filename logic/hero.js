@@ -31,7 +31,7 @@ class Hero {
   moveHero() {
    // var lastCall = 0;
     document.addEventListener("keydown", (e) => {
-      // cane we throtling the space////////////////////////
+      // cane we throtling the space////////////////////////  
       console.log(e.key);
       switch (e.key) {
         case " ":
