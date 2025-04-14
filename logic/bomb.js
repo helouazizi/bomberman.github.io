@@ -33,9 +33,14 @@ class Bomb {
     allnextWalElements.forEach((div) => {
 
       let divPos = this.getPosition(div);
+
+      // console.log(divPos);
+      // console.log("xfd",elementPosition);
+      
+      
       if (
-        parseInt( divPos.left) === parseInt(elementPosition.left) &&
-        parseInt(divPos.right) === parseInt(elementPosition.right)
+        parseInt(Math.round(divPos.left)) === parseInt(Math.round(elementPosition.left)) &&
+        parseInt(Math.round(divPos.right)) === parseInt(Math.round(elementPosition.right))
       ) {
         bottomDiv = div;
       }
@@ -44,8 +49,8 @@ class Bomb {
     allprevWalElements.forEach((div) => {
       let divPos = this.getPosition(div);
       if (
-       parseInt( divPos.left) === parseInt(elementPosition.left) &&
-        parseInt(divPos.right) === parseInt(elementPosition.right)
+        parseInt(Math.round(divPos.left)) === parseInt(Math.round(elementPosition.left)) &&
+        parseInt(Math.round(divPos.right)) === parseInt(Math.round(elementPosition.right))
       ) {
         topDiv = div;
       }
