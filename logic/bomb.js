@@ -19,7 +19,7 @@ class Bomb {
     element.append(bomb);
   }
 
-  // lets get the boomb locations
+  // lets get the boomb locations:
   bringbombcontainer() {
     let elements = document.querySelectorAll(".path");
     var location;
