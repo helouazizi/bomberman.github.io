@@ -17,6 +17,9 @@ class Bomb {
     
     let element = document.getElementById(location)
     element.append(bomb);
+    setTimeout(()=>{
+      element.removeChild(bomb)
+    },2000)
   }
 
   // lets get the boomb locations:
@@ -40,10 +43,6 @@ class Bomb {
     return location;
   }
 
-  // Create an explosion:
-  explode() {
-    setTimeout(() => {}, 500);
-  }
 
   getPosition = (element) => element.getBoundingClientRect();
 }

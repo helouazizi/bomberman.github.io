@@ -1,11 +1,11 @@
 export { Hero };
-export { Hero };
 import { Bomb } from "./bomb.js";
 class Hero {
   constructor() {
     this.hero = null;
     this.x = 2;
     this.y = 2;
+    this.step = 3;
   }
   throttle(fn, limit) {
     let lastCall = 0;
@@ -29,9 +29,12 @@ class Hero {
   }
   // create a function  to handle the movement of the hero:
   moveHero() {
-   // var lastCall = 0;
+    // var lastCall = 0;
+    let called = false;
+    let lastCall = 0;
+    let limit = 2000;
     document.addEventListener("keydown", (e) => {
-      // cane we throtling the space////////////////////////  
+      // cane we throtling the space////////////////////////
       console.log(e.key);
       switch (e.key) {
         case " ":
@@ -46,29 +49,29 @@ class Hero {
           called = true;
 
           if (called && Date.now() - lastCall >= limit) {
-            bomb.create();  //
+            bomb.create(); //
             lastCall = Date.now();
           }
 
         case "ArrowDown":
           if (this.canMoveVertically("down")) {
-            this.y++;
+            this.y += 2;
           }
           break;
         case "ArrowUp":
           this.getPosition(this.hero), "hero!";
           if (this.canMoveVertically("up")) {
-            this.y--;
+            this.y -= 2;
           }
           break;
         case "ArrowRight":
           if (this.canMoveHorizontally("right")) {
-            this.x++;
+            this.x += 2;
           }
           break;
         case "ArrowLeft":
           if (this.canMoveHorizontally()) {
-            this.x--;
+            this.x -= 2;
           }
       }
       this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
@@ -82,11 +85,11 @@ class Hero {
     let position = this.getPosition(this.hero);
     elements.forEach((element) => {
       if (direction === "right") {
-        if (!(position.right + 2 < element.left)) {
+        if (!(position.right + this.step < element.left)) {
           can = false;
         }
       } else {
-        if (!(position.left - 2 > element.right)) {
+        if (!(position.left - this.step > element.right)) {
           can = false;
         }
       }
@@ -100,11 +103,11 @@ class Hero {
     let position = this.getPosition(this.hero);
     elements.forEach((element) => {
       if (direction === "right") {
-        if (!(position.right + 2 < element.left)) {
+        if (!(position.right + this.step < element.left)) {
           can = false;
         }
       } else {
-        if (!(position.left - 2 > element.right)) {
+        if (!(position.left - this.step > element.right)) {
           can = false;
         }
       }
@@ -139,11 +142,11 @@ class Hero {
     let position = this.getPosition(this.hero);
     elements.forEach((element) => {
       if (direction === "up") {
-        if (position.top - 2 < element.bottom) {
+        if (position.top - this.step < element.bottom) {
           can = false;
         }
       } else {
-        if (position.bottom + 2 > element.top) {
+        if (position.bottom + this.step > element.top) {
           can = false;
         }
       }
@@ -177,11 +180,11 @@ class Hero {
     let position = this.getPosition(this.hero);
     elements.forEach((element) => {
       if (direction === "up") {
-        if (position.top - 2 < element.bottom) {
+        if (position.top - this.step < element.bottom) {
           can = false;
         }
       } else {
-        if (position.bottom + 2 > element.top) {
+        if (position.bottom + this.step > element.top) {
           can = false;
         }
       }
