@@ -18,25 +18,44 @@ class Bomb {
     console.log(location);
 
     let element = document.getElementById(location);
-    // let elementPosition = this.getPosition(element)
-    // let rightDev = element.nextElementSibling
-    // let leftDev = element.previousElementSibling
+    let elementPosition = this.getPosition(element);
+    //let topDiv = elementPosition.top
+    let rightDev = element.nextElementSibling;
+    let leftDev = element.previousElementSibling;
+    let topDiv;
+    let bottomDiv;
     let wall = element.parentElement;
-    let wallId = parseInt(wall.getAttribute("id").split("-")[1]);
-    console.log(wallId,"uuu");
-    
-    let nextWall = document.getElementById(`wall-${wallId+1}`);
-    let prevWall = document.getElementById(`wall-${wallId-1}`);
+    let nextWall = wall.nextElementSibling;
+    let prevWall = wall.previousElementSibling;
+    // let loop throuth the walsss to extract the top and bottum divs
+    let allnextWalElements = nextWall.querySelectorAll(".brick");
+    let allprevWalElements = prevWall.querySelectorAll(".brick");
+    allnextWalElements.forEach((div) => {
 
-    // console.log("rihdev",rightDev);
-    // console.log("curent",element);
-    // console.log("leftdev",leftDev);
-    console.log(element.parentElement);
-    console.log(nextWall);
-    console.log(prevWall);
+      let divPos = this.getPosition(div);
+      if (
+        parseInt( divPos.left) === parseInt(elementPosition.left) &&
+        parseInt(divPos.right) === parseInt(elementPosition.right)
+      ) {
+        bottomDiv = div;
+      }
+    });
 
-    // console.log("top",topDiv);
-    // console.log("bottom",bottomDiv);
+    allprevWalElements.forEach((div) => {
+      let divPos = this.getPosition(div);
+      if (
+       parseInt( divPos.left) === parseInt(elementPosition.left) &&
+        parseInt(divPos.right) === parseInt(elementPosition.right)
+      ) {
+        topDiv = div;
+      }
+    });
+
+    console.log("rihdev", rightDev);
+    console.log("curent", element);
+    console.log("leftdev", leftDev);
+    console.log("topdiv", topDiv);
+    console.log("buttomdiv", bottomDiv);
 
     element.append(bomb);
     setTimeout(() => {
