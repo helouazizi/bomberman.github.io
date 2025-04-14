@@ -65,7 +65,7 @@ class Hero {
     });
   }
 
-  // check the horizontal movement:
+  // check the horizontal movement
   canMoveHorizontally(direction = "left") {
     let can = true;
     let elements = this.getHorizontalBricks(direction);
