@@ -42,23 +42,23 @@ class Hero {
 
         case "ArrowDown":
           if (this.canMoveVertically("down")) {
-            this.y+=2;
+            this.y++;
           }
           break;
         case "ArrowUp":
           this.getPosition(this.hero), "hero!";
           if (this.canMoveVertically("up")) {
-            this.y-=2;
+            this.y--;
           }
           break;
         case "ArrowRight":
           if (this.canMoveHorizontally("right")) {
-            this.x+=2;
+            this.x++;
           }
           break;
         case "ArrowLeft":
           if (this.canMoveHorizontally()) {
-            this.x-=2;
+            this.x--;
           }
       }
       this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
