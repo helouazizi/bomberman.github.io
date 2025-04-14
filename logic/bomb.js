@@ -15,11 +15,8 @@ class Bomb {
     bomb.style.width = `100%`;
     bomb.style.height = `100%`;
     let location = this.bringbombcontainer();
+
     let element = document.getElementById(location);
-    this.explodeBomb(element, bomb);
-    element.append(bomb);
-  }
-  explodeBomb(element, bomb) {
     let elementPosition = this.getPosition(element);
 
     let rightDev = element.nextElementSibling;
@@ -32,9 +29,9 @@ class Bomb {
     // let loop throuth the walsss to extract the top and bottum divs
     let allnextWalElements = nextWall.querySelectorAll(".brick");
     let allprevWalElements = prevWall.querySelectorAll(".brick");
-
     allnextWalElements.forEach((div) => {
       let divPos = this.getPosition(div);
+
       if (
         parseInt(Math.round(divPos.left)) ===
           parseInt(Math.round(elementPosition.left)) &&
@@ -56,7 +53,6 @@ class Bomb {
         topDiv = div;
       }
     });
-
     let bombRange = [];
     bombRange.push(element, rightDev, leftDev, bottomDiv, topDiv);
     // console.log("rihdev", rightDev);
@@ -65,6 +61,7 @@ class Bomb {
     // console.log("topdiv", topDiv);
     // console.log("buttomdiv", bottomDiv);
 
+    element.append(bomb);
     setTimeout(() => {
       bombRange.forEach((div) => {
         if (div.classList.contains("gate") || div.classList.contains("path")) {
@@ -73,10 +70,16 @@ class Bomb {
             div.classList.remove("solid");
           }
         }
+        
       });
       element.removeChild(bomb);
-    }, 2000);
+    }, 1900);
   }
+
+  // bring4Divs() {
+
+  // }
+
   // lets get the boomb locations:
   bringbombcontainer() {
     let elements = document.querySelectorAll(".path");
