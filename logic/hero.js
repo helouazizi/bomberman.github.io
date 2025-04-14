@@ -36,7 +36,7 @@ class Hero {
           called = true;
 
           if (called && Date.now() - lastCall >= limit) {
-            bomb.create();
+            bomb.create();  //
             lastCall = Date.now();
           }
 
