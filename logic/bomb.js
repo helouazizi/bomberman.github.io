@@ -5,6 +5,7 @@ class Bomb {
     this.x = x;
     this.y = y;
   }
+  //// jkjk
 
   // Function to create a bomb (Throw it and run):
   create() {
