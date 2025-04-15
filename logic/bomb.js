@@ -54,14 +54,10 @@ class Bomb {
     });
     let bombRange = [];
     bombRange.push(element, rightDev, leftDev, bottomDiv, topDiv);
-    // console.log("rihdev", rightDev);
     console.log("curent", bombRange);
-    // console.log("leftdev", leftDev);
-    // console.log("topdiv", topDiv);
-    // console.log("buttomdiv", bottomDiv);
-
     element.append(bomb);
     setTimeout(() => {
+     
       bombRange.forEach((div) => {
         if (div.classList.contains("gate") || div.classList.contains("path")) {
           div.classList.add("affected");
@@ -69,15 +65,10 @@ class Bomb {
             div.classList.remove("solid");
           }
         }
-        
       });
       element.removeChild(bomb);
-    }, 1900);
+    }, 3000);
   }
-
-  // bring4Divs() {
-
-  // }
 
   // lets get the boomb locations:
   bringbombcontainer() {
