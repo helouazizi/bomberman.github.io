@@ -56,11 +56,14 @@ class Bomb {
 
     setTimeout(() => {
       bombRange.forEach((div) => {
-        if (div.classList.contains("gate") || div.classList.contains("path")) {
+        if (div.classList.contains("gate") || div.classList.contains("path") || div.classList.contains("enemy")){
           div.classList.add("affected");
           // lets remove the solid classe to let the heroo pass
           if (div.classList.contains("solid")) {
             div.classList.remove("solid");
+          }
+          if (div.classList.contains("enemy")) {
+            div.classList.remove("enemy");
           }
         }
       });
