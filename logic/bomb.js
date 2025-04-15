@@ -13,40 +13,58 @@ class Bomb {
     bomb.style.backgroundColor = "blue";
     bomb.style.width = `100%`;
     bomb.style.height = `100%`;
+
+    // lets get the bomb location to extract the container that can hold the bomb
     let location = this.bringbombcontainer();
+    // now we have the id of the container
+    let bombContainer = document.getElementById(location);
 
-    let element = document.getElementById(location);
-    // let elementPosition = this.getPosition(element);
-
-    let wall = element.parentElement;
+    // lets append the bomb to it
+    bombContainer.append(bomb);
+    let wall = bombContainer.parentElement;
     let nextWall = wall.nextElementSibling;
     let prevWall = wall.previousElementSibling;
 
+    let wallNodeList = wall.querySelectorAll(".brick");
+    let nextWallNodeList = nextWall.querySelectorAll(".brick");
+    let prevWallNodeList = prevWall.querySelectorAll(".brick");
 
-    element.append(bomb);
-    let nextWallNodeList = Array.from(nextWall.querySelectorAll("div"))
-    let prevWallNodeList =  Array.from(prevWall.querySelectorAll("div"))
+    // console.log("wall", wall);
+    // console.log("next wall", nextWall);
+    // console.log("prev wall", prevWall);
 
-    let index = this.getDivIndex(wall)
+    // console.log("wallnode", wallNodeList);
+    // console.log("prev node", prevWallNodeList);
+    // console.log("nex node", nextWallNodeList);
+
+    let index = this.getDivIndex(wallNodeList);
     console.log(index);
-    
-    let rightDiv = element.nextElementSibling;
-    let leftDiv = element.previousElementSibling;
-    let topDiv = prevWallNodeList[index]
-    let bottomDiv = nextWallNodeList[index]
 
+    let rightDiv = bombContainer.nextElementSibling;
+    let leftDiv = bombContainer.previousElementSibling;
+    let topDiv = prevWallNodeList[index];
+    let bottomDiv = nextWallNodeList[index];
 
-    let bombRange = [element, rightDiv, leftDiv, bottomDiv, topDiv]
+    // console.log("current",bombContainer);
+    // console.log("top",topDiv);
+    // console.log("right",rightDiv);
+    // console.log("bottom",bottomDiv);
+    // console.log("left",leftDiv);
+
+    let bombRange = [bombContainer, rightDiv, leftDiv, bottomDiv, topDiv];
     console.log(bombRange);
 
-
     setTimeout(() => {
-      bombRange.forEach(div => {
+      bombRange.forEach((div) => {
         if (div.classList.contains("gate") || div.classList.contains("path")) {
-          div.classList.add("affected")
+          div.classList.add("affected");
+          // lets remove the solid classe to let the heroo pass
+          if (div.classList.contains("solid")) {
+            div.classList.remove("solid");
+          }
         }
-      })
-      element.removeChild(bomb);
+      });
+      bombContainer.removeChild(bomb);
     }, 3000);
   }
 
@@ -69,26 +87,19 @@ class Bomb {
   }
   // get the bomb index
   getDivIndex(wall) {
-    const nodeList = wall.querySelectorAll('div')
-    let index
-    let bomb = document.getElementById("bomb")
-    let parent = bomb.parentElement
-
-    console.log(parent);
-    console.log(bomb);
-
-    // Convert NodeList to Array
-    const nodeArray = Array.from(nodeList);
+    let index;
+    let bomb = document.getElementById("bomb");
+    let parent = bomb.parentElement;
+    parent.setAttribute("here", "this-one");
 
     // Now you can access each element by index
-    nodeArray.forEach((element, ind) => {
-      if (element === parent) {
-        // console.log(`Element at index ${ind}:`, element);
-        index = ind
-
+    wall.forEach((element, divIndex) => {
+      if (element.hasAttribute("here")) {
+        index = divIndex;
+        element.removeAttribute("here");
       }
     });
-    return index
+    return index;
   }
 
   getPosition = (element) => element.getBoundingClientRect();
