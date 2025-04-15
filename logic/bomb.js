@@ -68,7 +68,7 @@ class Bomb {
       });
       element.removeChild(bomb);
     }, 3000);
-  }
+  }git 
 
   // lets get the boomb locations:
   bringbombcontainer() {
