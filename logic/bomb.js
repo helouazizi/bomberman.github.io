@@ -16,57 +16,36 @@ class Bomb {
     let location = this.bringbombcontainer();
 
     let element = document.getElementById(location);
-    let elementPosition = this.getPosition(element);
+    // let elementPosition = this.getPosition(element);
 
-    let rightDev = element.nextElementSibling;
-    let leftDev = element.previousElementSibling;
-    let topDiv;
-    let bottomDiv;
     let wall = element.parentElement;
     let nextWall = wall.nextElementSibling;
     let prevWall = wall.previousElementSibling;
-    // let loop throuth the walsss to extract the top and bottum divs
-    let allnextWalElements = nextWall.querySelectorAll(".brick");
-    let allprevWalElements = prevWall.querySelectorAll(".brick");
-    allnextWalElements.forEach((div) => {
-      let divPos = this.getPosition(div);
 
-      if (
-        parseInt(Math.round(divPos.left)) ===
-          parseInt(Math.round(elementPosition.left)) &&
-        parseInt(Math.round(divPos.right)) ===
-          parseInt(Math.round(elementPosition.right))
-      ) {
-        bottomDiv = div;
-      }
-    });
 
-    allprevWalElements.forEach((div) => {
-      let divPos = this.getPosition(div);
-      if (
-        parseInt(Math.round(divPos.left)) ===
-          parseInt(Math.round(elementPosition.left)) &&
-        parseInt(Math.round(divPos.right)) ===
-          parseInt(Math.round(elementPosition.right))
-      ) {
-        topDiv = div;
-      }
-    });
-    let bombRange = [];
-    bombRange.push(element, rightDev, leftDev, bottomDiv, topDiv);
-    console.log("curent", bombRange);
     element.append(bomb);
-    setTimeout(() => {
-     
-      bombRange.forEach((div) => {
+    let nextWallNodeList = Array.from(nextWall.querySelectorAll("div"))
+    let prevWallNodeList =  Array.from(prevWall.querySelectorAll("div"))
 
+    let index = this.getDivIndex(wall)
+    console.log(index);
+    
+    let rightDiv = element.nextElementSibling;
+    let leftDiv = element.previousElementSibling;
+    let topDiv = prevWallNodeList[index]
+    let bottomDiv = nextWallNodeList[index]
+
+
+    let bombRange = [element, rightDiv, leftDiv, bottomDiv, topDiv]
+    console.log(bombRange);
+
+
+    setTimeout(() => {
+      bombRange.forEach(div => {
         if (div.classList.contains("gate") || div.classList.contains("path")) {
-          div.classList.add("affected");
-          if (div.classList.contains("gate")) {
-            div.classList.remove("solid");
-          }
+          div.classList.add("affected")
         }
-      });
+      })
       element.removeChild(bomb);
     }, 3000);
   }
@@ -77,8 +56,6 @@ class Bomb {
     var location;
     elements.forEach((elment) => {
       let elmentPositions = this.getPosition(elment);
-      //console.log(elment);
-      //console.log(elmentPositions);
       if (
         this.x > elmentPositions.left &&
         this.x < elmentPositions.right &&
@@ -89,6 +66,29 @@ class Bomb {
       }
     });
     return location;
+  }
+  // get the bomb index
+  getDivIndex(wall) {
+    const nodeList = wall.querySelectorAll('div')
+    let index
+    let bomb = document.getElementById("bomb")
+    let parent = bomb.parentElement
+
+    console.log(parent);
+    console.log(bomb);
+
+    // Convert NodeList to Array
+    const nodeArray = Array.from(nodeList);
+
+    // Now you can access each element by index
+    nodeArray.forEach((element, ind) => {
+      if (element === parent) {
+        // console.log(`Element at index ${ind}:`, element);
+        index = ind
+
+      }
+    });
+    return index
   }
 
   getPosition = (element) => element.getBoundingClientRect();
