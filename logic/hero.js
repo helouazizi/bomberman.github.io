@@ -7,16 +7,7 @@ class Hero {
     this.y = 2;
     this.step = 3;
   }
-  throttle(fn, limit) {
-    let lastCall = 0;
-    return function (...args) {
-      const now = Date.now();
-      if (now - lastCall >= limit) {
-        lastCall = now;
-        fn.apply(this, args);
-      }
-    };
-  }
+
 
   createHero() {
     this.hero = document.createElement("div");
@@ -32,9 +23,8 @@ class Hero {
     // var lastCall = 0;
     let called = false;
     let lastCall = 0;
-    let limit = 2000;
+    let limit = 3001;
     document.addEventListener("keydown", (e) => {
-      // cane we throtling the space////////////////////////
       console.log(e.key);
       switch (e.key) {
         case " ":

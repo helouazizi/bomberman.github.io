@@ -59,6 +59,7 @@ class Bomb {
     setTimeout(() => {
      
       bombRange.forEach((div) => {
+
         if (div.classList.contains("gate") || div.classList.contains("path")) {
           div.classList.add("affected");
           if (div.classList.contains("gate")) {
