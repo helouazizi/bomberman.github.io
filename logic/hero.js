@@ -44,23 +44,23 @@ class Hero {
           }
 
         case "ArrowDown":
-          if (this.canMoveVertically("down")) {
+          if (this.canMoveVertically(this.hero,"down")) {
             this.y += 2;
           }
           break;
         case "ArrowUp":
-          this.getPosition(this.hero), "hero!";
-          if (this.canMoveVertically("up")) {
+        
+          if (this.canMoveVertically( this.hero,"up")) {
             this.y -= 2;
           }
           break;
         case "ArrowRight":
-          if (this.canMoveHorizontally("right")) {
+          if (this.canMoveHorizontally(this.hero,"right")) {
             this.x += 2;
           }
           break;
         case "ArrowLeft":
-          if (this.canMoveHorizontally()) {
+          if (this.canMoveHorizontally(this.hero,"left")) {
             this.x -= 2;
           }
       }
@@ -69,10 +69,10 @@ class Hero {
   }
 
   // check the horizontal movement:
-  canMoveHorizontally(direction = "left") {
+  canMoveHorizontally(element,direction = "left") {
     let can = true;
-    let elements = this.getHorizontalBricks(direction);
-    let position = this.getPosition(this.hero);
+    let elements = this.getHorizontalBricks(element,direction);
+    let position = this.getPosition(element);
     elements.forEach((element) => {
       if (direction === "right") {
         if (!(position.right + this.step < element.left)) {
@@ -87,10 +87,10 @@ class Hero {
     return can;
   }
   // check the horizontal movement:
-  canMoveHorizontally(direction = "left") {
+  canMoveHorizontally(element,direction = "left") {
     let can = true;
-    let elements = this.getHorizontalBricks(direction);
-    let position = this.getPosition(this.hero);
+    let elements = this.getHorizontalBricks(element,direction);
+    let position = this.getPosition(element);
     elements.forEach((element) => {
       if (direction === "right") {
         if (!(position.right + this.step < element.left)) {
@@ -106,9 +106,9 @@ class Hero {
   }
 
   // Get all the bricks in the horizontal range:
-  getHorizontalBricks(direction = "left") {
+  getHorizontalBricks(element,direction = "left") {
     let bricks = document.querySelectorAll(".solid");
-    let position = this.getPosition(this.hero);
+    let position = this.getPosition(element);
     let elements = [];
     bricks.forEach((brick) => {
       let hinder = this.getPosition(brick);
@@ -126,10 +126,10 @@ class Hero {
     return elements;
   }
   // check the vertical movement:
-  canMoveVertically(direction = "down") {
+  canMoveVertically(element,direction = "down") {
     let can = true;
-    let elements = this.getVerticalBricks(direction);
-    let position = this.getPosition(this.hero);
+    let elements = this.getVerticalBricks(element,direction);
+    let position = this.getPosition(element);
     elements.forEach((element) => {
       if (direction === "up") {
         if (position.top - this.step < element.bottom) {
@@ -144,9 +144,9 @@ class Hero {
     return can;
   }
   // Get all the bricks in the horizontal range:
-  getHorizontalBricks(direction = "left") {
+  getHorizontalBricks(element,direction = "left") {
     let bricks = document.querySelectorAll(".solid");
-    let position = this.getPosition(this.hero);
+    let position = this.getPosition(element);
     let elements = [];
     bricks.forEach((brick) => {
       let hinder = this.getPosition(brick);
@@ -164,10 +164,10 @@ class Hero {
     return elements;
   }
   // check the vertical movement:
-  canMoveVertically(direction = "down") {
+  canMoveVertically(element,direction = "down") {
     let can = true;
-    let elements = this.getVerticalBricks(direction);
-    let position = this.getPosition(this.hero);
+    let elements = this.getVerticalBricks(element,direction);
+    let position = this.getPosition(element);
     elements.forEach((element) => {
       if (direction === "up") {
         if (position.top - this.step < element.bottom) {
@@ -183,9 +183,9 @@ class Hero {
   }
 
   // Get all the bricks in the vertical range:
-  getVerticalBricks(direction = "down") {
+  getVerticalBricks(element,direction = "down") {
     let bricks = document.querySelectorAll(".solid");
-    let position = this.getPosition(this.hero);
+    let position = this.getPosition(element);
     let elements = [];
     bricks.forEach((brick) => {
       let hinder = this.getPosition(brick);
@@ -195,7 +195,7 @@ class Hero {
       ) {
         if (direction === "down" && position.bottom < hinder.top) {
           elements.push(hinder);
-        } else if (direction === "up" && position.top > hinder.bottom) {
+        } else if (direction === "up" && position.top > hinder.bottom) {this.hero
           elements.push(hinder);
         }
       }
@@ -203,9 +203,9 @@ class Hero {
     return elements;
   }
   // Get all the bricks in the vertical range:
-  getVerticalBricks(direction = "down") {
+  getVerticalBricks(element,direction = "down") {
     let bricks = document.querySelectorAll(".solid");
-    let position = this.getPosition(this.hero);
+    let position = this.getPosition(element);
     let elements = [];
     bricks.forEach((brick) => {
       let hinder = this.getPosition(brick);

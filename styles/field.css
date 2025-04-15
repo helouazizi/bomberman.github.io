@@ -10,19 +10,12 @@ body {
 }
 
 #container {
-<<<<<<< HEAD
     width: fit-content;
     height: fit-content;
     display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
-=======
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
->>>>>>> 056e3c4f54c905944c8d579f294864ce032e4080
 }
 
 .wall {
@@ -36,4 +29,10 @@ body {
 
 .gate {
   background-color: green;
+}
+.path{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
