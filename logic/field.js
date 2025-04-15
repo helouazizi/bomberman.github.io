@@ -1,14 +1,19 @@
 export { Field };
+import {  Enemy} from "./enemies.js";
+
 
 // Create a field to set the battle field of
 // our game and the track the progress of the game:
 class Field {
+  
   #count = 1;
   constructor(height) {
     this.height = height;
     this.width = (height * 15) / 13;
     this.container = null;
     this.battleField = null;
+    this.randomGates = new Set();
+    this.randomEnemies = new Set();
     this.stage = 1;
   }
   // Create the battlefield:
@@ -75,47 +80,69 @@ class Field {
     }
     this.container.appendChild(this.battleField);
     this.createGates();
+    // Instantiate the enemies:
+    this.generateRandomIds(34,113,"enemies")
+    let enemies = new Enemy(this.randomEnemies)
+    enemies.createEnimies();
   }
 
   // Genrate the breakable walls randomly:
-  generateRandomIds() {
+  generateRandomIds(min, max, choice) {
     let count = 0;
+    let enemiesCount = 4;
+
     switch (this.stage) {
       case 2:
-        count = 20;
-        break;
+        count = 20
+        enemiesCount = 5
+        break
       case 3:
-        count = 22;
-        break;
+        count = 22
+        enemiesCount = 6
+        break
       case 4:
-        count = 25;
-        break;
+        count = 25
+        enemiesCount = 7
+        break
       case 5:
-        count = 30;
-        break;
+        count = 30
+        enemiesCount = 8
+        break
       default:
-        count = 16;
+        count = 16
+        enemiesCount = 4
     }
-    let random = new Set();
+
+    let edge = count
+
+    if (choice === "enemies") {
+      edge = enemiesCount
+    }
+
+    let checker = new Set()
     do {
-      let num = Math.floor(Math.random() * 113) + 1;
-      if (num != 1 && num != 2 && num != 14) {
-        random.add(num);
+      let num = Math.floor(Math.random() * (max - min + 1)) + min
+      if (choice === "enemies" && !this.randomGates.has(num)) {
+        this.randomEnemies.add(num)
+        checker.add(num)
+      } else if (choice === "gate" && num != 1 && num != 14 && num != 2) {
+        this.randomGates.add(num)
+        checker.add(num)
       }
-    } while (random.size < count);
-    return Array.from(random);
+    } while (checker.size < edge )
   }
 
   // create the breakable walls
   createGates() {
-    let Ids = this.generateRandomIds();
-    document.getElementById(`${Ids[Ids.length / 2]}`).classList.add("door");
-
+    this.generateRandomIds(1, 113, "gate")
+    let Ids = Array.from(this.randomGates)
+    document.getElementById(`${Ids[Ids.length / 2]}`).classList.add("door")
     Ids.forEach((id) => {
-      let brick = document.getElementById(`${id}`);
-      brick.classList.add("solid", "gate");
-    });
+      let brick = document.getElementById(`${id}`)
+      brick.classList.add("solid", "gate")
+    })
   }
+
 
   // Get the position of each element within
   getPosition = (element) => element.getBoundingClientRect();
