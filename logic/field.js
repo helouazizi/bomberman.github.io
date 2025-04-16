@@ -84,6 +84,7 @@ class Field {
     this.generateRandomIds(34, 113, "enemies")
     let enemies = new Enemy(this.randomEnemies)
     enemies.createEnimies();
+    enemies.moveEnimies();
   
     
   }

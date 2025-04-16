@@ -7,16 +7,16 @@ export function getFourDivs(element, id) {
   let nextWallNodeList = nextWall.querySelectorAll(".brick");
   let prevWallNodeList = prevWall.querySelectorAll(".brick");
 
-//   console.log("wall", wall);
-//   console.log("next wall", nextWall);
-//   console.log("prev wall", prevWall);
+  //   console.log("wall", wall);
+  //   console.log("next wall", nextWall);
+  //   console.log("prev wall", prevWall);
 
   // console.log("wallnode", wallNodeList);
   // console.log("prev node", prevWallNodeList);
   // console.log("nex node", nextWallNodeList);
 
   let index = getDivIndex(wallNodeList, id);
-//   console.log("index",index);
+  //   console.log("index",index);
 
   let rightDiv = element.nextElementSibling;
   let leftDiv = element.previousElementSibling;
@@ -29,14 +29,11 @@ export function getFourDivs(element, id) {
   // console.log("bottom",bottomDiv);
   // console.log("left",leftDiv);
 
-  let bombRange = [element,topDiv, rightDiv, bottomDiv,leftDiv ];
+  let bombRange = [element, topDiv, rightDiv, bottomDiv, leftDiv];
   return bombRange;
 }
 // get the bomb index
 function getDivIndex(wall, id) {
-   
-    
-    
   let index;
   let element = document.getElementById(id);
   let parent = element.parentElement;
@@ -51,3 +48,44 @@ function getDivIndex(wall, id) {
   });
   return index;
 }
+
+// Get all the bricks in the horizontal range:
+function getHorizontalBricks(element, direction = "left") {
+  let bricks = document.querySelectorAll(".solid");
+  let position = getPosition(element);
+  let elements = [];
+  bricks.forEach((brick) => {
+    let hinder = getPosition(brick);
+    if (
+      position.top > hinder.top - position.height &&
+      position.bottom < hinder.bottom + position.height
+    ) {
+      if (direction === "left" && position.left > hinder.right) {
+        elements.push(hinder);
+      } else if (direction === "right" && position.right < hinder.left) {
+        elements.push(hinder);
+      }
+    }
+  });
+  return elements;
+}
+
+export function canMoveHorizontally(element, direction = "left") {
+  let can = true;
+  let elements = getHorizontalBricks(element, direction);
+  let position = getPosition(element);
+  elements.forEach((element) => {
+    if (direction === "right") {
+      if (!(position.right + 3 < element.left)) {
+        can = false;
+      }
+    } else {
+      if (!(position.left - 3 > element.right)) {
+        can = false;
+      }
+    }
+  });
+  return can;
+}
+
+export const getPosition = (element) => element.getBoundingClientRect();
