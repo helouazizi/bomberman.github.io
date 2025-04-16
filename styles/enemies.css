@@ -1,7 +1,7 @@
 .enemy{
     position: absolute;
     background-color: brown;
-    width: 50%;
-    height: 80%;
+    width: 90%;
+    height: 90%;
     border-radius: 50%;
 }

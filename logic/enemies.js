@@ -1,4 +1,4 @@
-import { canMoveHorizontally } from "./healpers.js";
+import { canMoveHorizontally, canMoveVertically } from "./healpers.js";
 class Enemy {
   constructor(enemiesCount) {
     this.enemiesCount = enemiesCount;
@@ -38,17 +38,92 @@ class Enemy {
       // let bricksPos = getHorizontalBricks(firstenemy,"left")
       // console.log("enemyPos",enemyPos);
       // console.log("posbriks",bricksPos);
+      // console.log("up", this.moveup);
+      // console.log("down", this.movedown);
+      // console.log("left",this.moveleft);
+      // console.log("right", this.moveright);
+
       if (canMoveHorizontally(firstenemy, "left") && this.moveleft) {
         enemiesPositions[0].x--;
       } else if (canMoveHorizontally(firstenemy, "right") && this.moveright) {
         enemiesPositions[0].x++;
+      } else if (canMoveVertically(firstenemy, "up") && this.moveup) {
+        enemiesPositions[0].y--;
+      } else if (canMoveVertically(firstenemy, "down") && this.movedown) {
+        enemiesPositions[0].y++;
       }
+
+      ///////////////////////////////////////////////
       if (!canMoveHorizontally(firstenemy, "left")) {
+        // block the left
         this.moveleft = false;
-        this.moveright = true;
+        // lets check the top
+        if (canMoveVertically(firstenemy, "up")) {
+          this.moveup = true;
+          this.movedown = false;
+          this.moveright = false;
+        } else if (canMoveVertically(firstenemy, "down")) {
+          this.moveup = false;
+          this.movedown = true;
+          this.moveright = false;
+        } else if (canMoveHorizontally(firstenemy, "right")) {
+          this.moveup = false;
+          this.movedown = false;
+          this.moveright = true;
+        }
       } else if (!canMoveHorizontally(firstenemy, "right")) {
-        this.moveleft = true;
+        // lets block the right
         this.moveright = false;
+
+        // lets check the top
+        if (canMoveVertically(firstenemy, "up")) {
+          this.moveup = true;
+          this.movedown = false;
+          this.moveleft = false;
+        } else if (canMoveVertically(firstenemy, "down")) {
+          this.moveup = false;
+          this.movedown = true;
+          this.moveleft = false;
+        } else if (canMoveHorizontally(firstenemy, "left")) {
+          this.moveup = false;
+          this.movedown = false;
+          this.moveleft = true;
+        }
+      } else if (!canMoveVertically(firstenemy, "up")) {
+        // lets block the top
+        this.moveup = false;
+        // lets check the top
+        if (canMoveHorizontally(firstenemy, "right")) {
+          this.moveright = true;
+          this.movedown = false;
+          this.moveleft = false;
+        } else if (canMoveHorizontally(firstenemy, "left")) {
+          this.moveright = false;
+          this.movedown = false;
+          this.moveleft = true;
+        } else if (canMoveVertically(firstenemy, "down")) {
+          this.moveright = false;
+          this.movedown = true;
+          this.moveleft = false;
+        }
+      } else if (!canMoveVertically(firstenemy, "down")) {
+        // lets block the down
+        this.movedown = false;
+
+        // lets check the top
+        if (canMoveHorizontally(firstenemy, "right")) {
+          this.moveright = true;
+          this.moveup = false;
+          this.moveleft = false;
+        } else if (canMoveHorizontally(firstenemy, "left")) {
+          this.moveright = false;
+          this.moveup = false;
+          this.moveleft = true;
+        } else if (canMoveVertically(firstenemy, "up")) {
+          this.moveright = false;
+          this.moveup = true;
+          this.moveleft = false;
+        }
       }
       firstenemy.style.transform = `translate( ${enemiesPositions[0].x}px,${enemiesPositions[0].y}px)`;
     }, 16.67);

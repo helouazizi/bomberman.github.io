@@ -69,6 +69,43 @@ function getHorizontalBricks(element, direction = "left") {
   });
   return elements;
 }
+function getVerticalBricks(element,direction = "down") {
+  let bricks = document.querySelectorAll(".solid");
+  let position =getPosition(element);
+  let elements = [];
+  bricks.forEach((brick) => {
+    let hinder =getPosition(brick);
+    if (
+      position.right < hinder.right + position.width &&
+      position.left > hinder.left - position.width
+    ) {
+      if (direction === "down" && position.bottom < hinder.top) {
+        elements.push(hinder);
+      } else if (direction === "up" && position.top > hinder.bottom) {
+        elements.push(hinder);
+      }
+    }
+  });
+  return elements;
+}
+
+export function canMoveVertically(element,direction = "down") {
+  let can = true;
+  let elements = getVerticalBricks(element,direction);
+  let position = getPosition(element);
+  elements.forEach((element) => {
+    if (direction === "up") {
+      if (position.top - 3 < element.bottom) {
+        can = false;
+      }
+    } else {
+      if (position.bottom + 3 > element.top) {
+        can = false;
+      }
+    }
+  });
+  return can;
+}
 
 export function canMoveHorizontally(element, direction = "left") {
   let can = true;
