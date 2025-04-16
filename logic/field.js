@@ -1,11 +1,11 @@
 export { Field };
-import {  Enemy} from "./enemies.js";
+import { Enemy } from "./enemies.js";
 
 
 // Create a field to set the battle field of
 // our game and the track the progress of the game:
 class Field {
-  
+
   #count = 1;
   constructor(height) {
     this.height = height;
@@ -27,7 +27,7 @@ class Field {
   CreateBattleField() {
     this.Create();
     let fragment = document.createDocumentFragment();
-    let board = document.createElement("div");
+    let board = document.createElement("div"); 
     board.setAttribute("id", "bord");
     board.style.width = `${this.width}vw`;
     board.style.height = `${this.height / 3}vh`;
@@ -81,9 +81,11 @@ class Field {
     this.container.appendChild(this.battleField);
     this.createGates();
     // Instantiate the enemies:
-    this.generateRandomIds(34,113,"enemies")
+    this.generateRandomIds(34, 113, "enemies")
     let enemies = new Enemy(this.randomEnemies)
     enemies.createEnimies();
+  
+    
   }
 
   // Genrate the breakable walls randomly:
@@ -129,7 +131,7 @@ class Field {
         this.randomGates.add(num)
         checker.add(num)
       }
-    } while (checker.size < edge )
+    } while (checker.size < edge)
   }
 
   // create the breakable walls

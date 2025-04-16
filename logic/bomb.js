@@ -1,4 +1,6 @@
+import {  getFourDivs} from "./healpers.js";
 export { Bomb };
+
 class Bomb {
   constructor(hero, x, y) {
     this.hero = hero;
@@ -21,38 +23,8 @@ class Bomb {
 
     // lets append the bomb to it
     bombContainer.append(bomb);
-    let wall = bombContainer.parentElement;
-    let nextWall = wall.nextElementSibling;
-    let prevWall = wall.previousElementSibling;
+    const bombRange = getFourDivs(bombContainer, "bomb")
 
-    let wallNodeList = wall.querySelectorAll(".brick");
-    let nextWallNodeList = nextWall.querySelectorAll(".brick");
-    let prevWallNodeList = prevWall.querySelectorAll(".brick");
-
-    // console.log("wall", wall);
-    // console.log("next wall", nextWall);
-    // console.log("prev wall", prevWall);
-
-    // console.log("wallnode", wallNodeList);
-    // console.log("prev node", prevWallNodeList);
-    // console.log("nex node", nextWallNodeList);
-
-    let index = this.getDivIndex(wallNodeList);
-    console.log(index);
-
-    let rightDiv = bombContainer.nextElementSibling;
-    let leftDiv = bombContainer.previousElementSibling;
-    let topDiv = prevWallNodeList[index];
-    let bottomDiv = nextWallNodeList[index];
-
-    // console.log("current",bombContainer);
-    // console.log("top",topDiv);
-    // console.log("right",rightDiv);
-    // console.log("bottom",bottomDiv);
-    // console.log("left",leftDiv);
-
-    let bombRange = [bombContainer, rightDiv, leftDiv, bottomDiv, topDiv];
-    console.log(bombRange);
 
     setTimeout(() => {
       bombRange.forEach((div) => {
@@ -88,22 +60,7 @@ class Bomb {
     });
     return location;
   }
-  // get the bomb index
-  getDivIndex(wall) {
-    let index;
-    let bomb = document.getElementById("bomb");
-    let parent = bomb.parentElement;
-    parent.setAttribute("here", "this-one");
-
-    // Now you can access each element by index
-    wall.forEach((element, divIndex) => {
-      if (element.hasAttribute("here")) {
-        index = divIndex;
-        element.removeAttribute("here");
-      }
-    });
-    return index;
-  }
+  
 
   getPosition = (element) => element.getBoundingClientRect();
 }
