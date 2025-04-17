@@ -42,6 +42,7 @@ class Enemy {
       // console.log("down", this.movedown);
       // console.log("left",this.moveleft);
       // console.log("right", this.moveright);
+      /// test
 
       if (canMoveHorizontally(firstenemy, "left") && this.moveleft) {
         enemiesPositions[0].x--;
