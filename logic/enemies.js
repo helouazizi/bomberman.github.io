@@ -1,81 +1,70 @@
 import { canMoveHorizontally, canMoveVertically } from "./healpers.js";
 class Enemy {
-  constructor(enemiesCount) {
-    this.enemiesCount = enemiesCount;
-    this.Directions = new Set();
+  constructor(id) {
+    this.id = id;
+    this.moveright = true;
+    this.moveleft = true;
+    this.moveup = true;
+    this.movedown = true;
     this.positionX = 0;
     this.positionY = 0;
+ 
   }
   // create the enemies
-  createEnimies() {
-    this.enemiesCount.forEach((id) => {
-      let Enemy = document.createElement("div");
-      Enemy.classList.add("enemy");
-      let brick = document.getElementById(`${id}`);
-      brick.appendChild(Enemy);
-    });
+  createEnemy() {
+    let Enemy = document.createElement("div");
+    Enemy.classList.add("enemy");
+    Enemy.setAttribute("id", `enemy-${this.id}`);
+    let brick = document.getElementById(`${this.id}`);
+    brick.appendChild(Enemy);
   }
   //lets move enemies
-  moveEnimies() {
-    let enemies = document.querySelectorAll(".enemy");
-    let firstenemy = enemies[0];
-    firstenemy.style.backgroundColor = "black";
-    // let moved = trues
+  moveEnemy() {
+    let enemy = document.getElementById(`enemy-${this.id}`);
+    enemy.style.backgroundColor = "black";
+    console.log(enemy, "enemies");
+
+    // let make the set interval to moove the enenmy
     setInterval(() => {
-      let coordinates = this.getRandomCoordinates();
-      if (coordinates.line === "horizontal") {
-        setInterval(() => {
-          if (canMoveHorizontally(firstenemy, coordinates.direction)) {
-            if (coordinates.direction === "left") {
-              this.positionX--;
-              firstenemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
-            } else {
-              this.positionX++;
-              firstenemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
-            }
-          }
-        }, 16.76);
-      } else {
-        setInterval(() => {
-          let coordinates = this.getRandomCoordinates();
-
-          if (canMoveVertically(firstenemy, coordinates.direction)) {
-            if (coordinates.direction === "down") {
-              this.positionY++;
-            } else {
-              this.positionY--;
-            }
-            firstenemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
-          }
-        }, 16.67);
+      if (canMoveHorizontally(enemy, "left") && this.moveleft) {
+        this.positionX--;
+      } else if (canMoveHorizontally(enemy, "right") && this.moveright) {
+        this.positionX++;
+      } else if (canMoveVertically(enemy, "up") && this.moveup) {
+        this.positionY--;
+      } else if (canMoveVertically(enemy, "down") && this.movedown) {
+        this.positionY++;
       }
-    }, 1000);
-  }
 
-  // Get a valid random direction:
-  getRandomCoordinates() {
-    let random = Math.floor(Math.random() * 4) + 1;
-    let coordination = {};
-    switch (random) {
-      case 1:
-        coordination.direction = "up";
-        coordination.line = "vertical";
-        break;
-      case 2:
-        coordination.direction = "right";
-        coordination.line = "horizontal";
-
-        break;
-      case 3:
-        coordination.direction = "down";
-        coordination.line = "vertical";
-
-        break;
-      default:
-        coordination.direction = "left";
-        coordination.line = "horizontal";
-    }
-    return coordination;
+      // ///////////////////////////////////////////////
+      if (!canMoveHorizontally(enemy, "left")) {
+        // block the left
+        this.moveleft = false;
+        this.moveright = true;
+      }
+      if (!canMoveHorizontally(enemy, "right")) {
+        // lets block the right
+        this.moveright = false;
+        this.moveleft = true;
+      }
+      if (!canMoveVertically(enemy, "up")) {
+        // lets block the top
+        this.moveup = false;
+        this.movedown = true;
+      }
+      if (!canMoveVertically(enemy, "down")) {
+        // lets block the down
+        this.movedown = false;
+        this.moveup = true;
+      }
+      enemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
+      console.log("/////////////////////////////////////");
+      console.log("top", this.moveup);
+      console.log("right", this.moveright);
+      console.log("down", this.movedown);
+      console.log("left", this.moveleft);
+      // console.log("/////////////////////////////////////");
+    }, 20);
   }
 }
 

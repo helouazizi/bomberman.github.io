@@ -113,11 +113,11 @@ export function canMoveHorizontally(element, direction = "left") {
   let position = getPosition(element);
   elements.forEach((element) => {
     if (direction === "right") {
-      if (!(position.right + 3 < element.left)) {
+      if (!(position.right + 1 < element.left)) {
         can = false;
       }
     } else {
-      if (!(position.left - 3 > element.right)) {
+      if (!(position.left - 1 > element.right)) {
         can = false;
       }
     }
