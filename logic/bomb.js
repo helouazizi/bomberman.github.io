@@ -53,8 +53,6 @@ class Bomb {
     }, 3000);
     setTimeout(() => {
       bombRange.forEach((div) => {
-        console.log(div);
-
         div.classList.remove("affected");
       });
     }, 4000);

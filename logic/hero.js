@@ -55,12 +55,14 @@ class Hero {
           }
           break;
         case "ArrowRight":
-          if (this.canMoveHorizontally(this.hero,"right")) {
+          if (this.canMoveHorizontally(this.hero,"right")) { 
             this.x += 2;
           }
           break;
         case "ArrowLeft":
           if (this.canMoveHorizontally(this.hero,"left")) {
+            
+
             this.x -= 2;
           }
       }
