@@ -69,7 +69,8 @@ class Field {
           x == 15 ||
           (y % 2 !== 0 && x % 2 !== 0)
         ) {
-          brick.classList.add("solid");
+          brick.classList.add("solid","borders");
+
         } else {
           brick.classList.add("path");
           brick.setAttribute("id", `${this.#count}`);

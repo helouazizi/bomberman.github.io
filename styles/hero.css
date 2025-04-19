@@ -1,8 +1,12 @@
 #hero {
   width: 50%;
   height: 80%;
-  background-color: rgb(255, 0, 0);
-  border: black solid 1px;
+  background-image: url("../mask_15542025.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+  /* border: black solid 1px; */
   position: absolute;
   z-index: 100;
 }

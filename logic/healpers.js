@@ -38,6 +38,7 @@ function getDivIndex(wall, id) {
   let element = document.getElementById(id);
   let parent = element.parentElement;
   parent.setAttribute("here", "this-one");
+  parent.classList.add("solid")
 
   // Now you can access each element by index
   wall.forEach((element, divIndex) => {
