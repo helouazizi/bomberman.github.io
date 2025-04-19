@@ -20,7 +20,7 @@ class Enemy {
   //lets move enemies
   moveEnemy() {
     let enemy = document.getElementById(`enemy-${this.id}`);
-    enemy.style.backgroundColor = "black";
+ 
     // console.log(enemy, "enemies");
 
     // let make the set interval to moove the enenmy

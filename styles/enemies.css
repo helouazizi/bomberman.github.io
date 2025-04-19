@@ -1,6 +1,6 @@
 .enemy{
     position: absolute;
-    background-color: brown;
+    background-image:url("../devil\ \(1\).png") ;
     width: 99%;
     height: 99%;
     border-radius: 50%;

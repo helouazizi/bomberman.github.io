@@ -12,7 +12,7 @@ class Bomb {
   create() {
     let bomb = document.createElement("div");
     bomb.setAttribute("id", "bomb");
-    bomb.style.backgroundColor = "blue";
+    
     bomb.style.width = `100%`;
     bomb.style.height = `100%`;
 
