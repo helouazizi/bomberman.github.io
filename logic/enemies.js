@@ -8,7 +8,6 @@ class Enemy {
     this.movedown = true;
     this.positionX = 0;
     this.positionY = 0;
- 
   }
   // create the enemies
   createEnemy() {
@@ -22,7 +21,7 @@ class Enemy {
   moveEnemy() {
     let enemy = document.getElementById(`enemy-${this.id}`);
     enemy.style.backgroundColor = "black";
-    console.log(enemy, "enemies");
+    // console.log(enemy, "enemies");
 
     // let make the set interval to moove the enenmy
     setInterval(() => {
@@ -58,11 +57,13 @@ class Enemy {
         this.moveup = true;
       }
       enemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
-      console.log("/////////////////////////////////////");
-      console.log("top", this.moveup);
-      console.log("right", this.moveright);
-      console.log("down", this.movedown);
-      console.log("left", this.moveleft);
+      
+     
+      // console.log("/////////////////////////////////////");
+      // console.log("top", this.moveup);
+      // console.log("right", this.moveright);
+      // console.log("down", this.movedown);
+      // console.log("left", this.moveleft);
       // console.log("/////////////////////////////////////");
     }, 20);
   }

@@ -95,11 +95,11 @@ export function canMoveVertically(element,direction = "down") {
   let position = getPosition(element);
   elements.forEach((element) => {
     if (direction === "up") {
-      if (position.top - 3 < element.bottom) {
+      if (position.top - 1 < element.bottom) {
         can = false;
       }
     } else {
-      if (position.bottom + 3 > element.top) {
+      if (position.bottom + 1 >element.top) {
         can = false;
       }
     }

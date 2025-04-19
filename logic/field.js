@@ -14,7 +14,7 @@ class Field {
     this.battleField = null;
     this.randomGates = new Set();
     this.randomEnemies = new Set();
-    this.stage = 1;
+    this.stage = 5;
   }
   // Create the battlefield:
   Create() {
