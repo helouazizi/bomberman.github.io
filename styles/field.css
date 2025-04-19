@@ -10,12 +10,12 @@ body {
 }
 
 #container {
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .wall {
@@ -24,13 +24,13 @@ body {
 }
 
 .solid {
-  border: black solid 1px;
+ background-color: rgb(127, 134, 132);
 }
 
 .gate {
   background-color: green;
 }
-.path{
+.path {
   display: flex;
   justify-content: center;
   align-items: center;

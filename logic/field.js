@@ -14,7 +14,7 @@ class Field {
     this.battleField = null;
     this.randomGates = new Set();
     this.randomEnemies = new Set();
-    this.stage = 1;
+    this.stage = 5;
   }
   // Create the battlefield:
   Create() {
@@ -82,10 +82,14 @@ class Field {
     this.createGates();
     // Instantiate the enemies:
     this.generateRandomIds(34, 113, "enemies")
-    let enemies = new Enemy(this.randomEnemies)
-    enemies.createEnimies();
-    enemies.moveEnimies();
-  
+
+    this.randomEnemies.forEach(id =>{
+      let enemy = new Enemy(id)
+      enemy.createEnemy()
+      enemy.moveEnemy();
+    
+
+    })
     
   }
 
