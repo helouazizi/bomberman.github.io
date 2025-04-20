@@ -1,6 +1,11 @@
-import { canMoveHorizontally, canMoveVertically } from "./healpers.js";
+import {
+  canMoveHorizontally,
+  canMoveVertically,
+  getPosition,
+} from "./healpers.js";
 class Enemy {
-  constructor(id) {
+  constructor(id,size) {
+    this.width = size
     this.id = id;
     this.moveright = true;
     this.moveleft = true;
@@ -12,6 +17,8 @@ class Enemy {
   // create the enemies
   createEnemy() {
     let Enemy = document.createElement("div");
+    Enemy.style.width = `${this.width-3}px`;
+    Enemy.style.height = `${this.width-3}px`;
     Enemy.classList.add("enemy");
     Enemy.setAttribute("id", `enemy-${this.id}`);
     let brick = document.getElementById(`${this.id}`);
@@ -20,10 +27,7 @@ class Enemy {
   //lets move enemies
   moveEnemy() {
     let enemy = document.getElementById(`enemy-${this.id}`);
- 
-    // console.log(enemy, "enemies");
 
-    // let make the set interval to moove the enenmy
     setInterval(() => {
       if (canMoveHorizontally(enemy, "left") && this.moveleft) {
         this.positionX--;
@@ -56,16 +60,53 @@ class Enemy {
         this.movedown = false;
         this.moveup = true;
       }
-      enemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
       
-     
-      // console.log("/////////////////////////////////////");
-      // console.log("top", this.moveup);
-      // console.log("right", this.moveright);
-      // console.log("down", this.movedown);
-      // console.log("left", this.moveleft);
-      // console.log("/////////////////////////////////////");
+      // htis handle the enney collistion with the herro
+      this.isCollistion(enemy)
+
+      enemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
     }, 20);
+  }
+
+  // htid the function that handle the object colitions
+  isCollistion(enemy){
+    let hero = document.getElementById("hero");
+    let heroCoordinates = getPosition(hero);
+    let enemyCoordinates = getPosition(enemy);
+    console.log(heroCoordinates.width ,heroCoordinates.height , "hero");
+    console.log(enemyCoordinates.width,enemyCoordinates.height, "enemy");
+    if (
+      heroCoordinates.left === enemyCoordinates.left &&
+      heroCoordinates.right === enemyCoordinates.right &&
+      heroCoordinates.bottom > enemyCoordinates.top
+    ) {
+      console.log("yeees");
+      hero.style.display = "none";
+    }
+    if (
+      heroCoordinates.left === enemyCoordinates.left &&
+      heroCoordinates.right === enemyCoordinates.right &&
+      heroCoordinates.top > enemyCoordinates.bottom
+    ) {
+      console.log("yeees");
+      hero.style.display = "none";
+    }
+    if (
+      heroCoordinates.top === enemyCoordinates.top &&
+      heroCoordinates.bottom === enemyCoordinates.bottom &&
+      heroCoordinates.right > enemyCoordinates.left
+    ) {
+      console.log("yeees");
+      hero.style.display = "none";
+    }
+    if (
+      heroCoordinates.top === enemyCoordinates.top &&
+      heroCoordinates.bottom === enemyCoordinates.bottom &&
+      heroCoordinates.left > enemyCoordinates.right
+    ) {
+      console.log("yeees");
+      hero.style.display = "none";
+    }
   }
 }
 
