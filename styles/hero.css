@@ -1,8 +1,9 @@
 #hero {
-  width: 32px;
-  height: 32px;
+  /* width: 32px;
+  height: 32px; */
   background-image: url("../icons8-alien-32.png");
   background-repeat: no-repeat;
+  background-size: cover;
   position: absolute;
   z-index: 101;
 }

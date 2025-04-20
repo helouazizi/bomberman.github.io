@@ -7,23 +7,23 @@ class Field {
   #count = 1;
   constructor(height) {
     this.height = height;
-    this.width = (height * 15) / 13
-    this.container = null
-    this.battleField = null
-    this.randomGates = new Set()
-    this.randomEnemies = new Set()
-    this.time = 200
-    this.score = 0
-    this.stage = 5
-    this.left = 3
+    this.width = height;
+    this.container = null;
+    this.battleField = null;
+    this.randomGates = new Set();
+    this.randomEnemies = new Set();
+    this.time = 200;
+    this.score = 0;
+    this.stage = 5;
+    this.left = 3;
   }
   // Create the battlefield:
   Create() {
     this.container = document.createElement("div");
     this.container.setAttribute("id", "container");
     document.body.appendChild(this.container);
-    this.container.style.width = `${this.width}px`
-    this.container.style.height = "fit-content"
+    this.container.style.width = `${this.width}px`;
+    this.container.style.height = "fit-content";
   }
 
   // Create the battle field:
@@ -35,46 +35,48 @@ class Field {
     board.style.width = `${this.width}px`;
     board.style.height = `50px`;
 
+    // lets creaete time
     let time = document.createElement("div");
     time.setAttribute("id", "time");
     time.setAttribute("class", "dashboard");
-    let timeText = document.createElement("strong")
-    timeText.innerHTML = `Time: <span id="timeCounter">${this.time}</span>`
-    time.appendChild(timeText)
+    let timeText = document.createElement("strong");
+    timeText.innerHTML = `Time: <span id="timeCounter">${this.time}</span>`;
+    time.appendChild(timeText);
+
+    // lets create score
     let score = document.createElement("div");
     score.setAttribute("id", "score");
     score.setAttribute("class", "dashboard");
-    let scoreText = document.createElement("strong")
-    scoreText.textContent = `${this.score}`
-    score.appendChild(scoreText)
+    let scoreText = document.createElement("strong");
+    scoreText.textContent = `${this.score}`;
+    score.appendChild(scoreText);
 
+    // lets create attempts
     let attempts = document.createElement("div");
     attempts.setAttribute("id", "attempts");
     attempts.setAttribute("class", "dashboard");
-    let left = document.createElement("p")
-    left.innerHTML = `Left: <span>${this.left-1}</span>`
+    let left = document.createElement("p");
+    left.innerHTML = `Left: <span>${this.left - 1}</span>`;
+    attempts.appendChild(left);
 
-    attempts.appendChild(left)
     fragment.append(time, score, attempts);
     board.appendChild(fragment);
-    this.container.appendChild(board)
-
+    this.container.appendChild(board);
     this.battleField = document.createElement("div");
     this.battleField.setAttribute("id", "battleField");
-  
 
     for (let y = 1; y <= 13; y++) {
       let wall = document.createElement("div");
       wall.setAttribute("class", "wall");
       wall.setAttribute("id", `wall-${y}`);
-      wall.style.width = `${this.width}px`;
-      wall.style.height = `${this.height / 13}px`;
+      // wall.style.width = `${this.width}px`;
+      // wall.style.height = `${this.height / 13}px`;
       for (let x = 1; x <= 15; x++) {
         let brick = document.createElement("div");
         brick.setAttribute("class", "brick");
 
-        brick.style.width = `${this.width / 15}px`;
-        brick.style.height = `100%`;
+        brick.style.width = `${this.width}px`;
+        brick.style.height = `${this.height}px`;
         wall.appendChild(brick);
 
         if (
@@ -166,8 +168,8 @@ class Field {
   getPosition = (element) => element.getBoundingClientRect();
 
   // Handle the time deadline of each game:
-  handleLeftTime(){
-    let counter = document.getElementById("timeCounter")
+  handleLeftTime() {
+    let counter = document.getElementById("timeCounter");
     const countdown = setInterval(() => {
       counter.textContent = this.time;
       this.time--;

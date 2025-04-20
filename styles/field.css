@@ -9,6 +9,7 @@
 .wall {
   display: flex;
   flex-direction: row;
+  width: fit-content;
 }
 
 #board {
