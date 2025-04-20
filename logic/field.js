@@ -32,8 +32,11 @@ class Field {
     let fragment = document.createDocumentFragment();
     let board = document.createElement("div");
     board.setAttribute("id", "board");
-    board.style.width = `${this.width}px`;
+    board.style.width = `${this.width*15}px`;
+    console.log(this.width*15,"heeeeeeeee");
+    
     board.style.height = `50px`;
+    //board.style.border = `5px solid red`;
 
     // lets creaete time
     let time = document.createElement("div");
