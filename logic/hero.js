@@ -16,8 +16,8 @@ class Hero {
     first.style.position = "relative";
     first.style.overflow = "visible";
     first.appendChild(this.hero);
-    this.hero.style.width = `${this.width-this.step}px`;
-    this.hero.style.height = `${this.width-this.step}px`;
+    this.hero.style.width = `${Math.floor(this.width-this.step)}px`;
+    this.hero.style.height = `${Math.floor(this.width-this.step)}px`;
     this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
   }
   // create a function  to handle the movement of the hero:
@@ -76,11 +76,11 @@ class Hero {
     let position = this.getPosition(element);
     elements.forEach((element) => {
       if (direction === "right") {
-        if (!(position.right + this.step-1 < element.left)) {
+        if (!(position.right + this.step < element.left)) {
           can = false;
         }
       } else {
-        if (!(position.left - this.step+1 > element.right)) {
+        if (!(position.left - this.step > element.right)) {
           can = false;
         }
       }
@@ -116,11 +116,11 @@ class Hero {
     let position = this.getPosition(element);
     elements.forEach((element) => {
       if (direction === "up") {
-        if (position.top - this.step+1 < element.bottom) {
+        if (position.top - this.step < element.bottom) {
           can = false;
         }
       } else {
-        if (position.bottom + this.step-1 > element.top) {
+        if (position.bottom + this.step > element.top) {
           can = false;
         }
       }
