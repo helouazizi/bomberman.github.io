@@ -1,21 +1,9 @@
-* {
-  box-sizing: border-box;
-  background-repeat: no-repeat;
-}
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 #container {
-  width: fit-content;
-  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
 .wall {
@@ -23,15 +11,31 @@ body {
   flex-direction: row;
 }
 
+#board {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#board .dashboard {
+  width: 33.33%;
+  height: 100%;
+  background-color: #d3d3d3;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .borders {
- background-color: rgb(103, 108, 107);
- box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  background-color: #d3d3d3;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
 }
 
 .gate {
- background-image: url("../wall.jpg");
- background-repeat: no-repeat;
- background-size: cover;
+  background-image: url("../wall.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .path {
   display: flex;
@@ -39,12 +43,20 @@ body {
   align-items: center;
   position: relative;
 }
-.door-img{
-
+.door-img {
   background-image: url("../door.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
-.path{
-  background-color: rgb(7, 88, 61);
+.path {
+  background-color: #008000;
+}
+
+#battleField {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
