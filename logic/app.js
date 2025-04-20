@@ -14,8 +14,7 @@ function setupGame() {
   unitSize = Math.max(20, Math.min(unitSize, 80));
     // Optional: Clear previous game content
    document.body.innerHTML = ''
-  // Initialize the field and hero with new unit size
-  console.log(unitSize,"size");
+  // Initialize the field and hero with new unit siz
   
   let field = new Field(unitSize);
   field.CreateBattleField();

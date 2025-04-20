@@ -80,11 +80,11 @@ export function canMoveVertically(element,direction = "down") {
   let position = getPosition(element);
   elements.forEach((element) => {
     if (direction === "up") {
-      if (position.top - 1 < element.bottom) {
+      if (position.top -3 < element.bottom) {
         can = false;
       }
     } else {
-      if (position.bottom + 1 >element.top) {
+      if (position.bottom + 3 >element.top) {
         can = false;
       }
     }
@@ -98,16 +98,24 @@ export function canMoveHorizontally(element, direction = "left") {
   let position = getPosition(element);
   elements.forEach((element) => {
     if (direction === "right") {
-      if (!(position.right + 1 < element.left)) {
+      if (!(position.right + 3 < element.left)) {
         can = false;
       }
     } else {
-      if (!(position.left - 1 > element.right)) {
+      if (!(position.left -3 > element.right)) {
         can = false;
       }
     }
   });
   return can;
+}
+
+export function bringElementAxis(element) {
+  let obj = {};
+  let position = getPosition(element);
+  obj.x = Math.floor(position.x + position.width / 2);
+  obj.y = Math.floor(position.y + position.height / 2);
+  return obj;
 }
 
 export const getPosition = (element) => element.getBoundingClientRect();
