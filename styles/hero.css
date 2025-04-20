@@ -1,8 +1,14 @@
 #hero {
-  width: 50%;
-  height: 80%;
-  background-color: rgb(255, 0, 0);
-  border: black solid 1px;
+  /* width: 32px;
+  height: 32px; */
+  background-image: url("../icons8-alien-32.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   position: absolute;
-  z-index: 100;
+  z-index: 101;
+}
+
+#hero img{
+  width: 100%;
+  height: 100%;
 }

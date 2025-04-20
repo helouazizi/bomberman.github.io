@@ -65,7 +65,7 @@ class Enemy {
       // console.log("down", this.movedown);
       // console.log("left", this.moveleft);
       // console.log("/////////////////////////////////////");
-    }, 20);
+    }, 50);
   }
 }
 

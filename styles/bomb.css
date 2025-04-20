@@ -1,5 +1,10 @@
 .affected{
-    background-color: yellow;
+    background-image: url("../effect.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
 #bomb{
     z-index: 100;

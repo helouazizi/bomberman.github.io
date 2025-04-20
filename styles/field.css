@@ -1,38 +1,63 @@
-* {
-  box-sizing: border-box;
-  background-repeat: no-repeat;
-}
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 #container {
-  width: fit-content;
-  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
 .wall {
   display: flex;
   flex-direction: row;
+  width: fit-content;
 }
 
-.solid {
- background-color: rgb(127, 134, 132);
+#board {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+#board .dashboard {
+  width: 33.33%;
+  height: 100%;
+  background-color: #d3d3d3;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.borders {
+  background-color: #d3d3d3;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
 }
 
 .gate {
-  background-color: green;
+  background-image: url("../wall.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .path {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+}
+.door-img {
+  background-image: url("../door.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.path {
+  background-color: #008000;
+}
+
+#battleField {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
