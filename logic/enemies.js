@@ -5,10 +5,10 @@ import {
   getPosition,
 } from "./healpers.js";
 class Enemy {
-  constructor(id, left, size) {
+  constructor(id, size) {
     this.width = size
     this.id = id;
-    this.left = left;
+  
     this.score = 0
     this.moveright = true;
     this.moveleft = true;

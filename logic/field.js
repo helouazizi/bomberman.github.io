@@ -5,7 +5,7 @@ import { Enemy } from "./enemies.js";
 // our game and the track the progress of the game:
 class Field {
   #count = 1;
-  constructor(height) {
+  constructor(height,stage) {
     this.height = height;
     this.width = height;
     this.container = null;
@@ -14,7 +14,7 @@ class Field {
     this.randomEnemies = new Set();
     this.time = 200;
     this.score = 0;
-    this.stage = 5;
+    this.stage = stage;
     this.left = 3;
   }
   // Create the battlefield:
@@ -33,9 +33,7 @@ class Field {
     let board = document.createElement("div");
     board.setAttribute("id", "board");
     board.style.width = `${this.width * 15}px`;
-
     board.style.height = `50px`;
-    //board.style.border = `5px solid red`;
 
     // lets creaete time
     let time = document.createElement("div");
@@ -101,7 +99,7 @@ class Field {
     this.generateRandomIds(34, 113, "enemies");
 
     this.randomEnemies.forEach((id) => {
-      let enemy = new Enemy(id , this.left,this.width);
+      let enemy = new Enemy(id , this.width);
       enemy.createEnemy();
        enemy.moveEnemy();
     
