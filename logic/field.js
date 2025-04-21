@@ -104,8 +104,12 @@ class Field {
        enemy.moveEnemy();
     
     });
- 
- 
+ // Create the pause button:
+    let pause =  document.createElement("button")
+    pause.classList.add("controlBtn")
+    pause.textContent = "pause"
+    pause.value = "pause"
+    document.body.appendChild(pause)
   }
 
   // Genrate the breakable walls randomly:
