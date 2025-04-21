@@ -58,8 +58,7 @@ class Field {
     attempts.setAttribute("id", "attempts");
     attempts.setAttribute("class", "dashboard");
     let left = document.createElement("p");
-    left.setAttribute("id", "left");
-    left.innerHTML = `Left: <span>${this.left - 1}</span>`;
+    left.innerHTML = `Left: <span id="left">${this.left - 1}</span>`;
     attempts.appendChild(left);
 
     fragment.append(time, score, attempts);

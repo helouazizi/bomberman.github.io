@@ -63,16 +63,25 @@ class Enemy {
         this.moveup = true;
       }
       enemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
-      herodead = this.isCollistion(enemy, "hero", 0);
-      if (document.getElementById("bomb")) {
-        enemyDead = this.isCollistion(enemy, "bomb", this.width);
+      let hero = document.getElementById("hero")
+      let bomb = document.getElementById("bomb")
+      if (hero) {
+        herodead = this.isCollistion(enemy, hero, 0);
+      }
+      if (bomb) {
+        herodead = this.isCollistion(hero, bomb, this.width)&& document.querySelectorAll(".affected").length != 0;
+        enemyDead = this.isCollistion(enemy, bomb, this.width);
       }
       /////////////////////
       if (herodead) {
         let hero = document.getElementById("hero");
+        let left = document.getElementById("left")
+        let leftValue = parseInt(left.innerText)-1
+        left.innerText = `${leftValue}`
         hero.classList.add("boom-out");
         clearInterval(moving);
         hero.classList.add("boom-out");
+
         setTimeout(() => {
           // Lock the final state (optional safety net)
           hero.style.opacity = "0";
@@ -84,21 +93,19 @@ class Enemy {
       /////////////////
       if (enemyDead && document.querySelectorAll(".affected").length != 0) {
         enemy.style.display = "none"
-        let Score =  document.getElementById("score")
-        let value = parseInt(Score.innerText)+100
+        let Score = document.getElementById("score")
+        let value = parseInt(Score.innerText) + 100
         Score.textContent = `${value}`
       }
     }, 20);
   }
 
-  isCollistion(enemy, target = "hero", width) {
+  isCollistion(enemy, targetElement, width) {
     let dead = false;
-    let targetElement = document.getElementById(target);
     let targetCoordinates = getPosition(targetElement);
     let enemyCoordinates = getPosition(enemy);
     let targetAxis = bringElementAxis(targetElement);
     let enemyAxix = bringElementAxis(enemy);
-
     if (
       this.isCoixial(targetCoordinates, enemyAxix, "y") &&
       targetAxis.y < enemyAxix.y &&

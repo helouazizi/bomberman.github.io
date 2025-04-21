@@ -25,7 +25,7 @@ class Hero {
     // var lastCall = 0;
     let called = false;
     let lastCall = 0;
-    let limit = 3001;
+    let limit = 4001;
     document.addEventListener("keydown", (e) => {
       console.log(e.key);
       switch (e.key) {
