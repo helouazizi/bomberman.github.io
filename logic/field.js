@@ -58,6 +58,7 @@ class Field {
     attempts.setAttribute("id", "attempts");
     attempts.setAttribute("class", "dashboard");
     let left = document.createElement("p");
+    left.setAttribute("id", "left");
     left.innerHTML = `Left: <span>${this.left - 1}</span>`;
     attempts.appendChild(left);
 
@@ -100,15 +101,14 @@ class Field {
     // Instantiate the enemies:
     this.generateRandomIds(34, 113, "enemies");
 
-    // this.randomEnemies.forEach((id) => {
-    //   let enemy = new Enemy(id);
-    //   enemy.createEnemy();
-    //   enemy.moveEnemy();
-    // });
-    const first = [...this.randomEnemies][0]
-    let enemy = new Enemy(first);
-    enemy.createEnemy();
-    enemy.moveEnemy();
+    this.randomEnemies.forEach((id) => {
+      let enemy = new Enemy(id , this.left);
+      enemy.createEnemy();
+       enemy.moveEnemy();
+    
+    });
+ 
+ 
   }
 
   // Genrate the breakable walls randomly:

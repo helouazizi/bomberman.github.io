@@ -1,7 +1,13 @@
-import { canMoveHorizontally, canMoveVertically,bringElementAxis,getPosition } from "./healpers.js";
+import {
+  canMoveHorizontally,
+  canMoveVertically,
+  bringElementAxis,
+  getPosition,
+} from "./healpers.js";
 class Enemy {
-  constructor(id) {
+  constructor(id, left) {
     this.id = id;
+    this.left = left;
     this.moveright = true;
     this.moveleft = true;
     this.moveup = true;
@@ -19,8 +25,9 @@ class Enemy {
   }
   //lets move enemies
   moveEnemy() {
+    let dead = false;
     let enemy = document.getElementById(`enemy-${this.id}`);
-    setInterval(() => {
+    let moving = setInterval(() => {
       if (canMoveHorizontally(enemy, "left") && this.moveleft) {
         this.positionX--;
       } else if (canMoveHorizontally(enemy, "right") && this.moveright) {
@@ -53,8 +60,24 @@ class Enemy {
         this.moveup = true;
       }
       enemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
-      this.isCollistion(enemy)
-     
+      dead = this.isCollistion(enemy);
+      if (dead) {
+        let hero = document.getElementById("hero");
+        hero.classList.add("boom-out");
+
+        clearInterval(moving);
+        hero.classList.add("boom-out");
+
+        setTimeout(() => {
+          // Lock the final state (optional safety net)
+          hero.style.opacity = "0";
+          hero.style.transform = "scale(0) rotate(720deg)";
+
+          // THEN hide it completely (if needed)
+          hero.style.display = "none";
+        }, 650);
+      }
+
       // console.log("/////////////////////////////////////");
       // console.log("top", this.moveup);
       // console.log("right", this.moveright);
@@ -65,6 +88,7 @@ class Enemy {
   }
 
   isCollistion(enemy) {
+    let dead = false;
     let hero = document.getElementById("hero");
     let heroCoordinates = getPosition(hero);
     let enemyCoordinates = getPosition(enemy);
@@ -76,8 +100,8 @@ class Enemy {
       heroAxis.y < enemyAxix.y &&
       heroCoordinates.bottom > enemyCoordinates.top
     ) {
-      console.log("yeees");
-      hero.style.display = "none";
+      // hero.style.display = "none";
+      dead = true;
     }
 
     // top
@@ -86,8 +110,8 @@ class Enemy {
       heroAxis.y > enemyAxix.y &&
       heroCoordinates.top < enemyCoordinates.bottom
     ) {
-      console.log("yeees");
-      hero.style.display = "none";
+      // hero.style.display = "none";
+      dead = true;
     }
     // right
     if (
@@ -95,19 +119,20 @@ class Enemy {
       heroCoordinates.right > enemyCoordinates.left &&
       heroAxis.x < enemyAxix.x
     ) {
-      console.log("yeees");
-      hero.style.display = "none";
+      // hero.style.display = "none";
+      dead = true;
     }
 
     //left
     if (
       this.isCoixial(heroCoordinates, enemyAxix, "x") &&
-      heroCoordinates.left < enemyCoordinates.right&&
+      heroCoordinates.left < enemyCoordinates.right &&
       enemyAxix.x < heroAxis.x
     ) {
-      console.log("yeees");
-      hero.style.display = "none";
+      // hero.style.display = "none";
+      dead = true;
     }
+    return dead;
   }
   isCoixial(coordes, axis, direction) {
     let coixial = false;
@@ -127,7 +152,6 @@ class Enemy {
 
     return coixial;
   }
-
 }
 
 export { Enemy };
