@@ -47,6 +47,7 @@ class Enemy {
         this.moveleft = false;
         this.moveright = true;
       }
+      // mmnm
       if (!canMoveHorizontally(enemy, "right")) {
         // lets block the right
         this.moveright = false;
