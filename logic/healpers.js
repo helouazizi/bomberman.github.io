@@ -110,4 +110,12 @@ export function canMoveHorizontally(element, direction = "left") {
   return can;
 }
 
+export function bringElementAxis(element) {
+  let obj = {};
+  let position = getPosition(element);
+  obj.x = Math.floor(position.x + position.width / 2);
+  obj.y = Math.floor(position.y + position.height / 2);
+  return obj;
+}
+
 export const getPosition = (element) => element.getBoundingClientRect();

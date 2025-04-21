@@ -32,9 +32,8 @@ class Field {
     let fragment = document.createDocumentFragment();
     let board = document.createElement("div");
     board.setAttribute("id", "board");
-    board.style.width = `${this.width*15}px`;
-    console.log(this.width*15,"heeeeeeeee");
-    
+    board.style.width = `${this.width * 15}px`;
+
     board.style.height = `50px`;
     //board.style.border = `5px solid red`;
 
@@ -72,8 +71,6 @@ class Field {
       let wall = document.createElement("div");
       wall.setAttribute("class", "wall");
       wall.setAttribute("id", `wall-${y}`);
-      // wall.style.width = `${this.width}px`;
-      // wall.style.height = `${this.height / 13}px`;
       for (let x = 1; x <= 15; x++) {
         let brick = document.createElement("div");
         brick.setAttribute("class", "brick");
@@ -103,11 +100,15 @@ class Field {
     // Instantiate the enemies:
     this.generateRandomIds(34, 113, "enemies");
 
-    this.randomEnemies.forEach((id) => {
-      let enemy = new Enemy(id);
-      enemy.createEnemy();
-      enemy.moveEnemy();
-    });
+    // this.randomEnemies.forEach((id) => {
+    //   let enemy = new Enemy(id);
+    //   enemy.createEnemy();
+    //   enemy.moveEnemy();
+    // });
+    const first = [...this.randomEnemies][0]
+    let enemy = new Enemy(first);
+    enemy.createEnemy();
+    enemy.moveEnemy();
   }
 
   // Genrate the breakable walls randomly:

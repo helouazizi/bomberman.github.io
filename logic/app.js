@@ -1,19 +1,13 @@
 import { Field } from "./field.js";
 import { Hero } from "./hero.js";
 
-// let feild = new Field(width);
-// feild.CreateBattleField();
-// let hero = new Hero();
-// hero.createHero();
-// hero.moveHero();
-// feild.handleLeftTime();
 function setupGame() {
   const screenWidth = window.innerWidth;
   // Calculate a responsive unit size based on window width
   let unitSize = screenWidth * 0.02;
   unitSize = Math.max(20, Math.min(unitSize, 80));
     // Optional: Clear previous game content
-   document.body.innerHTML = ''
+  document.body.innerHTML = ''
   // Initialize the field and hero with new unit size
   console.log(unitSize,"size");
   
