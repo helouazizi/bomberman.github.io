@@ -47,9 +47,9 @@ class Field {
 
     // lets create score
     let score = document.createElement("div");
-    score.setAttribute("id", "score");
     score.setAttribute("class", "dashboard");
     let scoreText = document.createElement("strong");
+    scoreText.setAttribute("id", "score");
     scoreText.textContent = `${this.score}`;
     score.appendChild(scoreText);
 
@@ -102,7 +102,7 @@ class Field {
     this.generateRandomIds(34, 113, "enemies");
 
     this.randomEnemies.forEach((id) => {
-      let enemy = new Enemy(id , this.left);
+      let enemy = new Enemy(id , this.left,this.width);
       enemy.createEnemy();
        enemy.moveEnemy();
     

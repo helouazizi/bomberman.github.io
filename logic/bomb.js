@@ -49,12 +49,13 @@ class Bomb {
           
         }
       });
-      bombContainer.removeChild(bomb);
+      
     }, 3000);
     setTimeout(() => {
       bombRange.forEach((div) => {
         div.classList.remove("affected");
       });
+      bombContainer.removeChild(bomb);
     }, 4000);
     // lets remove the effect
   }

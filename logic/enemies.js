@@ -5,9 +5,11 @@ import {
   getPosition,
 } from "./healpers.js";
 class Enemy {
-  constructor(id, left) {
+  constructor(id, left, size) {
+    this.width = size
     this.id = id;
     this.left = left;
+    this.score = 0
     this.moveright = true;
     this.moveleft = true;
     this.moveup = true;
@@ -25,7 +27,8 @@ class Enemy {
   }
   //lets move enemies
   moveEnemy() {
-    let dead = false;
+    let herodead = false;
+    let enemyDead = false
     let enemy = document.getElementById(`enemy-${this.id}`);
     let moving = setInterval(() => {
       if (canMoveHorizontally(enemy, "left") && this.moveleft) {
@@ -60,45 +63,46 @@ class Enemy {
         this.moveup = true;
       }
       enemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
-      dead = this.isCollistion(enemy);
-      if (dead) {
+      herodead = this.isCollistion(enemy, "hero", 0);
+      if (document.getElementById("bomb")) {
+        enemyDead = this.isCollistion(enemy, "bomb", this.width);
+      }
+      /////////////////////
+      if (herodead) {
         let hero = document.getElementById("hero");
         hero.classList.add("boom-out");
-
         clearInterval(moving);
         hero.classList.add("boom-out");
-
         setTimeout(() => {
           // Lock the final state (optional safety net)
           hero.style.opacity = "0";
           hero.style.transform = "scale(0) rotate(720deg)";
-
           // THEN hide it completely (if needed)
           hero.style.display = "none";
-        }, 650);
+        }, 1000);
       }
-
-      // console.log("/////////////////////////////////////");
-      // console.log("top", this.moveup);
-      // console.log("right", this.moveright);
-      // console.log("down", this.movedown);
-      // console.log("left", this.moveleft);
-      // console.log("/////////////////////////////////////");
+      /////////////////
+      if (enemyDead && document.querySelectorAll(".affected").length != 0) {
+        enemy.style.display = "none"
+        let Score =  document.getElementById("score")
+        let value = parseInt(Score.innerText)+100
+        Score.textContent = `${value}`
+      }
     }, 20);
   }
 
-  isCollistion(enemy) {
+  isCollistion(enemy, target = "hero", width) {
     let dead = false;
-    let hero = document.getElementById("hero");
-    let heroCoordinates = getPosition(hero);
+    let targetElement = document.getElementById(target);
+    let targetCoordinates = getPosition(targetElement);
     let enemyCoordinates = getPosition(enemy);
-    let heroAxis = bringElementAxis(hero);
+    let targetAxis = bringElementAxis(targetElement);
     let enemyAxix = bringElementAxis(enemy);
 
     if (
-      this.isCoixial(heroCoordinates, enemyAxix, "y") &&
-      heroAxis.y < enemyAxix.y &&
-      heroCoordinates.bottom > enemyCoordinates.top
+      this.isCoixial(targetCoordinates, enemyAxix, "y") &&
+      targetAxis.y < enemyAxix.y &&
+      targetCoordinates.bottom + width > enemyCoordinates.top
     ) {
       // hero.style.display = "none";
       dead = true;
@@ -106,18 +110,18 @@ class Enemy {
 
     // top
     if (
-      this.isCoixial(heroCoordinates, enemyAxix, "y") &&
-      heroAxis.y > enemyAxix.y &&
-      heroCoordinates.top < enemyCoordinates.bottom
+      this.isCoixial(targetCoordinates, enemyAxix, "y") &&
+      targetAxis.y > enemyAxix.y &&
+      targetCoordinates.top - width < enemyCoordinates.bottom
     ) {
       // hero.style.display = "none";
       dead = true;
     }
     // right
     if (
-      this.isCoixial(heroCoordinates, enemyAxix, "x") &&
-      heroCoordinates.right > enemyCoordinates.left &&
-      heroAxis.x < enemyAxix.x
+      this.isCoixial(targetCoordinates, enemyAxix, "x") &&
+      targetCoordinates.right + width > enemyCoordinates.left &&
+      targetAxis.x < enemyAxix.x
     ) {
       // hero.style.display = "none";
       dead = true;
@@ -125,9 +129,9 @@ class Enemy {
 
     //left
     if (
-      this.isCoixial(heroCoordinates, enemyAxix, "x") &&
-      heroCoordinates.left < enemyCoordinates.right &&
-      enemyAxix.x < heroAxis.x
+      this.isCoixial(targetCoordinates, enemyAxix, "x") &&
+      targetCoordinates.left - width < enemyCoordinates.right &&
+      enemyAxix.x < targetAxis.x
     ) {
       // hero.style.display = "none";
       dead = true;
