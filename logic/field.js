@@ -1,5 +1,5 @@
 export { Field };
-import { Enemy } from "./enemies.js";
+// import { Enemy } from "./enemies.js";
 
 // Create a field to set the battle field of
 // our game and the track the progress of the game:
@@ -98,18 +98,7 @@ class Field {
     // Instantiate the enemies:
     this.generateRandomIds(34, 113, "enemies");
 
-    this.randomEnemies.forEach((id) => {
-      let enemy = new Enemy(id , this.width);
-      enemy.createEnemy();
-       enemy.moveEnemy();
-    
-    });
- // Create the pause button:
-    let pause =  document.createElement("button")
-    pause.classList.add("controlBtn")
-    pause.textContent = "pause"
-    pause.value = "pause"
-    document.body.appendChild(pause)
+
   }
 
   // Genrate the breakable walls randomly:
