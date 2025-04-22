@@ -5,7 +5,7 @@ import { Enemy } from "./enemies.js";
 // our game and the track the progress of the game:
 class Field {
   #count = 1;
-  constructor(height) {
+  constructor(height,stage) {
     this.height = height;
     this.width = height;
     this.container = null;
@@ -14,7 +14,7 @@ class Field {
     this.randomEnemies = new Set();
     this.time = 200;
     this.score = 0;
-    this.stage = 5;
+    this.stage = stage;
     this.left = 3;
   }
   // Create the battlefield:
@@ -33,9 +33,7 @@ class Field {
     let board = document.createElement("div");
     board.setAttribute("id", "board");
     board.style.width = `${this.width * 15}px`;
-
     board.style.height = `50px`;
-    //board.style.border = `5px solid red`;
 
     // lets creaete time
     let time = document.createElement("div");
@@ -47,9 +45,9 @@ class Field {
 
     // lets create score
     let score = document.createElement("div");
-    score.setAttribute("id", "score");
     score.setAttribute("class", "dashboard");
     let scoreText = document.createElement("strong");
+    scoreText.setAttribute("id", "score");
     scoreText.textContent = `${this.score}`;
     score.appendChild(scoreText);
 
@@ -58,7 +56,7 @@ class Field {
     attempts.setAttribute("id", "attempts");
     attempts.setAttribute("class", "dashboard");
     let left = document.createElement("p");
-    left.innerHTML = `Left: <span>${this.left - 1}</span>`;
+    left.innerHTML = `Left: <span id="left">${this.left - 1}</span>`;
     attempts.appendChild(left);
 
     fragment.append(time, score, attempts);
@@ -71,8 +69,6 @@ class Field {
       let wall = document.createElement("div");
       wall.setAttribute("class", "wall");
       wall.setAttribute("id", `wall-${y}`);
-      // wall.style.width = `${this.width}px`;
-      // wall.style.height = `${this.height / 13}px`;
       for (let x = 1; x <= 15; x++) {
         let brick = document.createElement("div");
         brick.setAttribute("class", "brick");
@@ -102,17 +98,18 @@ class Field {
     // Instantiate the enemies:
     this.generateRandomIds(34, 113, "enemies");
 
-    // this.randomEnemies.forEach((id) => {
-    //   let enemy = new Enemy(id);
-    //   enemy.createEnemy();
-    //   enemy.moveEnemy();
-    // });
-
-    const firstItem = [...this.randomEnemies][0];
-
-    let enemy = new Enemy(firstItem,this.width);
-    enemy.createEnemy();
-    enemy.moveEnemy();
+    this.randomEnemies.forEach((id) => {
+      let enemy = new Enemy(id , this.width);
+      enemy.createEnemy();
+       enemy.moveEnemy();
+    
+    });
+ // Create the pause button:
+    let pause =  document.createElement("button")
+    pause.classList.add("controlBtn")
+    pause.textContent = "pause"
+    pause.value = "pause"
+    document.body.appendChild(pause)
   }
 
   // Genrate the breakable walls randomly:

@@ -16,8 +16,8 @@ class Hero {
     first.style.position = "relative";
     first.style.overflow = "visible";
     first.appendChild(this.hero);
-    this.hero.style.width = `${Math.floor(this.width-this.step)}px`;
-    this.hero.style.height = `${Math.floor(this.width-this.step)}px`;
+    this.hero.style.width = `${this.width-5}px`;
+    this.hero.style.height = `${this.width-5}px`;
     this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
   }
   // create a function  to handle the movement of the hero:
@@ -25,7 +25,7 @@ class Hero {
     // var lastCall = 0;
     let called = false;
     let lastCall = 0;
-    let limit = 3001;
+    let limit = 4001;
     document.addEventListener("keydown", (e) => {
       console.log(e.key);
       switch (e.key) {

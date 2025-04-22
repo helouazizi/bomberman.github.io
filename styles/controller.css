@@ -1,0 +1,22 @@
+#controller{
+    width: 40vw;
+    height: auto;
+    border-radius: 2vmin;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    gap: 5px;
+}
+
+.controlBtn{
+    padding: 2px 4px;
+    border: 1px solid black;
+    font-style: italic;
+    font-size: medium;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border-radius: 3px;
+    cursor: pointer;
+}
