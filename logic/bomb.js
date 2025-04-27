@@ -40,20 +40,22 @@ class Bomb {
           if (div.classList.contains("gate")) {
             div.classList.remove("gate");
           }
-          if (div.classList.contains("enemy")) {
-            div.classList.remove("enemy");
-          }
+          // if (div.classList.contains("enemy")) {
+          //   div.classList.remove("enemy");
+          // }
           if (div.classList.contains("door")) {
             div.classList.add("door-img");
           }
           
+          
         }
       });
-      
+      bomb.style.backgroundImage = ` url("../img/effect.jpg")`
     }, 3000);
     setTimeout(() => {
       bombRange.forEach((div) => {
         div.classList.remove("affected");
+
       });
       bombContainer.removeChild(bomb);
     }, 4000);

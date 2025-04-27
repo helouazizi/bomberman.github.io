@@ -73,15 +73,14 @@ class Enemy {
       enemy.style.transform = `translate( ${this.positionX}px,${this.positionY}px)`;
       let hero = document.getElementById("hero");
       let bomb = document.getElementById("bomb");
-      if (hero && enemy) {
+      if (hero && enemy ) {
         herodead = isCollistion(enemy, hero, 0);
       }
       if (bomb) {
-        herodead =
-          isCollistion(hero, bomb, this.width) &&
-          document.querySelectorAll(".affected").length != 0;
+        herodead = isCollistion(hero, bomb, this.width) && document.querySelectorAll(".affected").length != 0 || isCollistion(hero,enemy,0)
         enemyDead = isCollistion(enemy, bomb, this.width);
       }
+
 
       // In case the hero is dead:
       if (herodead) {

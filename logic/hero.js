@@ -18,16 +18,13 @@ class Hero {
     first.style.position = "relative";
     first.style.overflow = "visible";
     first.appendChild(this.hero);
-    this.hero.style.width = `${this.width - 5}px`;
-    this.hero.style.height = `${this.width - 5}px`;
+    this.hero.style.width = `${this.width - 10}px`;
+    this.hero.style.height = `${this.width - 10}px`;
     this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
   }
 
   // create a function  to handle the movement of the hero:
-  moveHero() {
-  
-    console.log(this.pause);
-    
+  moveHero() {    
     // var lastCall = 0;
     let called = false;
     let lastCall = 0;
@@ -43,9 +40,7 @@ class Hero {
               bomb.create();
               lastCall = Date.now();
             }
-
             called = true;
-
             if (called && Date.now() - lastCall >= limit) {
               bomb.create(); //
               lastCall = Date.now();
@@ -141,16 +136,10 @@ class Hero {
   win() {
     
     let door = document.getElementsByClassName("door")[0];
-    console.log(this.hero , "000000000000000000000");
-    
     // lets get the score
     let Score = document.getElementById("score");
     if (Score) {
       let value = parseInt(Score.innerText);
-     
-      console.log(this.hero,door , "win win");
-      
-      
       if (value >= 400 && isCollistion(this.hero,door,0)) {
         let popup = document.createElement("div");
         popup.setAttribute("id", "popup");
