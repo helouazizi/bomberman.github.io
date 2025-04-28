@@ -120,53 +120,53 @@ class Control {
     }
   }
 
-  
-
   gameController() {
     if (this.gameStatus === "initial") {
-      console.log("create");
-      this.createBoard();
-      this.gameStatus = "started";
+      this.startstory(() => {
+        // This will only run AFTER the story is done
+        this.createBoard();
+
+        this.gameStatus = "started";
+
+        this.setupGame(); // Create fields, hero, enemies, etc.
+      });
     }
-    ////////// resizing ///////////////
+  }
+
+  setupGame() {
     const screenWidth = window.innerWidth;
     let unitSize = screenWidth * 0.02;
     unitSize = Math.max(20, Math.min(unitSize, 80));
-    // document.body.innerHTML = "";
-    ////////////// classes ////////////////
+
     let field = new Field(unitSize, this.stage);
     let hero = new Hero(unitSize);
-    ////////////////////////////
 
-    //////////////// events //////////////////
     let controlBtns = document.querySelectorAll(".controlBtn");
 
     controlBtns.forEach((btn) => {
-      console.log(btn);
       btn.addEventListener("click", (e) => {
         if (e.target.value === "start") {
+          let story = document.getElementById("story");
+          story.classList.add("hidden");
           this.pausebtn.classList.remove("hidden");
           this.pausebtn.classList.add("show");
           this.startbtn.classList.remove("show");
           this.startbtn.classList.add("hidden");
+
           field.CreateBattleField();
           this.counter = document.getElementById("timeCounter");
           hero.createHero();
           hero.moveHero();
 
-          this.gameController();
           let randomIds = field.randomEnemies;
-          console.log(randomIds);
           randomIds.forEach((id) => {
             let enemy = new Enemy(id, field.width);
             enemy.createEnemy();
             enemy.moveEnemy();
-
             this.enemies.push(enemy);
           });
 
           this.startTimer();
-          console.log("interval id: ", this.intervalId);
         } else if (e.target.value === "restart") {
           location.reload();
         } else if (e.target.value === "resume") {
@@ -204,7 +204,9 @@ class Control {
               this.controller.style.display = "none";
 
               setTimeout(() => {
-                location.reload();
+                this.losestory(() => {
+                  location.reload();
+                });
               }, 2000);
             }
           }
@@ -220,9 +222,84 @@ class Control {
         }
       });
     });
+  }
 
-    /////////////////////  win //////////////
-   
+  startstory(onFinish) {
+    let body = document.body;
+    body.innerHTML = "";
+
+    let div = document.createElement("div");
+    div.id = "story";
+    let img = document.createElement("div");
+    img.classList.add("img");
+
+    const paragraphs = [
+      "The year is 3087. Far beyond the Milky Way...",
+      "One dark night, space raiders from a rival galaxy steal the Core...",
+      "You are Zylo, a young alien tasked with a desperate mission...",
+      "Board your hovercraft, navigate the cosmic fields and chase down the raiders!",
+    ];
+
+    let p = document.createElement("p");
+    p.classList.add("start");
+    p.textContent = paragraphs[0];
+
+    div.append(img, p);
+    body.appendChild(div);
+
+    let index = 1;
+    const interval = setInterval(() => {
+      if (index < paragraphs.length) {
+        p.textContent = paragraphs[index];
+        index++;
+      } else {
+        clearInterval(interval);
+        if (typeof onFinish === "function") {
+          setTimeout(() => {
+            div.classList.add("hidden");
+            onFinish(); // <-- Call the function when the story is finished
+          }, 1000); // wait 1 second to make it smooth
+        }
+      }
+    }, 5000);
+  }
+  losestory(onFinish) {
+    let body = document.body;
+    body.innerHTML = "";
+
+    let div = document.createElement("div");
+    div.id = "story";
+    let img = document.createElement("div");
+    img.classList.add("img");
+
+    const paragraphs = [
+      "The last flicker of Zelora's energy dies out as the Core remains in enemy hands.",
+      "The once-lush planet becomes a barren wasteland, its people scattered among the stars.",
+      "Zylo's mission ends in silence... but legends say another hero may one day rise to finish what was started.",
+    ];
+
+    let p = document.createElement("p");
+    p.classList.add("start");
+    p.textContent = paragraphs[0];
+
+    div.append(img, p);
+    body.appendChild(div);
+
+    let index = 1;
+    const interval = setInterval(() => {
+      if (index < paragraphs.length) {
+        p.textContent = paragraphs[index];
+        index++;
+      } else {
+        clearInterval(interval);
+        if (typeof onFinish === "function") {
+          setTimeout(() => {
+            div.classList.add("hidden");
+            onFinish(); // <-- Call the function when the story is finished
+          }, 1000); // wait 1 second to make it smooth
+        }
+      }
+    }, 5000);
   }
 }
 

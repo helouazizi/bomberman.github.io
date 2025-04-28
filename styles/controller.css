@@ -57,3 +57,22 @@
   font-style: italic;
   z-index: 3;
 }
+.img {
+  background-image: url('your-image-url.jpg');
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* So text appears above */
+}
+
+.start {
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20vh;
+  padding: 0 20px;
+}

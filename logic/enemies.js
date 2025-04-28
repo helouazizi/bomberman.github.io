@@ -124,28 +124,7 @@ class Enemy {
       this.requestId = null;
     }
   }
-  // win() {
-  //   // lets get the score
-  //   let Score = document.getElementById("score");
-  //   if (Score) {
-  //     let value = parseInt(Score.innerText);
-  //     let hero = document.getElementById("hero");
-  //     let door = document.getElementsByClassName("door");
-  //     // let IsONDoor =
-  //     if (value >= 400 && isCollistion(hero,door,this.width)) {
-  //       let popup = document.createElement("div");
-  //       popup.setAttribute("id", "popup");
-  //       popup.classList.add("show");
-  //       popup.textContent = "You won!!!";
-  //       document.body.appendChild(popup);
-  //       let controller = document.getElementById("controller");
-  //       controller.style.display = "none";
-  //       setTimeout(() => {
-  //         location.reload();
-  //       }, 2000);
-  //     }
-  //   }
-  // }
+
   resumeAnimation() {
     if (!this.paused) return;
     this.paused = false;
