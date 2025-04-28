@@ -213,8 +213,8 @@ class Hero {
 
     let div = document.createElement("div");
     div.id = "story";
-    let img = document.createElement("div");
-    img.classList.add("img");
+    let imgdiv = document.createElement("div");
+    imgdiv.classList.add("img");
 
     const paragraphs = [
       "Against all odds, Zylo defeats the raider leader and seizes back the Core of Life.",
@@ -224,10 +224,10 @@ class Hero {
     ];
 
     let p = document.createElement("p");
-    p.classList.add("start");
+    p.classList.add("start_history");
     p.textContent = paragraphs[0];
 
-    div.append(img, p);
+    div.append(imgdiv, p);
     body.appendChild(div);
 
     let index = 1;
