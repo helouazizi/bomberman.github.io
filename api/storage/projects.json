@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "Push Swap",
+        "description": "Sort stacks using custom operations",
+        "tags": ["Go", "Algorithms"],
+        "repo_url": "https://github.com/you/push-swap"
+    },
+    {
+        "id": 2,
+        "title": "Web Forum",
+        "description": "Use database and sotial ops",
+        "tags": ["Go", "sqlite3"],
+        "repo_url": "https://github.com/you/Web-forum"
+    },
+    {
+        "id": 3,
+        "title": "Go Realoaded",
+        "description": "First project in golang ",
+        "tags": ["Go"],
+        "repo_url": "https://github.com/you/go-realoaded"
+    }
+]
