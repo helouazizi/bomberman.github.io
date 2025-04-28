@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"sort"
 
 	"portfolio-api/models"
 )
+
 
 func LoadJSON[T any](filePath string, target *[]T) error {
 	// lets read the json file data into a slice of bytes
@@ -23,8 +25,9 @@ func LoadJSON[T any](filePath string, target *[]T) error {
 	return nil
 }
 
-func SaveJSON[T any](filePath string, newData T) error {
-	var existingData []T
+func SaveJSON(filePath string, newData models.Player) error {
+	var existingData []models.Player
+
 	// Step 1: Check if file exists and read old data
 	bytes, err := os.ReadFile(filePath)
 	if err == nil {
@@ -42,7 +45,12 @@ func SaveJSON[T any](filePath string, newData T) error {
 	// Step 2: Append newData to existingData
 	existingData = append(existingData, newData)
 
-	// Step 3: Marshal and Save back to file
+	// Step 3: Sort players by Score in descending order (highest score first)
+	sort.Slice(existingData, func(i, j int) bool {
+		return existingData[i].Score > existingData[j].Score
+	})
+
+	// Step 4: Marshal and Save back to file
 	newBytes, err := json.MarshalIndent(existingData, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal JSON: %w", err)

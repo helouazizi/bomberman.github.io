@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"portfolio-api/models"
 	"portfolio-api/utils"
@@ -15,13 +16,15 @@ func GetScores(w http.ResponseWriter, r *http.Request) {
 		utils.RespondWithError(w, models.Error{Message: "Method Not Allowed", Code: http.StatusMethodNotAllowed})
 		return
 	}
-	var projects []models.Player
-	err := utils.LoadJSON("./storage/scores.json", &projects)
+	var players []models.Player
+	err := utils.LoadJSON("./storage/scores.json", &players)
 	if err != nil {
 		utils.RespondWithError(w, models.Error{Message: "Internal Server Error", Code: http.StatusInternalServerError})
 		return
 	}
-	utils.RespondWithJSON(w, http.StatusOK, projects)
+	// lets sort thr players
+
+	utils.RespondWithJSON(w, http.StatusOK, players)
 }
 
 func SaveScores(w http.ResponseWriter, r *http.Request) {
@@ -36,6 +39,11 @@ func SaveScores(w http.ResponseWriter, r *http.Request) {
 		utils.RespondWithError(w, models.Error{Message: "Inetrnal Server Error", Code: http.StatusInternalServerError})
 		return
 	}
+	if player.Name == "" || player.Score < 0 {
+		utils.RespondWithError(w, models.Error{Message: "Bad Request", Code: http.StatusBadRequest})
+		return
+	}
+	player.Time = time.Now().Format(time.DateTime)
 
 	err := utils.SaveJSON("./storage/scores.json", player)
 	if err != nil {
