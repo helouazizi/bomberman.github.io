@@ -1,0 +1,9 @@
+.enemy{
+    position: absolute;
+    background-image:url("../img/monster.png") ;
+    /* width: 99%;
+    height: 99%; */
+    z-index: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
