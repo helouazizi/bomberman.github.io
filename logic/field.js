@@ -5,7 +5,7 @@ export { Field };
 // our game and the track the progress of the game:
 class Field {
   #count = 1;
-  constructor(height,stage) {
+  constructor(height, stage) {
     this.height = height;
     this.width = height;
     this.container = null;
@@ -30,8 +30,7 @@ class Field {
   // Create the battle field:
   CreateBattleField() {
     this.Create();
-    console.log(this.width,"width");
-    
+
     let fragment = document.createDocumentFragment();
     let board = document.createElement("div");
     board.setAttribute("id", "board");
@@ -62,11 +61,26 @@ class Field {
     left.innerHTML = `Left: <span id="left">${this.left}</span>`;
     attempts.appendChild(left);
 
+    // create form
+    // let display the input
+    let playerForm = document.createElement("div");
+    playerForm.classList.add("playerForm")
+    playerForm.setAttribute("id","playerForm")
+    playerForm.classList.add("hidden");
+    playerForm.classList.remove("show");
+    playerForm.innerHTML = `
+     
+      <input type="text" id="player-name" placeholder="Enter your name" required />
+      <button class="controlBtn" value="submit" >Submit</button>
+  
+ `;
+  
     fragment.append(time, score, attempts);
     board.appendChild(fragment);
     this.container.appendChild(board);
     this.battleField = document.createElement("div");
     this.battleField.setAttribute("id", "battleField");
+    
 
     for (let y = 1; y <= 13; y++) {
       let wall = document.createElement("div");
@@ -100,8 +114,7 @@ class Field {
     this.createGates();
     // Instantiate the enemies:
     this.generateRandomIds(34, 113, "enemies");
-
-
+    this.container.appendChild(playerForm)
   }
 
   // Genrate the breakable walls randomly:
@@ -163,6 +176,4 @@ class Field {
 
   // Get the position of each element within
   getPosition = (element) => element.getBoundingClientRect();
-
-
 }

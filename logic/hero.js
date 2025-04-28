@@ -1,6 +1,6 @@
 export { Hero };
 import { Bomb } from "./bomb.js";
-import { isCollistion } from "./healpers.js"
+import { isCollistion } from "./healpers.js";
 class Hero {
   constructor(size) {
     this.hero = null;
@@ -24,13 +24,13 @@ class Hero {
   }
 
   // create a function  to handle the movement of the hero:
-  moveHero() {    
+  moveHero() {
     // var lastCall = 0;
     let called = false;
     let lastCall = 0;
     let limit = 4001;
     document.addEventListener("keydown", (e) => {
-        if (!this.pause) {
+      if (!this.pause) {
         switch (e.key) {
           case " ":
             let axis = this.bringHeroAxis();
@@ -50,29 +50,29 @@ class Hero {
             if (this.canMoveVertically(this.hero, "down")) {
               this.y += 2;
             }
-            this.win()
+            this.win();
             break;
           case "ArrowUp":
             if (this.canMoveVertically(this.hero, "up")) {
               this.y -= 2;
             }
-            this.win()
+            this.win();
             break;
           case "ArrowRight":
             if (this.canMoveHorizontally(this.hero, "right")) {
               this.x += 2;
             }
-            this.win()
+            this.win();
             break;
           case "ArrowLeft":
             if (this.canMoveHorizontally(this.hero, "left")) {
               this.x -= 2;
             }
-            this.win()
+            this.win();
         }
         this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
       }
-      });
+    });
   }
 
   // check the horizontal movement:
@@ -93,7 +93,6 @@ class Hero {
     });
     return can;
   }
-
 
   // Get all the bricks in the horizontal range:
   getHorizontalBricks(element, direction = "left") {
@@ -134,13 +133,12 @@ class Hero {
     return can;
   }
   win() {
-    
     let door = document.getElementsByClassName("door")[0];
     // lets get the score
     let Score = document.getElementById("score");
     if (Score) {
       let value = parseInt(Score.innerText);
-      if (value >= 400 && isCollistion(this.hero,door,0)) {
+      if (/*value >= 400 && */isCollistion(this.hero, door, 0)) {
         let popup = document.createElement("div");
         popup.setAttribute("id", "popup");
         popup.classList.add("show");
@@ -148,9 +146,12 @@ class Hero {
         document.body.appendChild(popup);
         let controller = document.getElementById("controller");
         controller.style.display = "none";
-        setTimeout(() => {
-          location.reload();
-        }, 2000);
+        let bouseBtn = document.getElementById("pauseBtn")
+        let form = document.getElementById("playerForm")
+       
+        bouseBtn.click()
+        form.classList.remove("hidden")
+        form.classList.add("show")
       }
     }
   }
@@ -175,7 +176,6 @@ class Hero {
     });
     return elements;
   }
-
   // gring the center of the hero
   bringHeroAxis() {
     let obj = {};

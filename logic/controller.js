@@ -120,14 +120,45 @@ class Control {
     }
   }
 
-  
+  postScore() {
+    const playerName = document.getElementById("player-name").value.trim();
+    const playerScore = document.getElementById("score").innerText;
+    console.log(playerName, playerScore, "info");
+
+    if (!playerName) {
+      alert("Please enter your name.");
+      return;
+    }
+
+    fetch("http://localhost:5051/api/scores", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: playerName, score: parseInt(playerScore) }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log("Failed to submit player");
+          throw new Error("Failed to submit player");
+        }
+        return response.json();
+      })
+      .then((updatedScores) => {
+        console.log(updatedScores);
+      })
+      .catch((error) => {
+        alert("There was an error. Please try again.");
+      });
+  }
 
   gameController() {
     if (this.gameStatus === "initial") {
-      console.log("create");
       this.createBoard();
       this.gameStatus = "started";
     }
+
+    console.log(document.getElementsByClassName("door")[0], "dooooor");
     ////////// resizing ///////////////
     const screenWidth = window.innerWidth;
     let unitSize = screenWidth * 0.02;
@@ -140,9 +171,7 @@ class Control {
 
     //////////////// events //////////////////
     let controlBtns = document.querySelectorAll(".controlBtn");
-
     controlBtns.forEach((btn) => {
-      console.log(btn);
       btn.addEventListener("click", (e) => {
         if (e.target.value === "start") {
           this.pausebtn.classList.remove("hidden");
@@ -156,17 +185,14 @@ class Control {
 
           this.gameController();
           let randomIds = field.randomEnemies;
-          console.log(randomIds);
           randomIds.forEach((id) => {
             let enemy = new Enemy(id, field.width);
             enemy.createEnemy();
             enemy.moveEnemy();
-
             this.enemies.push(enemy);
           });
 
           this.startTimer();
-          console.log("interval id: ", this.intervalId);
         } else if (e.target.value === "restart") {
           location.reload();
         } else if (e.target.value === "resume") {
@@ -210,19 +236,22 @@ class Control {
           }
 
           hero.pause = true;
-          console.log("The left time ===>>", this.leftTime);
 
           this.enemies.forEach((enemy) => {
             enemy.pauseAnimation();
           });
-        } else {
-          console.log("Wrong choice!!!");
+        } else if (e.target.value === "submit") {
+          console.log("hhhhhhhhhhhhhhhhhhh");
+          this.controller.classList.add("show");
+          this.controller.classList.remove("hidden");
+          this.postScore();
+          setTimeout(()=>{},5000)
+          // return
         }
       });
     });
 
     /////////////////////  win //////////////
-   
   }
 }
 

@@ -10,7 +10,6 @@ import (
 	"portfolio-api/models"
 )
 
-
 func LoadJSON[T any](filePath string, target *[]T) error {
 	// lets read the json file data into a slice of bytes
 	content, err := os.ReadFile(filePath)
@@ -64,9 +63,16 @@ func SaveJSON(filePath string, newData models.Player) error {
 	return nil
 }
 
-func EnableCORS(w http.ResponseWriter) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+func EnableCORS(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*") // Allow all origins — for dev
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	// Handle preflight request
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
 }
 
 func RespondWithError(w http.ResponseWriter, err models.Error) {
