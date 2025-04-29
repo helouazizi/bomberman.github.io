@@ -3,9 +3,8 @@ import { Field } from "./field.js";
 import { Hero } from "./hero.js";
 
 class Control {
-  constructor(stage, lives, score) {
+  constructor(stage, score) {
     this.stage = stage;
-    this.lives = lives;
     this.score = score;
     this.gameStatus = "initial";
     this.controller = null;
@@ -147,7 +146,6 @@ class Control {
       btn.addEventListener("click", (e) => {
         if (e.target.value === "start") {
           let story = document.getElementById("story");
-          story.classList.add("hidden");
           this.pausebtn.classList.remove("hidden");
           this.pausebtn.classList.add("show");
           this.startbtn.classList.remove("show");
@@ -228,10 +226,8 @@ class Control {
     let body = document.body;
     body.innerHTML = "";
 
-    let div = document.createElement("div");
-    div.id = "story";
-    let img = document.createElement("div");
-    img.classList.add("img");
+    let story = document.createElement("div");
+    story.id = "story";
 
     const paragraphs = [
       "The year is 3087. Far beyond the Milky Way...",
@@ -240,25 +236,23 @@ class Control {
       "Board your hovercraft, navigate the cosmic fields and chase down the raiders!",
     ];
 
-    let p = document.createElement("p");
-    p.classList.add("start");
-    p.textContent = paragraphs[0];
+    story.textContent = paragraphs[0];
 
-    div.append(img, p);
-    body.appendChild(div);
+    // story.append(p);
+    body.appendChild(story);
 
     let index = 1;
     const interval = setInterval(() => {
       if (index < paragraphs.length) {
-        p.textContent = paragraphs[index];
+        story.textContent = paragraphs[index];
         index++;
       } else {
         clearInterval(interval);
         if (typeof onFinish === "function") {
           setTimeout(() => {
-            div.classList.add("hidden");
-            onFinish(); // <-- Call the function when the story is finished
-          }, 1000); // wait 1 second to make it smooth
+            story.remove()
+            onFinish()
+          }, 1000)
         }
       }
     }, 5000);
@@ -269,7 +263,7 @@ class Control {
 
     let div = document.createElement("div");
     div.id = "story";
-    let img = document.createElement("div");
+    let img = document.createElement("img");
     img.classList.add("img");
 
     const paragraphs = [
@@ -303,5 +297,5 @@ class Control {
   }
 }
 
-let controller = new Control(1, 3, 0);
+let controller = new Control(1, 0);
 controller.gameController();

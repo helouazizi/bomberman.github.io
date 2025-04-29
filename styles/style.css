@@ -15,9 +15,7 @@ body{
     justify-content: center;
     gap: 2vh;
     align-items: center;
-    /* background-image: url("../background.png"); */
     height: 100dvh;
-    /* background-image: linear-gradient(to right, #789278, #0cfc8c); */
     background-color: #C0C78C;
     background-size: cover;
     background-repeat: no-repeat;
@@ -28,4 +26,23 @@ body{
 
 .show{
     display: flex;
+}
+
+#story{
+    width: 20vw;
+    min-width: 300px;
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+flex-wrap: wrap;
+font-family: Georgia, 'Times New Roman', Times, serif;
+font-weight: 900;
+font-size: x-large;
+font-style: italic;
+color: antiquewhite;
+padding: 20px 10px;
+border-radius: 2vmin 0 2vmin 0;
+background-color: rgba(0, 0, 0, 0.247);
+overflow-wrap: break-word;
+z-index: 3;
 }

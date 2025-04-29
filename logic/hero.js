@@ -211,10 +211,8 @@ class Hero {
     let body = document.body;
     body.innerHTML = "";
 
-    let div = document.createElement("div");
+    let story = document.createElement("story");
     div.id = "story";
-    let imgdiv = document.createElement("div");
-    imgdiv.classList.add("img");
 
     const paragraphs = [
       "Against all odds, Zylo defeats the raider leader and seizes back the Core of Life.",
@@ -223,17 +221,13 @@ class Hero {
       "Zylo becomes a hero, and a new age of peace begins — thanks to your bravery!",
     ];
 
-    let p = document.createElement("p");
-    p.classList.add("start_history");
-    p.textContent = paragraphs[0];
-
-    div.append(imgdiv, p);
-    body.appendChild(div);
+    story.textContent = paragraphs[0];
+    body.appendChild(story);
 
     let index = 1;
     const interval = setInterval(() => {
       if (index < paragraphs.length) {
-        p.textContent = paragraphs[index];
+        story.textContent = paragraphs[index];
         index++;
       } else {
         clearInterval(interval);
@@ -250,32 +244,12 @@ class Hero {
     // Pause the game logic here (optional if you want automatic pause)
 
     // Create a story overlay div
-    let overlay = document.createElement("div");
-    overlay.id = "midstory-overlay";
-    overlay.style.position = "fixed";
-    overlay.style.top = "0";
-    overlay.style.left = "0";
-    overlay.style.width = "100%";
-    overlay.style.height = "100%";
-    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)"; // semi-transparent black
-    overlay.style.zIndex = "1000"; // Make sure it is above everything
-    overlay.style.display = "flex";
-    overlay.style.flexDirection = "column";
-    overlay.style.justifyContent = "center";
-    overlay.style.alignItems = "center";
-    overlay.style.color = "white";
-    overlay.style.fontSize = "24px";
-    overlay.style.padding = "20px";
-    overlay.style.textAlign = "center";
+    let story = document.createElement("div");
+    story.id = "story";
 
-    // Image (if needed)
-    let img = document.createElement("div");
-    img.classList.add("img"); // You control img CSS separately
-    img.style.width = "200px";
-    img.style.height = "200px";
-    img.style.backgroundSize = "cover";
-    img.style.backgroundPosition = "center";
-    img.style.marginBottom = "20px";
+
+
+
 
     // Text paragraph
     const paragraphs = [
@@ -285,31 +259,26 @@ class Hero {
       "Zylo must stay sharp, push forward, and reach the Core before the last light of Zelora fades.",
     ];
 
-    let p = document.createElement("p");
-    p.classList.add("start");
-    p.textContent = paragraphs[0];
+    story.textContent = paragraphs[0]
 
-    overlay.appendChild(img);
-    overlay.appendChild(p);
-    document.body.appendChild(overlay);
+    document.body.appendChild(story)
 
     let index = 1;
     const interval = setInterval(() => {
       if (index < paragraphs.length) {
-        p.textContent = paragraphs[index];
-        index++;
+        story.textContent = paragraphs[index]
+        index++
       } else {
         clearInterval(interval);
         if (typeof onFinish === "function") {
           setTimeout(() => {
-            overlay.remove(); // Remove the overlay
-            // Resume game
-            onFinish(); // Call back when story is done
-          }, 1000);
+            story.remove()
+            onFinish()
+          }, 1000)
         }
       }
-    }, 5000);
+    }, 5000)
   }
 
-  getPosition = (element) => element.getBoundingClientRect();
+  getPosition = (element) => element.getBoundingClientRect()
 }
