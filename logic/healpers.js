@@ -54,12 +54,12 @@ function getHorizontalBricks(element, direction = "left") {
   });
   return elements;
 }
-function getVerticalBricks(element,direction = "down") {
+function getVerticalBricks(element, direction = "down") {
   let bricks = document.querySelectorAll(".solid");
-  let position =getPosition(element);
+  let position = getPosition(element);
   let elements = [];
   bricks.forEach((brick) => {
-    let hinder =getPosition(brick);
+    let hinder = getPosition(brick);
     if (
       position.right < hinder.right + position.width &&
       position.left > hinder.left - position.width
@@ -74,17 +74,17 @@ function getVerticalBricks(element,direction = "down") {
   return elements;
 }
 
-export function canMoveVertically(element,direction = "down") {
+export function canMoveVertically(element, direction = "down") {
   let can = true;
-  let elements = getVerticalBricks(element,direction);
+  let elements = getVerticalBricks(element, direction);
   let position = getPosition(element);
   elements.forEach((element) => {
     if (direction === "up") {
-      if (position.top -3 < element.bottom) {
+      if (position.top - 3 < element.bottom) {
         can = false;
       }
     } else {
-      if (position.bottom + 3 >element.top) {
+      if (position.bottom + 3 > element.top) {
         can = false;
       }
     }
@@ -102,7 +102,7 @@ export function canMoveHorizontally(element, direction = "left") {
         can = false;
       }
     } else {
-      if (!(position.left -3 > element.right)) {
+      if (!(position.left - 3 > element.right)) {
         can = false;
       }
     }
@@ -158,12 +158,11 @@ export function isCollistion(target1, targetElement, width) {
     targetCoordinates.left - width < target1Coordinates.right &&
     target1Axix.x < targetAxis.x
   ) {
-    // hero.style.display = "none";
     dead = true;
   }
   return dead;
 }
- function isCoixial(coordes, axis, direction) {
+function isCoixial(coordes, axis, direction) {
   let coixial = false;
   switch (direction) {
     case "y":
@@ -180,6 +179,72 @@ export function isCollistion(target1, targetElement, width) {
   }
 
   return coixial;
+}
+
+// Create a function  to generate the story of the game:
+export function generate_game_story(paragraph_index, img_index) {
+  let body = document.body;
+  body.innerHTML = "";
+
+  let story = document.createElement("div");
+  story.id = "story";
+
+  let text = document.createElement("p")
+  text.setAttribute("id", "story_text")
+
+  let img_story = document.createElement("img")
+  img_story.setAttribute("id", "story_text")
+  
+
+  const paragraphs = [
+    ["The year is 3087. Far beyond the Milky Way...",
+      "One dark night, space raiders from a rival galaxy steal the Core...",
+      "You are Zylo, a young alien tasked with a desperate mission...",
+      "Board your hovercraft, navigate the cosmic fields and chase down the raiders!",],
+      [
+        "After countless battles and narrow escapes, Zylo picks up a distress signal.",
+        'It’s a transmission from a captured Zeloran elder, revealing the raiders hideout hidden inside a massive asteroid belt called the "Crimson Thorns."',
+        "However, it’s a trap: the path is filled with deadly drones and collapsing meteors!",
+        "Zylo must stay sharp, push forward, and reach the Core before the last light of Zelora fades.",
+      ],
+      [
+        "Against all odds, Zylo defeats the raider leader and seizes back the Core of Life.",
+        "Returning to Zelora, Zylo restores the Core to its sacred temple.",
+        "Slowly, life blooms again, and the skies turn from a dull gray to vibrant colors.",
+        "Zylo becomes a hero, and a new age of peace begins — thanks to your bravery!",
+      ],
+      [
+        "The last flicker of Zelora's energy dies out as the Core remains in enemy hands.",
+        "The once-lush planet becomes a barren wasteland, its people scattered among the stars.",
+        "Zylo's mission ends in silence... but legends say another hero may one day rise to finish what was started.",
+      ]
+  ];
+
+  const images = [
+    "../img/start_story_img.png",
+    "../img/mid_story_img.png",
+    "../img/win_story_img.png",
+    "../img/lose_story_img.png",
+  ]
+
+  text.textContent = paragraphs[paragraph_index][0];
+  img_story.src = images[img_index]
+  story.append(text, img_story);
+
+  body.appendChild(story);
+
+  let index = 1;
+  const interval = setInterval(() => {
+    if (index < paragraphs.length) {
+      text.textContent = paragraphs[paragraph_index][index];
+      index++;
+    } else {
+      clearInterval(interval);
+        setTimeout(() => {
+          story.remove()
+        }, 1000)
+    }
+  }, 5000);
 }
 
 export const getPosition = (element) => element.getBoundingClientRect();

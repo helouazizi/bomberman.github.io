@@ -1,6 +1,7 @@
 import { Enemy } from "./enemies.js";
 import { Field } from "./field.js";
 import { Hero } from "./hero.js";
+import { generate_game_story} from "./healpers.js"
 
 class Control {
   constructor(stage, score) {
@@ -121,14 +122,15 @@ class Control {
 
   gameController() {
     if (this.gameStatus === "initial") {
-      this.startstory(() => {
+      generate_game_story(0,0)
+
         // This will only run AFTER the story is done
         this.createBoard();
 
         this.gameStatus = "started";
 
         this.setupGame(); // Create fields, hero, enemies, etc.
-      });
+      
     }
   }
 
@@ -222,79 +224,87 @@ class Control {
     });
   }
 
-  startstory(onFinish) {
-    let body = document.body;
-    body.innerHTML = "";
+  // startstory(onFinish) {
+  //   let body = document.body;
+  //   body.innerHTML = "";
 
-    let story = document.createElement("div");
-    story.id = "story";
+  //   let story = document.createElement("div");
+  //   story.id = "story";
 
-    const paragraphs = [
-      "The year is 3087. Far beyond the Milky Way...",
-      "One dark night, space raiders from a rival galaxy steal the Core...",
-      "You are Zylo, a young alien tasked with a desperate mission...",
-      "Board your hovercraft, navigate the cosmic fields and chase down the raiders!",
-    ];
+  //   let text = document.createElement("p")
+  //   text.setAttribute("id", "story_text")
 
-    story.textContent = paragraphs[0];
+  //   let img_story = document.createElement("img")
+  //   img_story.setAttribute("id", "story_text")
+  //   img_story.src = "../img/start_story_img.png"
 
-    // story.append(p);
-    body.appendChild(story);
+  //   const paragraphs = [
+  //     "The year is 3087. Far beyond the Milky Way...",
+  //     "One dark night, space raiders from a rival galaxy steal the Core...",
+  //     "You are Zylo, a young alien tasked with a desperate mission...",
+  //     "Board your hovercraft, navigate the cosmic fields and chase down the raiders!",
+  //   ];
 
-    let index = 1;
-    const interval = setInterval(() => {
-      if (index < paragraphs.length) {
-        story.textContent = paragraphs[index];
-        index++;
-      } else {
-        clearInterval(interval);
-        if (typeof onFinish === "function") {
-          setTimeout(() => {
-            story.remove()
-            onFinish()
-          }, 1000)
-        }
-      }
-    }, 5000);
-  }
-  losestory(onFinish) {
-    let body = document.body;
-    body.innerHTML = "";
+  //   text.textContent = paragraphs[0];
 
-    let div = document.createElement("div");
-    div.id = "story";
-    let img = document.createElement("img");
-    img.classList.add("img");
+  //   story.append(text, img_story);
 
-    const paragraphs = [
-      "The last flicker of Zelora's energy dies out as the Core remains in enemy hands.",
-      "The once-lush planet becomes a barren wasteland, its people scattered among the stars.",
-      "Zylo's mission ends in silence... but legends say another hero may one day rise to finish what was started.",
-    ];
+  //   body.appendChild(story);
 
-    let p = document.createElement("p");
-    p.classList.add("start");
-    p.textContent = paragraphs[0];
+  //   let index = 1;
+  //   const interval = setInterval(() => {
+  //     if (index < paragraphs.length) {
+  //       text.textContent = paragraphs[index];
+  //       index++;
+  //     } else {
+  //       clearInterval(interval);
+  //       if (typeof onFinish === "function") {
+  //         setTimeout(() => {
+  //           story.remove()
+  //           onFinish()
+  //         }, 1000)
+  //       }
+  //     }
+  //   }, 5000);
+  // }
+//   losestory(onFinish) {
+//     let body = document.body;
+//     body.innerHTML = "";
 
-    div.append(img, p);
-    body.appendChild(div);
+//     let div = document.createElement("div");
+//     div.id = "story";
+//     let img = document.createElement("img");
+//     img.classList.add("img");
 
-    let index = 1;
-    const interval = setInterval(() => {
-      if (index < paragraphs.length) {
-        p.textContent = paragraphs[index];
-        index++;
-      } else {
-        clearInterval(interval);
-        if (typeof onFinish === "function") {
-          setTimeout(() => {
-            div.classList.add("hidden");
-            onFinish(); // <-- Call the function when the story is finished
-          }, 1000); // wait 1 second to make it smooth
-        }
-      }
-    }, 5000);
-  }
+//     const paragraphs = [
+//       "The last flicker of Zelora's energy dies out as the Core remains in enemy hands.",
+//       "The once-lush planet becomes a barren wasteland, its people scattered among the stars.",
+//       "Zylo's mission ends in silence... but legends say another hero may one day rise to finish what was started.",
+//     ];
+
+//     let p = document.createElement("p");
+//     p.classList.add("start");
+//     p.textContent = paragraphs[0];
+
+//     div.append(img, p);
+//     body.appendChild(div);
+
+//     let index = 1;
+//     const interval = setInterval(() => {
+//       if (index < paragraphs.length) {
+//         p.textContent = paragraphs[index];
+//         index++;
+//       } else {
+//         clearInterval(interval);
+//         if (typeof onFinish === "function") {
+//           setTimeout(() => {
+//             div.classList.add("hidden");
+//             onFinish(); // <-- Call the function when the story is finished
+//           }, 1000); // wait 1 second to make it smooth
+//         }
+//       }
+//     }, 5000);
+//   }
 }
 
 let controller = new Control(1, 0);

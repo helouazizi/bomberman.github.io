@@ -6,6 +6,7 @@
   background-size: cover;
   position: absolute;
   z-index: 5;
+  will-change: transform;
 }
 
 #hero img{

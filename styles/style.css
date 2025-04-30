@@ -4,12 +4,13 @@
 @import url(enemies.css);
 @import url(controller.css);
 
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-body{
+
+body {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,29 +21,39 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
 }
-.hidden{
+
+.hidden {
     display: none;
 }
 
-.show{
+.show {
     display: flex;
 }
 
-#story{
+#story {
     width: 20vw;
     min-width: 300px;
-display: flex;
-justify-content: space-evenly;
-align-items: center;
-flex-wrap: wrap;
-font-family: Georgia, 'Times New Roman', Times, serif;
-font-weight: 900;
-font-size: x-large;
-font-style: italic;
-color: antiquewhite;
-padding: 20px 10px;
-border-radius: 2vmin 0 2vmin 0;
-background-color: rgba(0, 0, 0, 0.247);
-overflow-wrap: break-word;
-z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+    font-size: large;
+    font-style: italic;
+    color: antiquewhite;
+    border-radius: 6px 0 6px 0;
+    background-color: rgba(0, 0, 0, 0.247);
+    overflow-wrap: break-word;
+    z-index: 4;
+    gap: 10px;
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 0vmin 0 10px 0;
+    }
+    p{
+        margin: 10px;
+    }
 }
