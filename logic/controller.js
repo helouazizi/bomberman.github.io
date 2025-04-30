@@ -30,6 +30,8 @@ class Control {
     controller.setAttribute("id", "controller");
     controller.style.width = `${unitSize * 15}px`;
     let title = document.createElement("h1");
+    let btnsContainer = document.createElement("div");
+    btnsContainer.setAttribute("id","btns_container")
     let start = document.createElement("button");
     let restart = document.createElement("button");
     let resume = document.createElement("button");
@@ -52,7 +54,8 @@ class Control {
     resume.setAttribute("class", "controlBtn");
     pause.setAttribute("class", "controlBtn");
     pause.setAttribute("id", "pauseBtn");
-    controller.append(title, start, restart, resume, pause);
+    btnsContainer.append( start, restart, resume, pause);
+    controller.append(title,btnsContainer)
     controller.classList.add("show");
     document.body.appendChild(controller);
     // hide the buttons that should:
@@ -122,7 +125,7 @@ class Control {
 
   gameController() {
     if (this.gameStatus === "initial") {
-      generate_game_story(0,0)
+      generate_game_story(0)
 
         // This will only run AFTER the story is done
         this.createBoard();
@@ -147,7 +150,11 @@ class Control {
     controlBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         if (e.target.value === "start") {
+          // document.body.innerHTML = ""
           let story = document.getElementById("story");
+          if (story){
+            story.remove()
+          }
           this.pausebtn.classList.remove("hidden");
           this.pausebtn.classList.add("show");
           this.startbtn.classList.remove("show");
@@ -204,10 +211,11 @@ class Control {
               this.controller.style.display = "none";
 
               setTimeout(() => {
-                this.losestory(() => {
-                  location.reload();
-                });
-              }, 2000);
+                document.body.innerHTML = ""
+                generate_game_story(3, ()=>{
+                  location.reload()
+                })
+              }, 500);
             }
           }
 
@@ -224,87 +232,6 @@ class Control {
     });
   }
 
-  // startstory(onFinish) {
-  //   let body = document.body;
-  //   body.innerHTML = "";
-
-  //   let story = document.createElement("div");
-  //   story.id = "story";
-
-  //   let text = document.createElement("p")
-  //   text.setAttribute("id", "story_text")
-
-  //   let img_story = document.createElement("img")
-  //   img_story.setAttribute("id", "story_text")
-  //   img_story.src = "../img/start_story_img.png"
-
-  //   const paragraphs = [
-  //     "The year is 3087. Far beyond the Milky Way...",
-  //     "One dark night, space raiders from a rival galaxy steal the Core...",
-  //     "You are Zylo, a young alien tasked with a desperate mission...",
-  //     "Board your hovercraft, navigate the cosmic fields and chase down the raiders!",
-  //   ];
-
-  //   text.textContent = paragraphs[0];
-
-  //   story.append(text, img_story);
-
-  //   body.appendChild(story);
-
-  //   let index = 1;
-  //   const interval = setInterval(() => {
-  //     if (index < paragraphs.length) {
-  //       text.textContent = paragraphs[index];
-  //       index++;
-  //     } else {
-  //       clearInterval(interval);
-  //       if (typeof onFinish === "function") {
-  //         setTimeout(() => {
-  //           story.remove()
-  //           onFinish()
-  //         }, 1000)
-  //       }
-  //     }
-  //   }, 5000);
-  // }
-//   losestory(onFinish) {
-//     let body = document.body;
-//     body.innerHTML = "";
-
-//     let div = document.createElement("div");
-//     div.id = "story";
-//     let img = document.createElement("img");
-//     img.classList.add("img");
-
-//     const paragraphs = [
-//       "The last flicker of Zelora's energy dies out as the Core remains in enemy hands.",
-//       "The once-lush planet becomes a barren wasteland, its people scattered among the stars.",
-//       "Zylo's mission ends in silence... but legends say another hero may one day rise to finish what was started.",
-//     ];
-
-//     let p = document.createElement("p");
-//     p.classList.add("start");
-//     p.textContent = paragraphs[0];
-
-//     div.append(img, p);
-//     body.appendChild(div);
-
-//     let index = 1;
-//     const interval = setInterval(() => {
-//       if (index < paragraphs.length) {
-//         p.textContent = paragraphs[index];
-//         index++;
-//       } else {
-//         clearInterval(interval);
-//         if (typeof onFinish === "function") {
-//           setTimeout(() => {
-//             div.classList.add("hidden");
-//             onFinish(); // <-- Call the function when the story is finished
-//           }, 1000); // wait 1 second to make it smooth
-//         }
-//       }
-//     }, 5000);
-//   }
 }
 
 let controller = new Control(1, 0);

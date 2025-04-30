@@ -11,6 +11,9 @@
   gap: 5px;
   border: 1px #B99470 solid;
   background-color: #FEFAE0;
+  position: absolute;
+  top: 0;
+  margin-top: 2vh;
 }
 
 .controlBtn {
@@ -56,5 +59,16 @@
   font-size: medium;
   font-style: italic;
   z-index: 3;
+}
+
+#btns_container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 5px;
+  width: 100%;
+  height: auto;
+
 }
 

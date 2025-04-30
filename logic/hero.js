@@ -1,6 +1,6 @@
 export { Hero };
 import { Bomb } from "./bomb.js";
-import { isCollistion } from "./healpers.js";
+import { isCollistion, generate_game_story} from "./healpers.js";
 class Hero {
   constructor(size) {
     this.hero = null;
@@ -144,10 +144,7 @@ class Hero {
         let pauseBtn = document.getElementById("pauseBtn");
         pauseBtn.click();
         this.count++;
-        this.midstory(() => {
-          let pauseBtn = document.getElementById("pauseBtn");
-          pauseBtn.click();
-        });
+        generate_game_story(1)
       }
       if (value >= 400 && isCollistion(this.hero, door, 0)) {
         let popup = document.createElement("div");
@@ -158,9 +155,7 @@ class Hero {
         let controller = document.getElementById("controller");
         controller.style.display = "none";
         setTimeout(() => {
-          this.winstory(() => {
-            location.reload();
-          });
+          generate_game_story(2, ()=>{location.reload()})
         }, 2000);
       }
     }
@@ -188,7 +183,7 @@ class Hero {
     return elements;
   }
 
-  // gring the center of the hero
+  // gring the center of the hero:
   bringHeroAxis() {
     let obj = {};
     let position = this.getPosition(this.hero);
@@ -196,89 +191,5 @@ class Hero {
     obj.y = position.y + position.height / 2;
     return obj;
   }
-
-  throttle(fn, limit, lastCall) {
-    return function (...args) {
-      const now = Date.now();
-      if (now - lastCall >= limit) {
-        lastCall = now;
-        fn.apply(this, args);
-      }
-    };
-  }
-
-  winstory(onFinish) {
-    let body = document.body;
-    body.innerHTML = "";
-
-    let story = document.createElement("story");
-    div.id = "story";
-
-    const paragraphs = [
-      "Against all odds, Zylo defeats the raider leader and seizes back the Core of Life.",
-      "Returning to Zelora, Zylo restores the Core to its sacred temple.",
-      "Slowly, life blooms again, and the skies turn from a dull gray to vibrant colors.",
-      "Zylo becomes a hero, and a new age of peace begins — thanks to your bravery!",
-    ];
-
-    story.textContent = paragraphs[0];
-    body.appendChild(story);
-
-    let index = 1;
-    const interval = setInterval(() => {
-      if (index < paragraphs.length) {
-        story.textContent = paragraphs[index];
-        index++;
-      } else {
-        clearInterval(interval);
-        if (typeof onFinish === "function") {
-          setTimeout(() => {
-            div.classList.add("hidden");
-            onFinish(); // <-- Call the function when the story is finished
-          }, 1000); // wait 1 second to make it smooth
-        }
-      }
-    }, 5000);
-  }
-  midstory(onFinish) {
-    // Pause the game logic here (optional if you want automatic pause)
-
-    // Create a story overlay div
-    let story = document.createElement("div");
-    story.id = "story";
-
-
-
-
-
-    // Text paragraph
-    const paragraphs = [
-      "After countless battles and narrow escapes, Zylo picks up a distress signal.",
-      'It’s a transmission from a captured Zeloran elder, revealing the raiders hideout hidden inside a massive asteroid belt called the "Crimson Thorns."',
-      "However, it’s a trap: the path is filled with deadly drones and collapsing meteors!",
-      "Zylo must stay sharp, push forward, and reach the Core before the last light of Zelora fades.",
-    ];
-
-    story.textContent = paragraphs[0]
-
-    document.body.appendChild(story)
-
-    let index = 1;
-    const interval = setInterval(() => {
-      if (index < paragraphs.length) {
-        story.textContent = paragraphs[index]
-        index++
-      } else {
-        clearInterval(interval);
-        if (typeof onFinish === "function") {
-          setTimeout(() => {
-            story.remove()
-            onFinish()
-          }, 1000)
-        }
-      }
-    }, 5000)
-  }
-
   getPosition = (element) => element.getBoundingClientRect()
 }

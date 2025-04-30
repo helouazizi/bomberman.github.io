@@ -182,9 +182,10 @@ function isCoixial(coordes, axis, direction) {
 }
 
 // Create a function  to generate the story of the game:
-export function generate_game_story(paragraph_index, img_index) {
+export function generate_game_story(source_index, callback = null) {
   let body = document.body;
-  body.innerHTML = "";
+
+
 
   let story = document.createElement("div");
   story.id = "story";
@@ -227,8 +228,8 @@ export function generate_game_story(paragraph_index, img_index) {
     "../img/lose_story_img.png",
   ]
 
-  text.textContent = paragraphs[paragraph_index][0];
-  img_story.src = images[img_index]
+  text.textContent = paragraphs[source_index][0];
+  img_story.src = images[source_index]
   story.append(text, img_story);
 
   body.appendChild(story);
@@ -236,13 +237,16 @@ export function generate_game_story(paragraph_index, img_index) {
   let index = 1;
   const interval = setInterval(() => {
     if (index < paragraphs.length) {
-      text.textContent = paragraphs[paragraph_index][index];
+      text.textContent = paragraphs[source_index][index];
       index++;
     } else {
       clearInterval(interval);
         setTimeout(() => {
           story.remove()
-        }, 1000)
+          if(typeof callback == "function"){
+            callback()
+          }
+        }, 200)
     }
   }, 5000);
 }
