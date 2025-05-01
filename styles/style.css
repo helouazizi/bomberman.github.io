@@ -1,0 +1,64 @@
+@import url(hero.css);
+@import url(field.css);
+@import url(bomb.css);
+@import url(enemies.css);
+@import url(controller.css);
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2vh;
+    align-items: center;
+    height: 100vh;
+    background-color: #C0C78C;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: flex;
+}
+
+#story {
+    top: 170px;
+    width: 30vw;
+    min-width: 300px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+    font-size: large;
+    font-style: italic;
+    color: antiquewhite;
+    border-radius: 6px 0 6px 0;
+    background-color: rgb(0, 0, 0);
+    overflow-wrap: break-word;
+    z-index: 5;
+    gap: 10px;
+
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 0vmin 0 10px 0;
+    }
+
+    p {
+        margin: 10px;
+    }
+}
