@@ -71,7 +71,7 @@ class Field {
     playerForm.innerHTML = `
      
       <input type="text" id="player-name" placeholder="Enter your name" required />
-      <button class="controlBtn" value="submit" >Submit</button>
+      <button class="controlBtn" value="submit" type="button" >Submit</button>
   
  `;
   

@@ -83,7 +83,6 @@ class Control {
 
   startTimer() {
     if (this.intervalId !== null) return; // Don't start a new timer if one is running
-
     this.intervalId = setInterval(() => {
       this.counter.textContent = this.leftTime;
       this.leftTime--;
@@ -173,6 +172,7 @@ class Control {
     let controlBtns = document.querySelectorAll(".controlBtn");
     controlBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
+        e.preventDefault(); // <--- Add this line to prevent page reload
         if (e.target.value === "start") {
           this.pausebtn.classList.remove("hidden");
           this.pausebtn.classList.add("show");
@@ -241,11 +241,11 @@ class Control {
             enemy.pauseAnimation();
           });
         } else if (e.target.value === "submit") {
+          e.preventDefault(); // <-- keep this here anyway
           console.log("hhhhhhhhhhhhhhhhhhh");
           this.controller.classList.add("show");
           this.controller.classList.remove("hidden");
           this.postScore();
-          setTimeout(()=>{},5000)
           // return
         }
       });
