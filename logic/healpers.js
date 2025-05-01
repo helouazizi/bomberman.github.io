@@ -195,30 +195,30 @@ export function generate_game_story(source_index, callback = null) {
 
   let img_story = document.createElement("img")
   img_story.setAttribute("id", "story_text")
-  
+
 
   const paragraphs = [
     ["The year is 3087. Far beyond the Milky Way...",
       "One dark night, space raiders from a rival galaxy steal the Core...",
       "You are Zylo, a young alien tasked with a desperate mission...",
       "Board your hovercraft, navigate the cosmic fields and chase down the raiders!",],
-      [
-        "After countless battles and narrow escapes, Zylo picks up a distress signal.",
-        'It’s a transmission from a captured Zeloran elder, revealing the raiders hideout hidden inside a massive asteroid belt called the "Crimson Thorns."',
-        "However, it’s a trap: the path is filled with deadly drones and collapsing meteors!",
-        "Zylo must stay sharp, push forward, and reach the Core before the last light of Zelora fades.",
-      ],
-      [
-        "Against all odds, Zylo defeats the raider leader and seizes back the Core of Life.",
-        "Returning to Zelora, Zylo restores the Core to its sacred temple.",
-        "Slowly, life blooms again, and the skies turn from a dull gray to vibrant colors.",
-        "Zylo becomes a hero, and a new age of peace begins — thanks to your bravery!",
-      ],
-      [
-        "The last flicker of Zelora's energy dies out as the Core remains in enemy hands.",
-        "The once-lush planet becomes a barren wasteland, its people scattered among the stars.",
-        "Zylo's mission ends in silence... but legends say another hero may one day rise to finish what was started.",
-      ]
+    [
+      "After countless battles and narrow escapes, Zylo picks up a distress signal.",
+      'It’s a transmission from a captured Zeloran elder, revealing the raiders hideout hidden inside a massive asteroid belt called the "Crimson Thorns."',
+      "However, it’s a trap: the path is filled with deadly drones and collapsing meteors!",
+      "Zylo must stay sharp, push forward, and reach the Core before the last light of Zelora fades.",
+    ],
+    [
+      "Against all odds, Zylo defeats the raider leader and seizes back the Core of Life.",
+      "Returning to Zelora, Zylo restores the Core to its sacred temple.",
+      "Slowly, life blooms again, and the skies turn from a dull gray to vibrant colors.",
+      "Zylo becomes a hero, and a new age of peace begins — thanks to your bravery!",
+    ],
+    [
+      "The last flicker of Zelora's energy dies out as the Core remains in enemy hands.",
+      "The once-lush planet becomes a barren wasteland, its people scattered among the stars.",
+      "Zylo's mission ends in silence... but legends say another hero may one day rise to finish what was started.",
+    ]
   ];
 
   const images = [
@@ -241,14 +241,32 @@ export function generate_game_story(source_index, callback = null) {
       index++;
     } else {
       clearInterval(interval);
-        setTimeout(() => {
-          story.remove()
-          if(typeof callback == "function"){
-            callback()
-          }
-        }, 200)
+      setTimeout(() => {
+        story.remove()
+        if (typeof callback == "function") {
+          callback()
+        }
+      }, 200)
     }
   }, 5000);
+}
+
+// handle score:
+export function handleScore(score) {
+  let score_form = document.createElement("form")
+  score_form.setAttribute("is", "user_score_form")
+  score_form.method = "POST"
+  score_form.innerHTML = `
+    <input id="user_score_input" type="text">
+    <input id="user_score_submit" type="submit">
+    `
+  document.body.appendChild(score_form)
+  score_form.addEventListener("submit", (e) => {
+ console.log(score_form);
+ 
+    var formData = new FormData(score_form)
+    console.log(formData)
+  })
 }
 
 export const getPosition = (element) => element.getBoundingClientRect();

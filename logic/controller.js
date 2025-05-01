@@ -1,7 +1,7 @@
 import { Enemy } from "./enemies.js";
 import { Field } from "./field.js";
 import { Hero } from "./hero.js";
-import { generate_game_story} from "./healpers.js"
+import { handleScore, generate_game_story} from "./healpers.js"
 
 class Control {
   constructor(stage, score) {
@@ -49,11 +49,13 @@ class Control {
     pause.textContent = "pause";
     // set atributes
     title.setAttribute("class", "title");
+    title.setAttribute("id", "title");
     start.setAttribute("class", "controlBtn");
     restart.setAttribute("class", "controlBtn");
     resume.setAttribute("class", "controlBtn");
     pause.setAttribute("class", "controlBtn");
     pause.setAttribute("id", "pauseBtn");
+    resume.setAttribute("id", "resumeBtn");
     btnsContainer.append( start, restart, resume, pause);
     controller.append(title,btnsContainer)
     controller.classList.add("show");
@@ -213,7 +215,8 @@ class Control {
               setTimeout(() => {
                 document.body.innerHTML = ""
                 generate_game_story(3, ()=>{
-                  location.reload()
+                  document.body.innerHTML = ""
+                  handleScore(500)
                 })
               }, 500);
             }
@@ -235,4 +238,6 @@ class Control {
 }
 
 let controller = new Control(1, 0);
+
 controller.gameController();
+ 

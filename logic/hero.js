@@ -142,9 +142,16 @@ class Hero {
 
       if (this.count == 0 && value >= 200) {
         let pauseBtn = document.getElementById("pauseBtn");
+        let resumeBtn = document.getElementById("resumeBtn");
         pauseBtn.click();
+        resumeBtn.classList.remove("show");
+        resumeBtn.classList.add("hidden");
         this.count++;
-        generate_game_story(1)
+        generate_game_story(1, ()=>{
+          let resumeBtn = document.getElementById("resumeBtn")
+          resumeBtn.classList.remove("hidden");
+          resumeBtn.classList.add("show");
+        })
       }
       if (value >= 400 && isCollistion(this.hero, door, 0)) {
         let popup = document.createElement("div");
