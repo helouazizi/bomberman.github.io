@@ -1,6 +1,6 @@
 export { Hero };
 import { Bomb } from "./bomb.js";
-import { isCollistion, generate_game_story} from "./healpers.js";
+import { isCollistion, generate_game_story, handleScore } from "./healpers.js";
 class Hero {
   constructor(size) {
     this.hero = null;
@@ -137,32 +137,51 @@ class Hero {
     let door = document.getElementsByClassName("door")[0];
     // lets get the score
     let Score = document.getElementById("score");
+    let pauseBtn = document.getElementById("pauseBtn");
+    let resumeBtn = document.getElementById("resumeBtn");
+    let restartBtn = document.getElementById("restartBtn");
     if (Score) {
       let value = parseInt(Score.innerText);
 
       if (this.count == 0 && value >= 200) {
-        let pauseBtn = document.getElementById("pauseBtn");
-        let resumeBtn = document.getElementById("resumeBtn");
         pauseBtn.click();
         resumeBtn.classList.remove("show");
         resumeBtn.classList.add("hidden");
         this.count++;
-        generate_game_story(1, ()=>{
-          let resumeBtn = document.getElementById("resumeBtn")
+        generate_game_story(1, () => {
+        
+
           resumeBtn.classList.remove("hidden");
           resumeBtn.classList.add("show");
-        })
+
+         
+        });
       }
-      if (value >= 400 && isCollistion(this.hero, door, 0)) {
+      if (value >= 400 && isCollistion(this.hero, door, 0) ) {
+        
         let popup = document.createElement("div");
         popup.setAttribute("id", "popup");
         popup.classList.add("show");
         popup.textContent = "You won!!!";
         document.body.appendChild(popup);
         let controller = document.getElementById("controller");
-        controller.style.display = "none";
+
         setTimeout(() => {
-          generate_game_story(2, ()=>{location.reload()})
+          document.body.innerHTML = "";
+          document.body.append(controller);
+
+          resumeBtn.classList.remove("show");
+          resumeBtn.classList.add("hidden");
+
+          pauseBtn.classList.remove("show");
+          pauseBtn.classList.add("hidden");
+
+          restartBtn.classList.add("show");
+          restartBtn.classList.remove("hidden");
+
+          generate_game_story(2, () => {
+            handleScore(400);
+          });
         }, 2000);
       }
     }
@@ -198,5 +217,5 @@ class Hero {
     obj.y = position.y + position.height / 2;
     return obj;
   }
-  getPosition = (element) => element.getBoundingClientRect()
+  getPosition = (element) => element.getBoundingClientRect();
 }

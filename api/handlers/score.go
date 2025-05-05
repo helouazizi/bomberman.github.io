@@ -13,7 +13,13 @@ import (
 
 
 func SaveScores(w http.ResponseWriter, r *http.Request) {
+	
+	if r.Method != http.MethodPost{
+		utils.RespondWithError(w, models.Error{Message: "Method Not Allawed", Code: http.StatusMethodNotAllowed})
+		return
+	}
 	var player models.Player
+	
 	if err := json.NewDecoder(r.Body).Decode(&player); err != nil {
 		fmt.Println(err)
 		utils.RespondWithError(w, models.Error{Message: "Inetrnal Server Error", Code: http.StatusInternalServerError})

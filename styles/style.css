@@ -3,6 +3,7 @@
 @import url(bomb.css);
 @import url(enemies.css);
 @import url(controller.css);
+@import url(score.css);
 
 * {
     box-sizing: border-box;

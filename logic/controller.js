@@ -1,7 +1,7 @@
 import { Enemy } from "./enemies.js";
 import { Field } from "./field.js";
 import { Hero } from "./hero.js";
-import { handleScore, generate_game_story} from "./healpers.js"
+import { handleScore, generate_game_story } from "./healpers.js";
 
 class Control {
   constructor(stage, score) {
@@ -31,7 +31,7 @@ class Control {
     controller.style.width = `${unitSize * 15}px`;
     let title = document.createElement("h1");
     let btnsContainer = document.createElement("div");
-    btnsContainer.setAttribute("id","btns_container")
+    btnsContainer.setAttribute("id", "btns_container");
     let start = document.createElement("button");
     let restart = document.createElement("button");
     let resume = document.createElement("button");
@@ -52,12 +52,14 @@ class Control {
     title.setAttribute("id", "title");
     start.setAttribute("class", "controlBtn");
     restart.setAttribute("class", "controlBtn");
+
     resume.setAttribute("class", "controlBtn");
     pause.setAttribute("class", "controlBtn");
+    restart.setAttribute("id", "restartBtn");
     pause.setAttribute("id", "pauseBtn");
     resume.setAttribute("id", "resumeBtn");
-    btnsContainer.append( start, restart, resume, pause);
-    controller.append(title,btnsContainer)
+    btnsContainer.append(start, restart, resume, pause);
+    controller.append(title, btnsContainer);
     controller.classList.add("show");
     document.body.appendChild(controller);
     // hide the buttons that should:
@@ -127,15 +129,14 @@ class Control {
 
   gameController() {
     if (this.gameStatus === "initial") {
-      generate_game_story(0)
+      generate_game_story(0);
 
-        // This will only run AFTER the story is done
-        this.createBoard();
+      // This will only run AFTER the story is done
+      this.createBoard();
 
-        this.gameStatus = "started";
+      this.gameStatus = "started";
 
-        this.setupGame(); // Create fields, hero, enemies, etc.
-      
+      this.setupGame(); // Create fields, hero, enemies, etc.
     }
   }
 
@@ -154,8 +155,8 @@ class Control {
         if (e.target.value === "start") {
           // document.body.innerHTML = ""
           let story = document.getElementById("story");
-          if (story){
-            story.remove()
+          if (story) {
+            story.remove();
           }
           this.pausebtn.classList.remove("hidden");
           this.pausebtn.classList.add("show");
@@ -210,14 +211,19 @@ class Control {
               popup.classList.add("show");
               popup.textContent = "Game over!!";
               document.body.appendChild(popup);
-              this.controller.style.display = "none";
+             
+              let score = document.getElementById("score").innerText;
+
+              let score_number = parseInt(score, 10);
 
               setTimeout(() => {
-                document.body.innerHTML = ""
-                generate_game_story(3, ()=>{
-                  document.body.innerHTML = ""
-                  handleScore(500)
-                })
+                document.body.innerHTML = "";
+                document.body.append(this.controller)
+                this.resumebtn.classList.remove("show");
+                this.resumebtn.classList.add("hidden");
+                generate_game_story(3, () => {
+                  handleScore(score_number);
+                });
               }, 500);
             }
           }
@@ -234,10 +240,8 @@ class Control {
       });
     });
   }
-
 }
 
 let controller = new Control(1, 0);
 
 controller.gameController();
- 
