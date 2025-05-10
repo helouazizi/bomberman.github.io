@@ -1,14 +1,15 @@
 .affected{
-    background-image: url("../effect.jpg");
+    background-image: url("../img/effect.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 2;
     /* display: flex;
     justify-content: center;
     align-items: center; */
 }
 #bomb{
-    z-index: 100;
-    background-image: url("../icons8-bomb-40.png");
+    z-index: 1;
+    background-image: url("../img//icons8-bomb-40.png");
     background-size: contain;
     background-repeat: no-repeat;
     display: flex;

@@ -1,11 +1,11 @@
 export { Field };
-import { Enemy } from "./enemies.js";
+// import { Enemy } from "./enemies.js";
 
 // Create a field to set the battle field of
 // our game and the track the progress of the game:
 class Field {
   #count = 1;
-  constructor(height) {
+  constructor(height, stage) {
     this.height = height;
     this.width = height;
     this.container = null;
@@ -14,10 +14,11 @@ class Field {
     this.randomEnemies = new Set();
     this.time = 200;
     this.score = 0;
-    this.stage = 5;
+    this.stage = stage;
     this.left = 3;
   }
   // Create the battlefield:
+
   Create() {
     this.container = document.createElement("div");
     this.container.setAttribute("id", "container");
@@ -29,13 +30,12 @@ class Field {
   // Create the battle field:
   CreateBattleField() {
     this.Create();
+
     let fragment = document.createDocumentFragment();
     let board = document.createElement("div");
     board.setAttribute("id", "board");
     board.style.width = `${this.width * 15}px`;
-
     board.style.height = `50px`;
-    //board.style.border = `5px solid red`;
 
     // lets creaete time
     let time = document.createElement("div");
@@ -47,9 +47,9 @@ class Field {
 
     // lets create score
     let score = document.createElement("div");
-    score.setAttribute("id", "score");
     score.setAttribute("class", "dashboard");
     let scoreText = document.createElement("strong");
+    scoreText.setAttribute("id", "score");
     scoreText.textContent = `${this.score}`;
     score.appendChild(scoreText);
 
@@ -58,21 +58,34 @@ class Field {
     attempts.setAttribute("id", "attempts");
     attempts.setAttribute("class", "dashboard");
     let left = document.createElement("p");
-    left.innerHTML = `Left: <span>${this.left - 1}</span>`;
+    left.innerHTML = `Left: <span id="left">${this.left}</span>`;
     attempts.appendChild(left);
 
+    // create form
+    // let display the input
+    let playerForm = document.createElement("div");
+    playerForm.classList.add("playerForm")
+    playerForm.setAttribute("id","playerForm")
+    playerForm.classList.add("hidden");
+    playerForm.classList.remove("show");
+    playerForm.innerHTML = `
+     
+      <input type="text" id="player-name" placeholder="Enter your name" required />
+      <button class="controlBtn" value="submit" type="button" >Submit</button>
+  
+ `;
+  
     fragment.append(time, score, attempts);
     board.appendChild(fragment);
     this.container.appendChild(board);
     this.battleField = document.createElement("div");
     this.battleField.setAttribute("id", "battleField");
+    
 
     for (let y = 1; y <= 13; y++) {
       let wall = document.createElement("div");
       wall.setAttribute("class", "wall");
       wall.setAttribute("id", `wall-${y}`);
-      // wall.style.width = `${this.width}px`;
-      // wall.style.height = `${this.height / 13}px`;
       for (let x = 1; x <= 15; x++) {
         let brick = document.createElement("div");
         brick.setAttribute("class", "brick");
@@ -101,18 +114,7 @@ class Field {
     this.createGates();
     // Instantiate the enemies:
     this.generateRandomIds(34, 113, "enemies");
-
-    // this.randomEnemies.forEach((id) => {
-    //   let enemy = new Enemy(id);
-    //   enemy.createEnemy();
-    //   enemy.moveEnemy();
-    // });
-
-    const firstItem = [...this.randomEnemies][0];
-
-    let enemy = new Enemy(firstItem,this.width);
-    enemy.createEnemy();
-    enemy.moveEnemy();
+    this.container.appendChild(playerForm)
   }
 
   // Genrate the breakable walls randomly:
@@ -174,17 +176,4 @@ class Field {
 
   // Get the position of each element within
   getPosition = (element) => element.getBoundingClientRect();
-
-  // Handle the time deadline of each game:
-  handleLeftTime() {
-    let counter = document.getElementById("timeCounter");
-    const countdown = setInterval(() => {
-      counter.textContent = this.time;
-      this.time--;
-      if (this.time < 0) {
-        clearInterval(countdown);
-        counter.textContent = "Time's up!";
-      }
-    }, 1000);
-  }
 }

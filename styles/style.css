@@ -2,6 +2,7 @@
 @import url(field.css);
 @import url(bomb.css);
 @import url(enemies.css);
+@import url(controller.css);
 
 *{
     box-sizing: border-box;
@@ -10,6 +11,21 @@
 }
 body{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    gap: 2vh;
     align-items: center;
+    /* background-image: url("../background.png"); */
+    height: 100dvh;
+    /* background-image: linear-gradient(to right, #789278, #0cfc8c); */
+    background-color: #C0C78C;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.hidden{
+    display: none;
+}
+
+.show{
+    display: flex;
 }

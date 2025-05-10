@@ -1,5 +1,6 @@
 export { Hero };
 import { Bomb } from "./bomb.js";
+import { isCollistion } from "./healpers.js";
 class Hero {
   constructor(size) {
     this.hero = null;
@@ -7,6 +8,7 @@ class Hero {
     this.y = 2;
     this.step = 3;
     this.width = size;
+    this.pause = false;
   }
 
   createHero() {
@@ -16,56 +18,60 @@ class Hero {
     first.style.position = "relative";
     first.style.overflow = "visible";
     first.appendChild(this.hero);
-    this.hero.style.width = `${Math.floor(this.width-this.step)}px`;
-    this.hero.style.height = `${Math.floor(this.width-this.step)}px`;
+    this.hero.style.width = `${this.width - 10}px`;
+    this.hero.style.height = `${this.width - 10}px`;
     this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
   }
+
   // create a function  to handle the movement of the hero:
   moveHero() {
     // var lastCall = 0;
     let called = false;
     let lastCall = 0;
-    let limit = 3001;
+    let limit = 4001;
     document.addEventListener("keydown", (e) => {
-      console.log(e.key);
-      switch (e.key) {
-        case " ":
-          let axis = this.bringHeroAxis();
-          let bomb = new Bomb(this.hero, axis.x, axis.y);
+      if (!this.pause) {
+        switch (e.key) {
+          case " ":
+            let axis = this.bringHeroAxis();
+            let bomb = new Bomb(this.hero, axis.x, axis.y);
 
-          if (!called) {
-            bomb.create();
-            lastCall = Date.now();
-          }
+            if (!called) {
+              bomb.create();
+              lastCall = Date.now();
+            }
+            called = true;
+            if (called && Date.now() - lastCall >= limit) {
+              bomb.create(); //
+              lastCall = Date.now();
+            }
 
-          called = true;
-
-          if (called && Date.now() - lastCall >= limit) {
-            bomb.create(); //
-            lastCall = Date.now();
-          }
-
-        case "ArrowDown":
-          if (this.canMoveVertically(this.hero, "down")) {
-            this.y += 2;
-          }
-          break;
-        case "ArrowUp":
-          if (this.canMoveVertically(this.hero, "up")) {
-            this.y -= 2;
-          }
-          break;
-        case "ArrowRight":
-          if (this.canMoveHorizontally(this.hero, "right")) {
-            this.x += 2;
-          }
-          break;
-        case "ArrowLeft":
-          if (this.canMoveHorizontally(this.hero, "left")) {
-            this.x -= 2;
-          }
+          case "ArrowDown":
+            if (this.canMoveVertically(this.hero, "down")) {
+              this.y += 2;
+            }
+            this.win();
+            break;
+          case "ArrowUp":
+            if (this.canMoveVertically(this.hero, "up")) {
+              this.y -= 2;
+            }
+            this.win();
+            break;
+          case "ArrowRight":
+            if (this.canMoveHorizontally(this.hero, "right")) {
+              this.x += 2;
+            }
+            this.win();
+            break;
+          case "ArrowLeft":
+            if (this.canMoveHorizontally(this.hero, "left")) {
+              this.x -= 2;
+            }
+            this.win();
+        }
+        this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
       }
-      this.hero.style.transform = `translate( ${this.x}px,${this.y}px)`;
     });
   }
 
@@ -87,7 +93,6 @@ class Hero {
     });
     return can;
   }
-
 
   // Get all the bricks in the horizontal range:
   getHorizontalBricks(element, direction = "left") {
@@ -127,7 +132,29 @@ class Hero {
     });
     return can;
   }
-
+  win() {
+    let door = document.getElementsByClassName("door")[0];
+    // lets get the score
+    let Score = document.getElementById("score");
+    if (Score) {
+      let value = parseInt(Score.innerText);
+      if (/*value >= 400 && */isCollistion(this.hero, door, 0)) {
+        let popup = document.createElement("div");
+        popup.setAttribute("id", "popup");
+        popup.classList.add("show");
+        popup.textContent = "You won!!!";
+        document.body.appendChild(popup);
+        let controller = document.getElementById("controller");
+        controller.style.display = "none";
+        let bouseBtn = document.getElementById("pauseBtn")
+        let form = document.getElementById("playerForm")
+       
+        bouseBtn.click()
+        form.classList.remove("hidden")
+        form.classList.add("show")
+      }
+    }
+  }
   // Get all the bricks in the vertical range:
   getVerticalBricks(element, direction = "down") {
     let bricks = document.querySelectorAll(".solid");
@@ -149,7 +176,6 @@ class Hero {
     });
     return elements;
   }
-
   // gring the center of the hero
   bringHeroAxis() {
     let obj = {};
