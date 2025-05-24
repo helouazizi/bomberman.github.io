@@ -2,7 +2,7 @@ class Maps {
   constructor(stage) {
     this.stage = stage;
     this.rows = 13;
-    this.colloms = 16;
+    this.colloms = 15;
     this.randomGates = new Set();
     this.randomEnemies = new Set();
   }
@@ -27,26 +27,34 @@ class Maps {
       const row = [];
       for (let x = 0; x < this.colloms; x++) {
         const id = y * this.colloms + x + 1;
-
-        // Set boundaries as WALL
+    
+        // Outer boundary walls
         if (
           y === 0 ||
-          y === this.rows - 1 || // top/bottom rows
+          y === this.rows - 1 ||
           x === 0 ||
-          x === this.colloms - 1 // left/right columns
+          x === this.colloms - 1
         ) {
           row.push(TILE_TYPES.WALL);
-        } else if (this.randomGates.has(id)) {
+        } 
+        // Add inner indestructible walls in a checkerboard pattern
+        else if (x % 2 === 0 && y % 2 === 0) {
+          row.push(TILE_TYPES.WALL);
+        } 
+        // Place gates and enemies
+        else if (this.randomGates.has(id)) {
           row.push(TILE_TYPES.GATE);
         } else if (this.randomEnemies.has(id)) {
           row.push(TILE_TYPES.ENEMY);
-        } else {
+        } 
+        // Empty spaces
+        else {
           row.push(TILE_TYPES.EMPTY);
         }
       }
       map.push(row);
     }
-
+    
     return map;
   }
 

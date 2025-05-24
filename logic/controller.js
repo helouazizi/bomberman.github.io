@@ -146,11 +146,11 @@ class Control {
     let unitSize = screenWidth * 0.02;
     unitSize = Math.max(20, Math.min(unitSize, 80));
 
-    let field = new Field(unitSize, this.stage);
     let hero = new Hero(unitSize);
     let maps = new Maps(this.stage);
     let map = maps.generateTileMap()
     console.log(map,"our map");
+    let field = new Field(unitSize, this.stage,map);
     
 
     let controlBtns = document.querySelectorAll(".controlBtn");
