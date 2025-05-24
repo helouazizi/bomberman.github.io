@@ -1,68 +1,93 @@
+/* ========== Container and Layout ========== */
 #container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-position: absolute;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
-.wall {
+/* ========== Dashboard ========== */
+.dashboard-container {
   display: flex;
-  flex-direction: row;
-  width: fit-content;
-}
-
-#board {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 12px;
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--color-text-muted);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2);
+  font-family: var(--font-family);
+  color: var(--color-text);
+  user-select: none;
 }
-#board .dashboard {
-  width: 33.33%;
-  height: 100%;
-  background-color: #FEFAE0;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
-
+.dashboard {
+  flex: 1;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  cursor: default;
 }
 
+.dashboard strong {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--color-primary);
+}
+
+#attempts p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--color-accent);
+}
+
+.dashboard:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+/* ========== Tile Types ========== */
 .borders {
-  /* background-color: #d3d3d3; */
-  background-color: #FEFAE0;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  background-color: var(--color-bg-dark);
+  box-shadow:
+    inset 0 0 6px rgba(255 255 255 / 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 .gate {
   background-image: url("../img/wall.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 4px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease;
 }
+
 .path {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  background-color: var(--color-bg);
+  border: none;
 }
+
 .door-img {
   background-image: url("../img/door.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-}
-.path {
-  background-color: #008000;
+  border-radius: 4px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
-#battleField {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
-}

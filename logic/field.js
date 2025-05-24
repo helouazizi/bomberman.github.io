@@ -1,149 +1,276 @@
 export { Field };
-// import { Enemy } from "./enemies.js";
 
-// Create a field to set the battle field of
-// our game and the track the progress of the game:
 class Field {
-  #count = 1;
-  constructor(height, stage, map) {
+  #tileCount = 0;
+
+  constructor(tileSize, stage, map) {
+    this.tileSize = tileSize;
     this.map = map;
-    this.height = height;
-    this.width = height;
+    this.stage = stage;
     this.container = null;
     this.battleField = null;
-    this.randomGates = new Set();
-    this.randomEnemies = new Set();
+    this.enemies = [];
     this.time = 200;
     this.score = 0;
-    this.stage = stage;
     this.left = 3;
-  }
-  // Create the battlefield:
+    this.hero = null
 
-  Create() {
-    this.container = document.createElement("div");
-    this.container.setAttribute("id", "container");
+    this.rows = map.length;
+    this.columns = map[0].length;
+  }
+
+  createElement(tag, { id, classNames = [], innerHTML, styles = {} } = {}) {
+    const el = document.createElement(tag);
+    if (id) el.id = id;
+    if (classNames.length) el.classList.add(...classNames);
+    if (innerHTML) el.innerHTML = innerHTML;
+    Object.assign(el.style, styles);
+    return el;
+  }
+
+  createContainer() {
+    this.container = this.createElement("div", {
+      id: "container",
+      styles: {
+        width: `${this.tileSize * this.columns}px`,
+        height: "fit-content",
+      },
+    });
     document.body.appendChild(this.container);
-    this.container.style.width = `${this.width}px`;
-    this.container.style.height = "fit-content";
   }
 
-  // Create the battle field:
-  CreateBattleField() {
-    this.Create();
+  createDashboard() {
+    const dashboard = this.createElement("div", {
+      id: "dashboard",
+      classNames: ["dashboard-container"],
+      styles: { display: "flex", justifyContent: "space-between", marginBottom: "8px" },
+    });
 
-    console.log(this.width, "width");
+    const time = this.createElement("div", {
+      id: "time",
+      classNames: ["dashboard"],
+      innerHTML: `<strong>Time: <span id="timeCounter">${this.time}</span></strong>`,
+    });
 
-    let fragment = document.createDocumentFragment();
-    let board = document.createElement("div");
-    board.setAttribute("id", "board");
-    board.style.width = `${this.width * 15}px`;
-    board.style.height = `50px`;
+    const score = this.createElement("div", {
+      classNames: ["dashboard"],
+      innerHTML: `<strong id="score">${this.score}</strong>`,
+    });
 
-    // lets creaete time
-    let time = document.createElement("div");
-    time.setAttribute("id", "time");
-    time.setAttribute("class", "dashboard");
-    let timeText = document.createElement("strong");
-    timeText.innerHTML = `Time: <span id="timeCounter">${this.time}</span>`;
-    time.appendChild(timeText);
+    const attempts = this.createElement("div", {
+      id: "attempts",
+      classNames: ["dashboard"],
+      innerHTML: `<p>Left: <span id="left">${this.left}</span></p>`,
+    });
 
-    // lets create score
-    let score = document.createElement("div");
-    score.setAttribute("class", "dashboard");
-    let scoreText = document.createElement("strong");
-    scoreText.setAttribute("id", "score");
-    scoreText.textContent = `${this.score}`;
-    score.appendChild(scoreText);
+    dashboard.append(time, score, attempts);
+    this.container.appendChild(dashboard);
+  }
 
-    // lets create attempts
-    let attempts = document.createElement("div");
-    attempts.setAttribute("id", "attempts");
-    attempts.setAttribute("class", "dashboard");
-    let left = document.createElement("p");
-    left.innerHTML = `Left: <span id="left">${this.left}</span>`;
-    attempts.appendChild(left);
+  createBattleField() {
+    this.battleField = this.createElement("div", {
+      id: "battleField",
+      styles: {
+        position: "relative",
+        display: "grid",
+        gridTemplateRows: `repeat(${this.rows}, ${this.tileSize}px)`,
+        gridTemplateColumns: `repeat(${this.columns}, ${this.tileSize}px)`,
+        gap: "0",
+        width: `${this.columns * this.tileSize}px`,
+        height: `${this.rows * this.tileSize}px`,
+        padding: "0", 
+        backgroundColor: "var(--color-bg-dark)",
+        borderRadius: "10px",
+        boxShadow: "0 0 30px 5px rgba(0, 0, 0, 0.4)",
+      },
+    });
 
-    fragment.append(time, score, attempts);
-    board.appendChild(fragment);
-    this.container.appendChild(board);
-    this.battleField = document.createElement("div");
-    this.battleField.setAttribute("id", "battleField");
+    this.#tileCount = 0;
 
-    // for (let y = 1; y <= 13; y++) {
-    //   let wall = document.createElement("div");
-    //   wall.setAttribute("class", "wall");
-    //   wall.setAttribute("id", `wall-${y}`);
-    //   for (let x = 1; x <= 15; x++) {
-    //     let brick = document.createElement("div");
-    //     brick.setAttribute("class", "brick");
+    for (let y = 0; y < this.rows; y++) {
+      for (let x = 0; x < this.columns; x++) {
+        const tileType = this.map[y][x];
+        const tileId = `tile-${y * this.columns + x + 1}`;
 
-    //     brick.style.width = `${this.width}px`;
-    //     brick.style.height = `${this.height}px`;
-    //     wall.appendChild(brick);
+        if (tileType === 3) {
+          // Enemy position will be managed separately, so create a path tile here
+          const pathTile = this.createElement("div", {
+            id: tileId,
+            classNames: ["brick", "path"],
+            styles: {
+              width: `${this.tileSize}px`,
+              height: `${this.tileSize}px`,
+            },
+          });
+          this.battleField.appendChild(pathTile);
 
-    //     if (
-    //       y === 1 ||
-    //       y === 13 ||
-    //       x == 1 ||
-    //       x == 15 ||
-    //       (y % 2 !== 0 && x % 2 !== 0)
-    //     ) {
-    //       brick.classList.add("solid", "borders");
-    //     } else {
-    //       brick.classList.add("path");
-    //       brick.setAttribute("id", `${this.#count}`);
-    //       this.#count++;
-    //     }
-    //   }
-    //   this.battleField.appendChild(wall);
-    // }
-    for (let y = 0; y < this.map.length; y++) {
-      let wall = document.createElement("div");
-      wall.setAttribute("class", "wall");
-      wall.setAttribute("id", `wall-${y + 1}`);
+          // Create enemy element positioned absolutely
+          const enemy = this.createElement("div", {
+            classNames: ["enemy"],
+            styles: {
+              width: `${this.tileSize}px`,
+              height: `${this.tileSize}px`,
+              top: `${y * this.tileSize}px`,
+              left: `${x * this.tileSize}px`,
+              position: "absolute",
+              backgroundImage: 'url("../img/monster.png")',
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              zIndex: 10,
+            },
+          });
+
+          this.battleField.appendChild(enemy);
+          this.enemies.push({ element: enemy, x, y });
+
+          this.#tileCount++;
+        } else if (tileType === -1) {
+          // Create path tile under hero
+          const pathTile = this.createElement("div", {
+            id: tileId,
+            classNames: ["brick", "path"],
+            styles: {
+              width: `${this.tileSize}px`,
+              height: `${this.tileSize}px`,
+            },
+          });
+          this.battleField.appendChild(pathTile);
     
-      for (let x = 0; x < this.map[y].length; x++) {
-        let brick = document.createElement("div");
-        brick.style.width = `${this.width}px`;
-        brick.style.height = `${this.height}px`;
+          // Create hero element
+          this.hero = this.createElement("div", {
+            id: "hero",
+            classNames: ["hero"],
+            styles: {
+              width: `${this.tileSize}px`,
+              height: `${this.tileSize}px`,
+              top: `${y * this.tileSize}px`,
+              left: `${x * this.tileSize}px`,
+              position: "absolute",
+              // backgroundImage: 'url("../img/hero.png")',
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              zIndex: 20,
+            },
+          });
+
+          this.battleField.appendChild(this.hero);
+          this.heroPosition = { x, y }; // Save position if needed for movement
+          this.#tileCount++;
     
-        const tile = this.map[y][x];
-    
-        switch (tile) {
-          case 1: // WALL
-          brick.classList.add("solid", "borders");
-            break;
-          case 2: // GATE
-            brick.classList.add("class", "solid"  ,"gate");
-          
-            break;
-          case 3: // ENEMY
-            brick.classList.add("class", "brick", "enemy");
-          
-            break;
-          default: // EMPTY
-            brick.classList.add("class", "brick" ,"path");
-            brick.setAttribute("id", `${this.#count}`);
-            this.#count++;
+        }else {
+          // Create tile according to type
+          const tile = this.createElement("div", {
+            id: tileType === 0 ? tileId : undefined,
+            styles: {
+              width: `${this.tileSize}px`,
+              height: `${this.tileSize}px`,
+            },
+          });
+
+          switch (tileType) {
+            case 0:
+              tile.classList.add("brick", "path");
+              this.#tileCount++;
+              break;
+            case 1:
+              tile.classList.add("solid", "borders");
+              break;
+            case 2:
+              tile.classList.add("solid", "gate");
+              break;
+            default:
+              tile.classList.add("brick", "path");
+              this.#tileCount++;
+              break;
+          }
+
+          this.battleField.appendChild(tile);
         }
-    
-        wall.appendChild(brick);
       }
-    
-      this.battleField.appendChild(wall);
     }
+
     this.container.appendChild(this.battleField);
-    
-    this.container.appendChild(this.battleField);
-    
-    // Instantiate the enemies:
-  
   }
 
-  // Genrate the breakable walls randomly:
-
-
-  // Get the position of each element within
-  getPosition = (element) => element.getBoundingClientRect();
+  initEnemyMovement() {
+    const speed = 1; // pixels per frame
+    const tileSize = this.tileSize;
+  
+    const directions = [
+      { dx: 1, dy: 0 },   // right
+      { dx: -1, dy: 0 },  // left
+      { dx: 0, dy: 1 },   // down
+      { dx: 0, dy: -1 },  // up
+    ];
+  
+    this.enemies.forEach(enemy => {
+      if (enemy.dirIndex === undefined) enemy.dirIndex = 0;
+      
+      const size = tileSize / 1.1; // Slightly smaller than tile for better fit
+      enemy.size = size;
+  
+      if (enemy.px === undefined || enemy.py === undefined) {
+        // Center the enemy in its starting tile
+        enemy.px = enemy.x * tileSize + (tileSize - size) / 2;
+        enemy.py = enemy.y * tileSize + (tileSize - size) / 2;
+      }
+  
+      // Set size via CSS if not already
+      enemy.element.style.width = `${size}px`;
+      enemy.element.style.height = `${size}px`;
+      enemy.element.style.position = 'absolute';
+    });
+  
+    const canMoveTo = (px, py, size) => {
+      const leftTile = Math.floor(px / tileSize);
+      const rightTile = Math.floor((px + size - 1) / tileSize);
+      const topTile = Math.floor(py / tileSize);
+      const bottomTile = Math.floor((py + size - 1) / tileSize);
+  
+      for (let ty = topTile; ty <= bottomTile; ty++) {
+        for (let tx = leftTile; tx <= rightTile; tx++) {
+          if (ty < 0 || ty >= this.rows || tx < 0 || tx >= this.columns) return false;
+          const tile = this.map[ty][tx];
+          if (tile !== 0 && tile !== 3) return false;
+        }
+      }
+      return true;
+    };
+  
+    const move = () => {
+      this.enemies.forEach(enemy => {
+        const dir = directions[enemy.dirIndex];
+        const nextPx = enemy.px + dir.dx * speed;
+        const nextPy = enemy.py + dir.dy * speed;
+        const size = enemy.size;
+  
+        if (canMoveTo(nextPx, nextPy, size)) {
+          enemy.px = nextPx;
+          enemy.py = nextPy;
+  
+          // Update grid position for internal logic
+          enemy.x = Math.floor((enemy.px + size / 2) / tileSize);
+          enemy.y = Math.floor((enemy.py + size / 2) / tileSize);
+        } else {
+          enemy.dirIndex = (enemy.dirIndex + 1) % directions.length;
+        }
+  
+        // Update DOM position
+        enemy.element.style.left = `${enemy.px}px`;
+        enemy.element.style.top = `${enemy.py}px`;
+      });
+  
+      requestAnimationFrame(move);
+    };
+  
+    requestAnimationFrame(move);
+  }
+  CreateBattleField() {
+    this.createContainer();
+    this.createDashboard();
+    this.createBattleField();
+    this.initEnemyMovement()
+  }
 }

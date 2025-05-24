@@ -1,100 +1,96 @@
-class Maps {
-  constructor(stage) {
-    this.stage = stage;
-    this.rows = 13;
-    this.colloms = 15;
-    this.randomGates = new Set();
-    this.randomEnemies = new Set();
+export class Maps {
+  constructor(rows, columns, stage = 1) {
+    this.rows = rows;
+    this.columns = columns;
+    this.stage = stage; // 1 = easy, 2 = medium, 3 = hard
+    this.map = this.generateMap();
   }
 
-  // sunction to create map
-  generateTileMap() {
-    // Initialize empty map
-    this.generateRandomIds(1, 113, "gate");
-    this.generateRandomIds(34, 113, "enemies");
-
-    const TILE_TYPES = {
-      EMPTY: 0,
-      WALL: 1,
-      GATE: 2,
-      ENEMY: 3,
-    };
-
+  generateMap() {
     const map = [];
-    // const totalTiles = this.rows * this.colloms;
 
-    for (let y = 0; y < this.rows; y++) {
+    for (let r = 0; r < this.rows; r++) {
       const row = [];
-      for (let x = 0; x < this.colloms; x++) {
-        const id = y * this.colloms + x + 1;
-    
-        // Outer boundary walls
-        if (
-          y === 0 ||
-          y === this.rows - 1 ||
-          x === 0 ||
-          x === this.colloms - 1
-        ) {
-          row.push(TILE_TYPES.WALL);
-        } 
-        // Add inner indestructible walls in a checkerboard pattern
-        else if (x % 2 === 0 && y % 2 === 0) {
-          row.push(TILE_TYPES.WALL);
-        } 
-        // Place gates and enemies
-        else if (this.randomGates.has(id)) {
-          row.push(TILE_TYPES.GATE);
-        } else if (this.randomEnemies.has(id)) {
-          row.push(TILE_TYPES.ENEMY);
-        } 
-        // Empty spaces
-        else {
-          row.push(TILE_TYPES.EMPTY);
+      for (let c = 0; c < this.columns; c++) {
+        // Border walls
+        if (r === 0 || c === 0 || r === this.rows - 1 || c === this.columns - 1) {
+          row.push(1); // Wall
+        }
+        // Inner blocks
+        else if (r % 2 === 0 && c % 2 === 0) {
+          row.push(1); // Wall block
+        } else {
+          row.push(0); // Empty path
         }
       }
       map.push(row);
     }
-    
+
+    this.placeGates(map);
+    this.placeEnemies(map);
+    this.placeHero(map)
+
     return map;
   }
 
-  // Genrate the breakable walls randomly:
-  generateRandomIds(min, max, choice) {
-    let enemiesCount;
-    let gateCount;
-    switch (this.stage) {
-      case 2:
-        gateCount = 25;
-        enemiesCount = 6;
-        break;
-      case 3:
-        gateCount = 30;
-        enemiesCount = 8;
-        break;
-      default:
-        gateCount = 20;
-        enemiesCount = 4;
-    }
+  placeHero(map) {
+    map[1][1] = -1;
+  }
 
-    let edge = gateCount;
-
-    if (choice === "enemies") {
-      edge = enemiesCount;
-    }
-
-    let checker = new Set();
-    do {
-      let num = Math.floor(Math.random() * (max - min + 1)) + min;
-      if (choice === "enemies" && !this.randomGates.has(num)) {
-        this.randomEnemies.add(num);
-        checker.add(num);
-      } else if (choice === "gate" && num != 1 && num != 14 && num != 2) {
-        this.randomGates.add(num);
-        checker.add(num);
+  placeGates(map) {
+    const gatesCount = {
+      1: 20,
+      2: 25,
+      3: 33,
+    };
+  
+    const count = gatesCount[this.stage] || 1;
+    let placed = 0;
+  
+    while (placed < count) {
+      const r = this.getRandomInt(1, this.rows - 2);
+      const c = this.getRandomInt(1, this.columns - 2);
+  
+      // Skip reserved hero spawn area: (1,1), (1,2), (2,1), (2,2)
+      if ((r === 1 || r === 2) && (c === 1 || c === 2)) continue;
+  
+      if (map[r][c] === 0) {
+        map[r][c] = 2; // Gate
+        placed++;
       }
-    } while (checker.size < edge);
+    }
+  }
+  
+  placeEnemies(map) {
+    const enemiesCount = {
+      1: 3,
+      2: 6,
+      3: 10,
+    };
+  
+    const count = enemiesCount[this.stage] || 1;
+    let placed = 0;
+  
+    while (placed < count) {
+      const r = this.getRandomInt(1, this.rows - 2);
+      const c = this.getRandomInt(1, this.columns - 2);
+  
+      // Skip reserved hero spawn area: (1,1), (1,2), (2,1), (2,2)
+      if ((r === 1 || r === 2) && (c === 1 || c === 2)) continue;
+  
+      if (map[r][c] === 0) {
+        map[r][c] = 3; // Enemy
+        placed++;
+      }
+    }
+  }
+  
+
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  getMap() {
+    return this.map;
   }
 }
-
-
-export {Maps}

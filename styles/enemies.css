@@ -1,7 +1,13 @@
-.enemy{
+/* ========== Enemy ========== */
+.enemy {
     position: absolute;
-    background-image:url("../img/monster.png") ;
-    z-index: 1;
-    background-size: cover;
+    background-image: url("../img/monster.png");
+    background-size: contain;
     background-repeat: no-repeat;
-}
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+  }
+  
+  
