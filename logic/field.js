@@ -149,6 +149,8 @@ class Field {
               position: "absolute",
               // backgroundImage: 'url("../img/hero.png")',
               backgroundSize: "contain",
+
+              
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               zIndex: 20,
