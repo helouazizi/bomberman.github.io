@@ -10,8 +10,9 @@ class Maps {
   // sunction to create map
   generateTileMap() {
     // Initialize empty map
-    generateRandomIds(1, 113, "gate");
-    generateRandomIds(34, 113, "enemies");
+    this.generateRandomIds(1, 113, "gate");
+    this.generateRandomIds(34, 113, "enemies");
+
     const TILE_TYPES = {
       EMPTY: 0,
       WALL: 1,
@@ -48,8 +49,6 @@ class Maps {
 
     return map;
   }
-
-  create_map() {}
 
   // Genrate the breakable walls randomly:
   generateRandomIds(min, max, choice) {
@@ -88,3 +87,6 @@ class Maps {
     } while (checker.size < edge);
   }
 }
+
+
+export {Maps}

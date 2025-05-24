@@ -1,6 +1,7 @@
 import { Enemy } from "./enemies.js";
 import { Field } from "./field.js";
 import { Hero } from "./hero.js";
+import { Maps } from "./maps.js";
 import { handleScore, generate_game_story } from "./healpers.js";
 
 class Control {
@@ -147,6 +148,10 @@ class Control {
 
     let field = new Field(unitSize, this.stage);
     let hero = new Hero(unitSize);
+    let maps = new Maps(this.stage);
+    let map = maps.generateTileMap()
+    console.log(map,"our map");
+    
 
     let controlBtns = document.querySelectorAll(".controlBtn");
 
@@ -211,14 +216,14 @@ class Control {
               popup.classList.add("show");
               popup.textContent = "Game over!!";
               document.body.appendChild(popup);
-             
+
               let score = document.getElementById("score").innerText;
 
               let score_number = parseInt(score, 10);
 
               setTimeout(() => {
                 document.body.innerHTML = "";
-                document.body.append(this.controller)
+                document.body.append(this.controller);
                 this.resumebtn.classList.remove("show");
                 this.resumebtn.classList.add("hidden");
                 generate_game_story(3, () => {
